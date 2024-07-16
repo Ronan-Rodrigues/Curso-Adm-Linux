@@ -1,0 +1,75 @@
+Administradores experientes de Linux provavelmente
+fazem sua gestão de pacotes utilizando linhas de comando
+ao invés da interface gráfica,
+No entanto, cada distribuição do Linux tem ao menos uma
+interface gráfica para instalação, atualização, remoção e
+e etc. Vários pacotes de aplicativos.
+Então, vamos dar uma olhada em um recente sistema Ubuntu.
+Posso ir em "Aplicações" depois em "Ferramentas de Sistema".
+Primeiramente, vamos observar esse na parte inferior
+que se chama "Software".
+Isso é na verdade um programa chamado GNOME software.
+Pode ser instalado mesmo que não tenha sido ainda.
+Parece um pouco com a Play Store da Android ou App Store.
+E é obvio que basta clicar em qualquer um desses para tentar
+instalar, etc.
+E na parte inferior, se encontram as categorias.
+Então se eu for em "Utilidades", irei ver vários programas
+que podem ou não já terem sido instalados no sistema.
+Ou posso pesquisar várias coisas, deixa eu voltar
+à página principal.
+E, se eu clicar nessa lupa no canto, eu posso pesquisar.
+Então vamos dizer que eu procure "Terminal".
+Eu vou ter várias opções que posso instalar.
+Da para ver aqui, esse terminal aqui é o GNOME, e consta
+como instalado, nessa fonte menor aqui.
+E se quiser instalar algo mais, é só clicar aqui por exemplo
+e depois em "Instalar", e iria instalar.
+Ou se quiser algo mais divertido, digamos, vou procurar um
+programa chamado "Cheese", que usa a sua câmera do
+computador para tirar fotos, e fazer vídeos, etc.
+E posso "Remover" porque no caso isso já foi instalado,
+então vamos removê-lo.
+Vai pedir uma senha para isso, o que é normal.
+Então digite a senha, e remova o programa.
+Então se eu quiser reinstalar, que é o que vou fazer
+basta clicar em "Instalar" e inserir a senha novamente.
+Não é um programa complexo de usar.
+É bem fácil de usar o GNOME software,
+E pode ver no topo da página, tem uma lista de "Explorar"
+que é onde estamos; "Instalados" que são os pacotes que já
+foram instalados.
+E se for em "Atualizações", me diz que tenho duas
+conjuntos de atualizações que tenho que fazer, mas para
+poupar tempo, farei depois.
+Então essa é uma interface gráfica.
+Existe uma mais velha, disponível para Ubuntu,
+chamada Synaptic.
+Vamos dar uma olhada.
+Acho que está em...Está abaixo de "Ferramentas de Sistema".
+Aqui está.
+"Gestor de Pacotes Synaptic".
+E mais uma vez, se deve colocar a senha.
+Essa é uma mensagem informativa.
+Isso é bem simples, fácil de usar, e dá uma visão clara da
+origem de tudo, comparado a uma interface gráfica mais nova.
+É bem direto de usar.
+Pode ser organizado por seções aqui.
+Pode ser feito de outras formas.
+Posso fazer buscas, etc.
+Então, digamos que faço uma busca.
+Vou fazer a mesma busca aqui, "Terminal".
+Vai me mostrar que tenha um terminal ou esteja relacionado.
+Se quiser posso restringir para aqueles que tem o
+termo "Terminal" só no nome.
+Bem direto de usar.
+Eu não entrar em detalhes.
+Estes estão em verde porque estão instalados.
+Posso instalar qualquer um desses, e basta clicar.
+Digamos que quero instalar o "qTernimal".
+Eu colocaria "Marcado para instalar"
+E indica que para isso funcionar, todos esses outros
+pacotes têm que ser instalados também.
+Que são necessários, então não iremos fazer isso.
+É rapidamente o que se deve fazer em um sistema Ubuntu com
+o pacote de programas gráficos, instalações e remoções.

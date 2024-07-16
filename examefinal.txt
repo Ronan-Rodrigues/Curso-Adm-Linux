@@ -1,0 +1,5 @@
+Parabéns! Você concluiu este curso!
+
+Para passar, você deve obter uma nota final igual ou superior a 70% neste curso. A sua nota final é uma combinação das questões de verificação de conhecimentos (20%) no final de cada capítulo e do exame final (80%).
+
+Você terá no máximo 2 tentativas para responder a cada questão do exame (exceto respostas verdadeiro/falso, nesse caso você terá apenas 1 tentativa). É um exame sem consulta (o que significa que você pode consultar suas anotações, telas do curso, etc.) e não há limite de tempo para responder a uma pergunta. Você sempre pode pular uma pergunta e voltar a ela mais tarde.

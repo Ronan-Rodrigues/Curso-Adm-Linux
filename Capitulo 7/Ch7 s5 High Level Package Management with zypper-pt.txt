@@ -1,0 +1,34 @@
+Vou demonstrar o gerenciamento básico de pacotes,
+com a ferramenta Zypper, no sistema OpenSUSE.
+Usemos "Zypper search"
+para visualizar todos os pacotes
+que possuem a instrução "gnuplot".
+São exibidos vários pacotes.
+Observe os pacotes de documentação.
+Digamos que eu queira instalar este.
+Isso tem de ser feito por um "super user".
+Digito "sudo zypper install gnuplot-doc"
+Note que tenho de instalar não só o gnuplot-doc,
+mas também o gnuplot, que é o programa
+que processa documentos gnuplot-doc.
+Digito "y" para Sim.
+Foi concluído com êxito.
+Para obter informações sobre o pacote,
+digito "rpm -qi gnuplot-doc".
+Para isso, eu não preciso de ser usuário "root".
+Ele informa nome, versão, tamanho e tudo o mais.
+Descrição informa que inclui as páginas "manual" e "info",
+desse muito útil programa de plotagem.
+Se eu quiser remover esse pacote,
+digito "zypper...
+remove gnuplot".
+Digamos que queira remover o "gnuplot", não "gnuplot-doc".
+Ele informa que para remover "gnuplot",
+também preciso remover "gnuplot-doc"
+para não causar inconsistência.
+Digito "y" para sim.
+Ambos foram desinstalados.
+Esses são os passos básicos
+para achar e instalar um pacote,
+obter informações sobre ele
+e removê-lo com o Zypper.

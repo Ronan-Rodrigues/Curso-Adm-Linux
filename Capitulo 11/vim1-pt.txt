@@ -1,0 +1,46 @@
+[Jerry Cooperstein] Vamos praticar um pouco
+os movimentos de cursor básicos,
+bem como entender os diferentes modos
+que podemos utilizar com vi.
+Primeiro, vamos criar um arquivo de texto novo,
+colocando o nome como argumento na linha de comando.
+Colocarei o nome de "vi testfile.txt".
+Estou no modo de comando, mas apertarei "i"
+para ir para o modo de inserção, e digitarei algumas linhas.
+"Esse é um arquivo
+para usar com LFS101X".
+"Essa é uma boa maneira de aprender a usar o Linux".
+Agora, estou no modo de inserção.
+Se eu quiser entrar no modo de comando, aperto "esc",
+e vou para o modo de comando.
+Posso navegar de várias maneiras.
+Se eu apertar "k", eu vou uma linha para cima.
+Se eu apertar o cifrão ,
+eu vou para o fim da linha.
+Apertarei "k" de novo, ou a seta para cima no teclado;
+é completamente equivalente, e em vários casos
+é mais fácil usar as setas.
+Se eu apertar "h", uma, duas, três, quatro vezes,
+vou para a esquerda ou poderia usar a seta esquerda.
+Se eu quiser escrever o arquivo,
+preciso voltar para o modo de comando.
+Estou no modo de comando, então inserirei ":w"
+e ele escreve o arquivo.
+Então, posso inserir ":q" e saio do arquivo.
+E se eu quiser ver o que está no arquivo,
+posso inserir "cat testfile.txt".
+Digamos que quero trabalhar mais no arquivo, fazer mudanças.
+Só preciso inserir "vi testfile.txt" novamente.
+Digamos que quero mudar algo.
+Posso voltar para o modo de inserção.
+Inserirei "i" para ir para o modo de inserção.
+Então, inserirei "outra palavra" escrita errada
+e passarei para a próxima linha.
+Digamos que eu queira salvar isso, aperto "esc".
+Se eu quiser sair e apertar ":q",
+serei avisado que não há mudanças.
+Mas se eu apertar ":wq", ele faz mudanças.
+Se eu olhar o arquivo, verei as mudanças.
+O jeito de aprender é usando.
+O tutorial foi muito bom.
+É só a pequena demonstração de como usar um pouco o vi.

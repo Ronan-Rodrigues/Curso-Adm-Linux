@@ -1,0 +1,553 @@
+Como você aprendeu na lição anterior,
+o Linux trata quase tudo como um arquivo.
+Trabalhar com arquivos é importante para quase tudo
+que você fizer no Linux.
+Nesta lição,
+falaremos do sistema de arquivos do Linux.
+Examinaremos diretórios-padrão
+e que arquivos há neles,
+aprenderemos novos comandos para comparar,
+compactar e fazer backup de arquivos.
+Vamos começar!
+
+Ao final deste capítulo, você deverá ser capaz de:
+
+Explore o sistema de arquivos e sua hierarquia.
+Explique o layout do sistema de arquivos e a finalidade de diretórios importantes.
+Liste os tipos de sistemas de arquivos comuns usados no Linux.
+Compreenda partições de disco e montagem e verificação de sistemas de arquivos.
+Utilize o NFS.
+Compare arquivos e identifique diferentes tipos de arquivos.
+Faça backup e compacte dados.
+
+“Tudo é um arquivo” é um ditado frequentemente repetido e citado por usuários de Linux (e de todos os sistemas operacionais semelhantes ao UNIX). Esteja você lidando com arquivos de dados e documentos normais ou com dispositivos como placas de som e impressoras, isso significa que a interação com eles ocorre por meio das mesmas operações de entrada/saída (E/S) que você normalmente usa com arquivos. Isso simplifica as coisas: você abre um “arquivo” e realiza operações normais, como lê-lo e escrevê-lo (que é uma das razões pelas quais os editores de texto, sobre os quais você aprenderá na próxima seção, são tão importantes).
+
+Em muitos sistemas (incluindo Linux), o sistema de arquivos é estruturado como uma árvore. A árvore geralmente é retratada como invertida e começa no que é mais comumente chamado de diretório raiz, que marca o início do sistema de arquivos hierárquico e às vezes também é chamado de tronco e simplesmente denotado por /. O diretório raiz não é igual ao usuário root. O sistema de arquivos hierárquico também contém outros elementos no caminho (nomes de diretórios), que são separados por barras (/), como em /usr/bin/emacs, onde o último elemento é o nome real do arquivo.
+
+Nesta seção, você aprenderá alguns conceitos básicos, incluindo a hierarquia do sistema de arquivos, bem como partições de disco.
+
+O Linux oferece suporte a vários tipos de sistemas de arquivos nativos, criados expressamente por desenvolvedores Linux, como:
+
+ext3
+ext4
+abóbora
+btrfs
+Também oferece implementações de sistemas de arquivos usados em outros sistemas operacionais alienígenas, como os de:
+
+Windows (ntfs, vfat, exfat)
+SGI (xfs)
+IBM (jfs)
+MacOS (hfs, hfs+)
+Muitos sistemas de arquivos legados mais antigos, como FAT, também são suportados.
+
+Muitas vezes acontece que mais de um tipo de sistema de arquivos é usado em uma máquina, com base em considerações como o tamanho dos arquivos, com que frequência eles são modificados, em que tipo de hardware eles estão instalados e que tipo de velocidade de acesso é necessária, etc. . Os tipos de sistemas de arquivos mais avançados de uso comum são as variedades de registro em diário: ext4, xfs, btrfs e jfs. Eles possuem muitos recursos de última geração e alto desempenho e não são fáceis de corromper acidentalmente.
+
+O Linux também faz uso de sistemas de arquivos em rede (ou distribuídos), onde todo ou parte do sistema de arquivos está em máquinas externas. Além do NFS (Network File System), cujo uso discutiremos, isso inclui Ceph, Lustre e OpenAFS.
+
+Na maioria das situações, cada sistema de arquivos em um sistema Linux ocupa uma partição de disco. (Também é possível encapsular um sistema de arquivos em um arquivo de loopback residente em outro sistema de arquivos regular baseado em partição, mas não discutiremos isso aqui.) As partições ajudam a organizar o conteúdo dos discos de acordo com o tipo e uso dos dados contidos. . Por exemplo, programas importantes necessários para executar o sistema são frequentemente mantidos em uma partição separada (conhecida como root ou /) daquela que contém arquivos pertencentes a usuários regulares desse sistema (/home). Além disso, arquivos temporários criados e destruídos durante a operação normal do Linux podem estar localizados em partições dedicadas. Uma vantagem deste tipo de isolamento por tipo e variabilidade é que quando todo o espaço disponível em uma partição específica estiver esgotado, o sistema ainda poderá operar normalmente. Além disso, se os dados forem corrompidos por erro ou falha de hardware, ou violados por um problema de segurança, poderá ser possível confinar os problemas a uma área menor que todo o sistema.
+
+A imagem mostra o uso do utilitário GParted, que exibe o layout da partição em um sistema de laptop que possui dois sistemas operacionais: RHEL9 e RHEL 8.
+
+Antes de começar a usar um sistema de arquivos, você precisa montá-lo na árvore do sistema de arquivos em um ponto de montagem. Este é simplesmente um diretório (que pode ou não estar vazio) onde o sistema de arquivos será enxertado. Às vezes, pode ser necessário criar o diretório se ele ainda não existir.
+
+AVISO: Se você montar um sistema de arquivos em um diretório não vazio, o conteúdo anterior desse diretório será encoberto e não poderá ser acessado até que o sistema de arquivos seja desmontado. Assim, os pontos de montagem geralmente são diretórios vazios.
+
+O comando mount é usado para anexar um sistema de arquivos (que pode ser local no computador ou em uma rede) em algum lugar da árvore do sistema de arquivos. Os argumentos básicos são o nó do dispositivo e o ponto de montagem. Por exemplo,
+
+$ sudo montar /dev/sda5 /home
+
+anexará o sistema de arquivos contido na partição do disco associada ao nó do dispositivo /dev/sda5 na árvore do sistema de arquivos no ponto de montagem /home. Existem outras maneiras de especificar a partição além do nó do dispositivo, como usando o rótulo do disco ou UUID (Universally Unique IDentifier).
+
+Para desmontar a partição, o comando seria:
+
+$ sudoumount /home
+
+Observe que o comando é umount, não unmount! Somente um usuário root (logado como root ou usando sudo) tem o privilégio de executar esses comandos, a menos que o sistema tenha sido configurado de outra forma.
+
+Se você quiser que ele esteja disponível automaticamente sempre que o sistema for inicializado, você precisará editar /etc/fstab adequadamente (o nome é uma abreviação de tabela do sistema de arquivos). Observar este arquivo mostrará a configuração de todos os sistemas de arquivos pré-configurados. man fstab exibirá como este arquivo é usado e como configurá-lo.
+
+Executar mount sem nenhum argumento mostrará todos os sistemas de arquivos montados atualmente.
+
+O comando df -Th (disk free) exibirá informações sobre sistemas de arquivos montados, incluindo o tipo de sistema de arquivos e estatísticas de uso sobre o espaço atualmente usado e disponível.
+
+Você pode notar várias entradas do tipo tmpfs. Estes não são sistemas de arquivos físicos reais, mas partes da memória do sistema representadas como tal para aproveitar certos recursos de programação.
+
+Muitas vezes é necessário compartilhar dados entre sistemas físicos que podem estar no mesmo local ou em qualquer lugar acessível pela Internet. Um sistema de arquivos de rede (às vezes também chamado de distribuído) pode ter todos os seus dados em uma máquina ou espalhados em mais de um nó da rede. Uma variedade de sistemas de arquivos diferentes podem ser usados localmente em máquinas individuais; um sistema de arquivos de rede pode ser considerado um agrupamento de sistemas de arquivos de nível inferior de vários tipos.
+
+Muitos administradores de sistema montam diretórios pessoais de usuários remotos em um servidor para dar-lhes acesso aos mesmos arquivos e arquivos de configuração em vários sistemas clientes. Isso permite que os usuários façam login em computadores diferentes, mas ainda tenham acesso aos mesmos arquivos e recursos.
+
+O sistema de arquivos mais comum é denominado simplesmente NFS (sistema de arquivos de rede). Tem uma longa história e foi desenvolvido pela primeira vez pela Sun Microsystems. Outra implementação comum é o CIFS (também denominado SAMBA), que tem raízes na Microsoft. Restringiremos nossa atenção a seguir ao NFS.
+
+Veremos agora em detalhes como usar o NFS no servidor.
+
+Na máquina servidora, o NFS usa daemons (processos de serviço e rede integrados no Linux) e outros servidores do sistema são iniciados na linha de comando digitando:
+
+$ sudo systemctl iniciar nfs
+
+NOTA: Em alguns sistemas, como RHEL/CentOS e Fedora, o serviço agora é chamado de nfs-server, não de nfs.
+
+O arquivo de texto /etc/exports contém os diretórios e permissões que um host deseja compartilhar com outros sistemas via NFS. Uma entrada muito simples neste arquivo pode ter a seguinte aparência:
+
+/projetos *.example.com(rw)
+
+Esta entrada permite que o diretório /projects seja montado usando NFS com permissões de leitura e gravação (rw) e compartilhado com outros hosts no domínio example.com. Como detalharemos no próximo capítulo, todo arquivo no Linux possui três permissões possíveis: leitura (r), gravação (w) e execução (x).
+
+Depois de modificar o arquivo /etc/exports, você pode digitar exportfs -av para notificar o Linux sobre os diretórios que você está permitindo serem montados remotamente usando NFS. Você também pode reiniciar o NFS com sudo systemctl restart nfs, mas isso é mais pesado, pois interrompe o NFS por um curto período antes de iniciá-lo novamente. Para garantir que o serviço NFS seja iniciado sempre que o sistema for inicializado, emita sudo systemctl enable nfs.
+
+Na máquina cliente, se desejar que o sistema de arquivos remoto seja montado automaticamente na inicialização do sistema, /etc/fstab será modificado para fazer isso. Por exemplo, uma entrada no /etc/fstab do cliente pode ter a seguinte aparência:
+
+nome do servidor:/projetos /mnt/nfs/projetos padrões nfs 0 0
+
+Você também pode montar o sistema de arquivos remoto sem reinicializar ou como uma montagem única usando diretamente o comando mount:
+
+$ sudo mount nome do servidor:/projects /mnt/nfs/projects
+
+Lembre-se, se /etc/fstab não for modificado, esta montagem remota não estará presente na próxima vez que o sistema for reiniciado. Além disso, você pode querer usar a opção nofail no fstab caso o servidor NFS não esteja ativo na inicialização.
+
+Emita o comando:
+
+aluno:/tmp> cat /etc/fstab
+
+Agora digite:
+
+aluno:/tmp> montar
+
+Compare os resultados. Quais são as diferenças?
+
+Encontre outra maneira de ver uma lista dos sistemas de arquivos montados, examinando o pseudosistema de arquivos /proc.
+
+Confira a solução fornecida na próxima página.
+
+Normalmente, mount mostrará mais sistemas de arquivos montados do que os mostrados em /etc/fstab, que lista apenas aqueles que são solicitados explicitamente.
+
+O sistema, entretanto, montará sistemas de arquivos especiais adicionais necessários para a operação normal, que não são enumerados em /etc/fstab.
+
+Outra maneira de mostrar sistemas de arquivos montados é digitar:
+
+aluno:/tmp> cat /proc/mounts
+
+que é essencialmente como o utilitário obtém suas informações.
+
+Nesta seção, você aprenderá a identificar e diferenciar os diretórios mais importantes encontrados no Linux. Começamos com o espaço do diretório inicial dos usuários comuns.
+
+Cada usuário possui um diretório inicial, geralmente colocado em /home. O diretório /root ("slash-root") nos sistemas Linux modernos não é mais do que o diretório inicial do usuário root (ou superusuário ou conta de administrador do sistema).
+
+Em sistemas multiusuários, a infraestrutura do diretório /home pode ser montada como um sistema de arquivos separado em sua própria partição ou até mesmo exportada (compartilhada) remotamente em uma rede através de NFS.
+
+Às vezes, você pode agrupar usuários com base em seu departamento ou função. Você pode então criar subdiretórios no diretório /home para cada um desses grupos. Por exemplo, uma escola pode organizar /home com algo como o seguinte:
+
+/casa/corpo docente/
+/casa/equipe/
+/casa/alunos/
+
+O diretório /bin contém binários executáveis, comandos essenciais usados para inicializar o sistema ou no modo de usuário único e comandos essenciais exigidos por todos os usuários do sistema, como cat, cp, ls, mv, ps e rm.
+
+Da mesma forma, o diretório /sbin destina-se a binários essenciais relacionados à administração do sistema, como fsck e ip. Para ver uma lista desses programas, digite:
+
+$ ls /bin /sbin
+
+Comandos que não são essenciais (teoricamente) para o sistema inicializar ou operar no modo de usuário único são colocados nos diretórios /usr/bin e /usr/sbin. Historicamente, isso foi feito para que /usr pudesse residir em um sistema de arquivos separado que pudesse ser montado em um estágio posterior da inicialização do sistema ou até mesmo em uma rede. No entanto, hoje em dia a maioria considera esta distinção obsoleta. Na verdade, descobriu-se que muitas distribuições não conseguem inicializar com essa separação, pois essa modalidade não era usada ou testada há muito tempo.
+
+Assim, na maioria das distribuições Linux atuais, /usr/bin e /bin estão, na verdade, apenas simbolicamente ligados entre si, assim como /usr/sbin e /sbin, portanto, existem apenas dois diretórios, não quatro.
+
+Certos sistemas de arquivos, como aquele montado em /proc, são chamados de pseudo-sistemas de arquivos porque não têm presença permanente em nenhum lugar do disco.
+
+O sistema de arquivos /proc contém arquivos virtuais (arquivos que existem apenas na memória) que permitem visualizar dados do kernel em constante mudança. /proc contém arquivos e diretórios que imitam estruturas do kernel e informações de configuração. Ele não contém arquivos reais, mas informações do sistema em tempo de execução, por ex. memória do sistema, dispositivos montados, configuração de hardware, etc. Algumas entradas importantes em /proc são:
+
+/proc/cpuinfo
+/proc/interrupções
+/proc/meminfo
+/proc/montagens
+/proc/partições
+/proc/versão
+
+/proc também possui subdiretórios, incluindo:
+
+/proc/<ID do processo-#>
+/proc/sys
+
+O primeiro exemplo mostra que existe um diretório para cada processo em execução no sistema, que contém informações vitais sobre ele. O segundo exemplo mostra um diretório virtual que contém muitas informações sobre todo o sistema, principalmente seu hardware e configuração. O sistema de arquivos /proc é muito útil porque as informações que ele relata são coletadas apenas conforme necessário e nunca precisam de armazenamento no disco.
+
+O diretório /dev contém nós de dispositivos, um tipo de pseudoarquivo usado pela maioria dos dispositivos de hardware e software, exceto dispositivos de rede. Este diretório é:
+
+Vazio na partição do disco quando não está montado
+Contém entradas criadas pelo sistema udev, que cria e gerencia nós de dispositivos no Linux, criando-os dinamicamente quando os dispositivos são encontrados. O diretório /dev contém itens como:
+/dev/sda1 (primeira partição no primeiro disco rígido)
+/dev/lp1 (segunda impressora)
+/dev/random (uma fonte de números aleatórios).
+
+O diretório /var contém arquivos que devem mudar de tamanho e conteúdo à medida que o sistema está em execução (var significa variável), como as entradas nos seguintes diretórios:
+
+Arquivos de log do sistema: /var/log
+Pacotes e arquivos de banco de dados: /var/lib
+Filas de impressão: /var/spool
+Arquivos temporários: /var/tmp.
+
+O diretório /var pode ser colocado em seu próprio sistema de arquivos para que o crescimento dos arquivos possa ser acomodado e qualquer tamanho de arquivo explosivo não afete fatalmente o sistema. Diretórios de serviços de rede como /var/ftp (o serviço FTP) e /var/www (o serviço web HTTP) também são encontrados em /var.
+
+O diretório /etc é o local dos arquivos de configuração do sistema. Não contém programas binários, embora existam alguns scripts executáveis. Por exemplo, /etc/resolv.conf informa ao sistema onde ir na rede para obter o nome do host para mapeamentos de endereços IP (DNS). Arquivos como passwd, shadow e group para gerenciar contas de usuários são encontrados no diretório /etc. Embora algumas distribuições tenham historicamente tido sua própria infraestrutura extensa em /etc (por exemplo, Red Hat e SUSE usaram /etc/sysconfig), com o advento do systemd há muito mais uniformidade entre as distribuições hoje.
+
+Observe que /etc é para arquivos de configuração de todo o sistema e somente o superusuário pode modificar os arquivos lá. Os arquivos de configuração específicos do usuário são sempre encontrados em seu diretório inicial.
+
+Clique na imagem para ver uma versão ampliada.
+
+O diretório /boot contém alguns arquivos essenciais necessários para inicializar o sistema. Para cada kernel alternativo instalado no sistema existem quatro arquivos:
+
+vmlinuz
+O kernel Linux compactado, necessário para inicialização.
+initramfs
+O sistema de arquivos RAM inicial, necessário para inicialização, às vezes chamado de initrd, não de initramfs.
+configuração
+O arquivo de configuração do kernel, usado apenas para depuração e contabilidade.
+Mapa do sistema
+Tabela de símbolos do kernel, usada apenas para depuração.
+Cada um desses arquivos possui uma versão do kernel anexada ao seu nome.
+
+Os arquivos Grand Unified Bootloader (GRUB), como /boot/grub/grub.conf ou /boot/grub2/grub2.cfg, também são encontrados no diretório /boot.
+
+A captura de tela mostra um exemplo de listagem do diretório /boot, obtido de um sistema RHEL que possui vários kernels instalados, incluindo os fornecidos pela distribuição e os compilados de forma personalizada. Os nomes variam e as coisas tendem a parecer um pouco diferentes em uma distribuição diferente.
+
+/lib contém bibliotecas (código comum compartilhado por aplicativos e necessário para sua execução) para os programas essenciais em /bin e /sbin. Esses nomes de arquivos de biblioteca começam com ld ou lib. Por exemplo, /lib/libncurses.so.5.9.
+
+A maioria delas são conhecidas como bibliotecas carregadas dinamicamente (também conhecidas como bibliotecas compartilhadas ou Objetos Compartilhados (SO)). Em algumas distribuições Linux existe um diretório /lib64 contendo bibliotecas de 64 bits, enquanto /lib contém versões de 32 bits.
+
+Em distribuições Linux recentes, encontra-se:
+
+ou seja, assim como para /bin e /sbin, os diretórios apenas apontam para aqueles em /usr.
+
+Os módulos do kernel (código do kernel, geralmente drivers de dispositivo, que podem ser carregados e descarregados sem reiniciar o sistema) estão localizados em /lib/modules/<kernel-version-number>.
+
+Freqüentemente, são usadas mídias removíveis, como unidades USB, CDs e DVDs. Para tornar o material acessível através do sistema de arquivos normal, ele deve ser montado em um local conveniente. A maioria dos sistemas Linux são configurados para que qualquer mídia removível seja montada automaticamente quando o sistema perceber que algo foi conectado.
+
+Embora historicamente isso tenha sido feito no diretório /media, as distribuições modernas do Linux colocam esses pontos de montagem no diretório /run. Por exemplo, um pen drive USB com o rótulo myusbdrive para um usuário chamado student seria montado em /run/media/student/myusbdrive.
+
+O diretório /mnt tem sido usado desde os primórdios do UNIX para montagem temporária de sistemas de arquivos. Podem ser aqueles em mídia removível, mas mais frequentemente podem ser sistemas de arquivos de rede, que normalmente não são montados. Ou podem ser partições temporárias, ou os chamados sistemas de arquivos de loopback, que são arquivos que fingem ser partições.
+
+Existem alguns diretórios adicionais que podem ser encontrados no diretório raiz:
+
+/opt Pacotes opcionais de software de aplicação
+/sys Pseudo-sistema de arquivos virtual que fornece informações sobre o sistema e o hardware
+Pode ser usado para alterar parâmetros do sistema e para fins de depuração
+/srv Dados específicos do site fornecidos pelo sistema
+Raramente usado
+/tmp Arquivos temporários; em algumas distribuições apagadas durante uma reinicialização e/ou pode realmente ser um disco RAM na memória
+/usr Aplicativos, utilitários e dados multiusuário
+
+A árvore de diretórios /usr contém programas e scripts teoricamente não essenciais (no sentido de que eles não deveriam ser necessários para inicializar o sistema inicialmente) e possui pelo menos os seguintes subdiretórios:
+
+/usr/include Arquivos de cabeçalho usados para compilar aplicativos
+/usr/lib Bibliotecas para programas em /usr/bin e /usr/sbin
+/usr/lib64 Bibliotecas de 64 bits para programas de 64 bits em /usr/bin e /usr/sbin
+/usr/sbin Binários de sistema não essenciais, como daemons de sistema e scripts
+/usr/share Dados compartilhados usados por aplicativos, geralmente independentes de arquitetura
+/usr/src Código fonte, geralmente para o kernel Linux
+/usr/local Dados e programas específicos da máquina local; subdiretórios incluem bin, sbin, lib, share, include, etc.
+/usr/bin Este é o diretório principal de programas e scripts executáveis
+
+Agora que você conhece o sistema de arquivos e sua estrutura, vamos aprender como gerenciar arquivos e diretórios.
+
+diff é usado para comparar arquivos e diretórios. Este programa utilitário frequentemente usado tem muitas opções úteis (consulte: man diff), incluindo:
+
+uso da opção diff
+-c
+Fornece uma lista de diferenças que inclui três linhas de contexto antes e depois das linhas com conteúdo diferente
+-r Usado para comparar recursivamente subdiretórios, bem como o diretório atual
+-i Ignorar o caso das letras
+-w Ignorar diferenças em espaços e tabulações (espaço em branco)
+-q Fique quieto: reporte apenas se os arquivos forem diferentes sem listar as diferenças
+
+
+Para comparar dois arquivos, no prompt de comando, digite diff [options] <filename1> <filename2>. diff deve ser usado para arquivos de texto; para arquivos binários, pode-se usar cmp.
+
+Se preferir, existem várias interfaces gráficas para comparação, incluindo difusa, vimdiff e fusão.
+
+Nesta seção, você aprenderá métodos adicionais para comparar arquivos e como aplicar patches aos arquivos.
+
+Você pode comparar três arquivos de uma vez usando o diff3, que usa um arquivo como base de referência para os outros dois. Por exemplo, suponha que você e um colega de trabalho tenham feito modificações no mesmo arquivo trabalhando ao mesmo tempo de forma independente. diff3 pode mostrar as diferenças com base no arquivo comum com o qual vocês dois começaram. A sintaxe para diff3 é a seguinte:
+
+
+$ diff3 MEU ARQUIVO ARQUIVO COMUM SEU ARQUIVO
+
+O gráfico mostra o uso de diff3.
+
+Muitas modificações no código-fonte e nos arquivos de configuração são distribuídas utilizando patches, que são aplicados, não surpreendentemente, com o programa patch. Um arquivo de patch contém os deltas (alterações) necessários para atualizar uma versão mais antiga de um arquivo para a nova. Os arquivos de patch são produzidos executando diff com as opções corretas, como em:
+
+$ diff -Nur arquivo original novo arquivo> patchfile
+
+Distribuir apenas o patch é mais conciso e eficiente do que distribuir o arquivo inteiro. Por exemplo, se apenas uma linha precisar ser alterada em um arquivo que contém 1.000 linhas, o arquivo de patch terá apenas algumas linhas.
+
+Para aplicar um patch, você pode simplesmente seguir um dos dois métodos abaixo:
+
+$ patch -p1 < arquivo de patch
+$ patch arquivo original arquivo patch
+
+O primeiro uso é mais comum, pois costuma ser usado para aplicar alterações a uma árvore de diretórios inteira, em vez de apenas a um arquivo, como no segundo exemplo. Para entender o uso da opção -p1 e muitas outras, consulte a página man do patch.
+
+No Linux, a extensão de um arquivo, por padrão, não categoriza sua natureza da mesma forma que faria em outros sistemas operacionais. Por exemplo, não se pode presumir que um arquivo denominado file.txt seja um arquivo de texto e não um programa executável. No Linux, um nome de arquivo geralmente é mais significativo para o usuário do sistema do que o próprio sistema. Na verdade, a maioria dos aplicativos examina diretamente o conteúdo de um arquivo para ver que tipo de objeto ele é, em vez de depender de uma extensão. Isso é muito diferente da maneira como o Windows lida com nomes de arquivos, onde um nome de arquivo que termina com .exe, por exemplo, representa um arquivo binário executável.
+
+A natureza real de um arquivo pode ser verificada usando o utilitário de arquivo. Para os nomes de arquivos fornecidos como argumentos, ele examina o conteúdo e certas características para determinar se os arquivos são texto simples, bibliotecas compartilhadas, programas executáveis, scripts ou qualquer outra coisa.
+
+Por favor, dê uma olhada no seguinte exercício Experimente você mesmo: Comparando arquivos.
+
+Por favor, dê uma olhada no seguinte exercício: Experimente você mesmo: Usando file.
+
+O Linux e outras comunidades de código aberto costumam usar o utilitário patch para disseminar modificações e atualizações. Aqui, daremos uma introdução prática ao uso de diff e patch.
+
+Seria uma boa ideia ler as páginas de manual do patch e do diff para aprender mais sobre opções e técnicas avançadas, que ajudarão alguém a trabalhar de forma mais eficaz com o patch. Em particular, a forma dos patches tem muito a ver com a possibilidade de eles serem aceitos no formulário enviado.
+
+Mude para o diretório /tmp.
+Copie um arquivo de texto para /tmp. Por exemplo, copie /etc/group para /tmp.
+Use o utilitário dd para copiar o arquivo de texto para um novo arquivo em /tmp enquanto converte caracteres em letras maiúsculas, como em: student:/tmp> dd if=/tmp/group of=/tmp/GROUP conv=ucase. (Discutiremos dd em breve). A opção conv=ucase converterá todos os caracteres em letras maiúsculas. Se preferir, você pode utilizar qualquer outro método para introduzir alterações no arquivo de texto; não há necessidade de usar dd.
+De acordo com a página man do patch, as opções preferidas para preparar um patch com diff são -Naur ao comparar duas árvores de diretórios recursivamente. Iremos ignorar a opção -a, que significa tratar todos os arquivos como texto, já que patch e diff só devem ser usados em arquivos de texto de qualquer maneira. Como estamos apenas comparando dois arquivos, não precisamos usar as opções N ou r para fazer a comparação, mas poderíamos usá-las de qualquer maneira, pois isso não fará diferença. Compare grupo e GRUPO usando diff e prepare um arquivo de patch adequado.
+Use patch para corrigir o arquivo original, /tmp/group, para que seu conteúdo agora corresponda ao do arquivo modificado, /tmp/GROUP. Você pode tentar primeiro a opção --dry-run!
+Finalmente, para provar que seu arquivo original agora foi corrigido para ser o mesmo com todos os caracteres maiúsculos, use diff nesses dois arquivos. Os arquivos devem ser iguais e você não obterá nenhuma saída do diff.
+
+Confira a solução fornecida na próxima página.
+
+Para este exercício, você poderia usar qualquer arquivo de texto, mas usaremos /etc/group conforme descrito.
+
+aluno:/tmp> cd /tmp
+aluno:/tmp> cp /etc/group /tmp
+aluno:/tmp> dd if=/tmp/group of=/tmp/GROUP conv=ucase
+2+1 registros em
+2+1 registros lançados
+1.054 bytes (1,1 kB, 1,0 KiB) copiados, 0,00048203 s, 2,2 MB/
+aluno:/tmp> diff -Nur grupo GRUPO > patchfile
+aluno:/tmp> cat patchfile
+--- grupo 17/04/2015 11:03:26.710813740 -0500
++++ GRUPO 17/04/2015 11:15:14.602813740 -0500
+@@ -1,68 +1,68 @@
+-raiz:x:0:
+-daemon:x:1:
+-bin:x:2:
+-sys:x:3:
+....
+-libvirtd:x:127:aluno
+-vboxsf:x:999:
++RAIZ:X:0:
++DAEMON:X:1:
++BIN:X:2:
++SISTEMA:X:3:
+.....
+aluno:/tmp> patch --arquivo de patch do grupo de simulação
+verificando grupo de arquivos
+aluno:/tmp> patch do grupo patchfile
+corrigindo grupo de arquivos
+Observe que você também poderia ter executado um destes dois comandos:
+aluno:/tmp> grupo de patches < arquivo de patch
+aluno:/tmp> patch < patchfile
+aluno:/tmp> diff -s grupo GRUPO
+aluno:/tmp> Grupo de arquivos e GRUPO são idênticos
+
+Há muitas maneiras de fazer backup de dados ou até mesmo de todo o sistema. As maneiras básicas de fazer isso incluem o uso de cópia simples com cp e o uso do rsync mais robusto.
+
+Ambos podem ser usados para sincronizar árvores de diretórios inteiras. Porém, o rsync é mais eficiente, pois verifica se o arquivo que está sendo copiado já existe. Se o arquivo existir e não houver alteração no tamanho ou horário de modificação, o rsync evitará uma cópia desnecessária e economizará tempo. Além disso, como o rsync copia apenas as partes dos arquivos que realmente foram alteradas, ele pode ser muito rápido.
+
+cp só pode copiar arquivos de e para destinos na máquina local (a menos que você esteja copiando de ou para um sistema de arquivos montado usando NFS), mas o rsync também pode ser usado para copiar arquivos de uma máquina para outra. Os locais são designados no formato target:path, onde o destino pode estar no formato alguém@host. A parte Someone@ é opcional e usada se o usuário remoto for diferente do usuário local.
+
+O rsync é muito eficiente ao copiar recursivamente uma árvore de diretórios para outra, porque apenas as diferenças são transmitidas pela rede. Freqüentemente, sincroniza-se a árvore de diretórios de destino com a origem, usando a opção -r para percorrer recursivamente a árvore de diretórios, copiando todos os arquivos e diretórios abaixo daquele listado como origem.
+
+rsync é um utilitário muito poderoso. Por exemplo, uma maneira muito útil de fazer backup de um diretório de projeto pode ser usar o seguinte comando:
+
+$ rsync -r projeto-X máquina de arquivo:arquivos/projeto-X
+
+Observe que o rsync pode ser muito destrutivo! O uso indevido acidental pode causar muitos danos aos dados e programas, copiando inadvertidamente as alterações para onde não são desejadas. Tome cuidado para especificar as opções e caminhos corretos. É altamente recomendável que você primeiro teste seu comando rsync usando a opção -dry-run para garantir que ele forneça os resultados desejados.
+
+Para usar o rsync no prompt de comando, digite rsync sourcefile destinationfile, onde qualquer arquivo pode estar na máquina local ou em uma máquina em rede; O conteúdo do arquivo de origem será copiado para o arquivo de destino.
+
+Uma boa combinação de opções é mostrada em:
+
+$ rsync --progress -avrxH --delete sourcedir destino
+
+Os dados dos arquivos geralmente são compactados para economizar espaço em disco e reduzir o tempo necessário para transmitir arquivos pelas redes.
+
+O Linux usa vários métodos para realizar essa compactação, incluindo:
+
+Tabela: Métodos para realizar compactação
+Uso de comando
+gzip 	O utilitário de compactação Linux usado com mais frequência
+bzip2 	Produz arquivos significativamente menores que aqueles produzidos pelo gzip
+xz 	O utilitário de compactação com maior eficiência de espaço usado no Linux
+zip 	É frequentemente necessário para examinar e descompactar arquivos de outros sistemas operacionais
+
+Essas técnicas variam na eficiência da compactação (quanto espaço é economizado) e no tempo que levam para compactar; geralmente, as técnicas mais eficientes demoram mais. O tempo de descompressão não varia tanto entre os diferentes métodos.
+
+Além disso, o utilitário tar é frequentemente usado para agrupar arquivos em um arquivo e compactar todo o arquivo de uma vez.
+
+gzip tem sido historicamente o utilitário de compactação Linux mais usado. Comprime bem e é muito rápido. A tabela a seguir fornece alguns exemplos de uso:
+
+Tabela: exemplos de uso do gzip
+Uso de comando
+gzip * 			Compacta todos os arquivos do diretório atual; cada arquivo é compactado e renomeado com uma extensão .gz.
+
+gzip -r projectX 	Compacta todos os arquivos no diretório projectX, junto com todos os arquivos em todos os diretórios em projectX.
+
+gunzip foo 		Descompacta foo encontrado no arquivo foo.gz. Nos bastidores, o comando gunzip é na verdade o mesmo que gzip –d.
+
+O bzip2 possui uma sintaxe semelhante ao gzip, mas usa um algoritmo de compactação diferente e produz arquivos significativamente menores, ao preço de demorar mais para fazer seu trabalho. Portanto, é mais provável que seja usado para compactar arquivos maiores.
+
+Exemplos de uso comum também são semelhantes ao gzip:
+
+Tabela: Exemplos de uso do bzip2
+Uso de comando
+bzip2 * Compacta todos os arquivos no diretório atual e substitui cada arquivo por um arquivo renomeado com extensão .bz2.
+bunzip2 *.bz2 Descompacta todos os arquivos com extensão .bz2 no diretório atual. Nos bastidores, bunzip2 é o mesmo que chamar bzip2 -d.
+ 
+
+NOTA: bzip2 tornou-se obsoleto recentemente devido à falta de manutenção e às taxas de compressão superiores de xz que são mantidas ativamente. Embora não deva mais ser usado para compactar arquivos, é provável que você ainda precise dele para descompactar arquivos que encontrar com a extensão bz2.
+
+xz é o utilitário de compactação com maior eficiência de espaço frequentemente usado no Linux e é a escolha para distribuição e armazenamento de arquivos do kernel Linux. Mais uma vez, ele troca uma velocidade de compressão mais lenta por uma taxa de compressão ainda maior. Está gradualmente se tornando o método de compactação dominante, especialmente para arquivos grandes que podem precisar ser baixados da Internet.
+
+ 
+
+Tabela: Exemplos de uso de xz
+Uso de comando
+xz * Compacta todos os arquivos no diretório atual e substitui cada arquivo por um com extensão .xz.
+xz foo Compacta foo em foo.xz usando o nível de compactação padrão (-6) e remove foo se a compactação for bem-sucedida.
+xz -dk bar.xz Descompacta bar.xz em bar e não remove bar.xz mesmo se a descompactação for bem-sucedida.
+xz -dcf a.txt b.txt.xz > abcd.txt Descompacta uma combinação de arquivos compactados e descompactados para saída padrão, usando um único comando.
+xz -d *.xz Descompacta os arquivos compactados usando xz.
+ 
+
+Os arquivos compactados são armazenados com uma extensão .xz.
+
+Embora o programa zip raramente seja usado para compactar arquivos no Linux, pode ser necessário examinar e descompactar arquivos de outros sistemas operacionais. Ele só é usado no Linux quando você obtém um arquivo compactado de um usuário ou ambiente Windows ou de downloads da Internet. É um programa legado. Não é rápido nem eficiente.
+
+Tabela: exemplos de uso de zip
+Uso de comando
+zip backup * 		Compacta todos os arquivos no diretório atual e os coloca no backup.zip.
+zip -r backup.zip ~ 	Arquiva seu diretório de login (~) e todos os arquivos e diretórios contidos nele em backup.zip.
+unzip backup.zip 	Extrai todos os arquivos em backup.zip e os coloca no diretório atual.
+
+Historicamente, tar significava "arquivo de fita" e era usado para arquivar arquivos em fita magnética. Ele permite que você crie ou extraia arquivos de um arquivo compactado, geralmente chamado de tarball. Ao mesmo tempo, você pode opcionalmente compactar ao criar o arquivo e descompactar ao extrair seu conteúdo.
+
+Tabela: exemplos de uso de tar
+Uso de comando
+tar xvf mydir.tar 		Extraia todos os arquivos em mydir.tar para o diretório mydir.
+tar zcvf mydir.tar.gz mydir 	Crie o arquivo e compacte com gzip.
+tar jcvf mydir.tar.bz2 mydir 	Crie o arquivo e compacte com bz2.
+tar Jcvf mydir.tar.xz mydir 	Crie o arquivo e compacte com xz.
+tar xvf mydir.tar.gz 		Extraia todos os arquivos em mydir.tar.gz para o diretório mydir.
+
+NOTA: Você não precisa informar ao tar que ele está no formato gzip.
+
+O uso de um travessão (“-”) antes das opções costuma ser feito, embora geralmente seja desnecessário, como em tar -xvf mydir.tar.
+
+Você pode separar os estágios de arquivamento e compactação, como em:
+
+$ tar cvf meudir.tar meudir ; gzip meudir.tar
+$ gunzip meudir.tar.gz; tar xvf meudir.tar
+
+mas isso é mais lento e desperdiça espaço ao criar um arquivo .tar intermediário desnecessário.
+
+Para demonstrar a eficiência relativa de gzip, bzip2 e xz, a captura de tela a seguir mostra os resultados da compactação de uma árvore de diretórios de arquivos de texto puramente (o diretório de inclusão da fonte do kernel) usando os três métodos.
+
+
+Tempos e tamanhos relativos de compactação
+
+
+Isso mostra que à medida que os fatores de compactação aumentam, o tempo de CPU também aumenta (ou seja, a produção de arquivos menores leva mais tempo).
+
+O programa dd é muito útil para fazer cópias de espaço bruto em disco. Por exemplo, para fazer backup do seu Master Boot Record (MBR) (o primeiro setor de 512 bytes no disco que contém uma tabela que descreve as partições nesse disco), você pode digitar:
+
+dd if=/dev/sda of=sda.mbr bs=512 contagem=1
+
+AVISO!
+
+Digitando:
+
+dd if=/dev/sda of=/dev/sdb
+
+fazer uma cópia de um disco para outro, excluirá tudo o que existia anteriormente no segundo disco.
+
+Uma cópia exata do primeiro dispositivo de disco é criada no segundo dispositivo de disco.
+
+Não experimente este comando conforme descrito acima, pois ele pode apagar um disco rígido!
+
+Exatamente o que o nome dd representa é um item frequentemente discutido. As palavras definição de dados são a teoria mais popular e têm raízes no início da história da IBM. Freqüentemente, as pessoas brincam que isso significa destruidor de disco e outras variantes, como exclusão de dados!
+
+Arquivar (ou fazer backup) de seus arquivos de vez em quando é essencial para uma boa higiene. Você pode digitar um comando e, assim, destruir involuntariamente os arquivos necessários e que não pretendia alterar.
+
+Além disso, embora seu hardware possa ser considerado bastante confiável, todos os dispositivos eventualmente falham de alguma forma (mesmo que seja apenas uma falha de energia inesperada). Muitas vezes, isso acontece no pior momento possível. Fazer backup de arquivos periodicamente é um bom hábito.
+
+É claro que é importante fazer backups em sistemas externos por meio de uma rede ou em armazenamento externo, como uma unidade externa ou pendrive. Aqui, faremos um arquivo de backup no mesmo sistema, o que é muito útil, mas não ajudará se a unidade falhar catastroficamente, ou se seu computador for roubado ou se o prédio for atingido por um asteróide ou incêndio.
+
+Primeiro, usando tar, faça backup de todos os arquivos e subdiretórios em seu diretório inicial. Coloque o arquivo tarball resultante no diretório /tmp, dando-lhe o nome backup.tar.
+
+Segundo, execute a mesma tarefa com compactação gzip usando a opção -z para tar, criando /tmp/backup.tar.gz.
+
+Compare o tamanho dos dois arquivos (com ls -l).
+
+Para obter experiência adicional, faça backups usando a opção -j usando a compactação bzip2 e a opção -J para usar a compactação xz.
+
+Confira a solução fornecida na próxima página.
+
+Para construir um arquivo tarball do seu diretório inicial, você pode fazer:
+
+aluno:/tmp> tar -cvf /tmp/backup.tar ~
+
+ou equivalente
+
+aluno:/tmp> tar -cvf /tmp/backup.tar /home/aluno
+
+Observe que você pode ter omitido o - nas opções sem nenhuma alteração. A seguir, não nos preocuparemos em usar a opção -v para verboso. Para criar arquivos com todos os três utilitários de compactação, execute:
+
+aluno:/tmp> tar zcf /tmp/backup.tar.gz ~
+aluno:/tmp> tar jcf /tmp/backup.tar.bz2 ~
+aluno:/tmp> tar Jcf /tmp/backup.tar.xz ~
+
+Comparando os tamanhos (primeiro usando a opção -h para ls para torná-lo legível):
+
+aluno@ubuntu:~aluno:/tmp> ls -lh /tmp/backup*
+
+-rw-rw-r-- 1 aluno aluno 8,3M 17 de abril 10:14 /tmp/backup2.tar.gz
+-rw-rw-r-- 1 aluno aluno 12M 17 de abril 10:13 /tmp/backup.tar
+-rw-rw-r-- 1 aluno aluno 8,4M 17 de abril 10:15 /tmp/backup.tar.bz2
+-rw-rw-r-- 1 aluno aluno 8,3M 17 de abril 10:14 /tmp/backup.tar.gz
+-rw-rw-r-- 1 aluno aluno 8,2M 17 de abril 10:15 /tmp/backup.tar.xz
+
+e depois sem ele:
+
+aluno@ubuntu:~aluno:/tmp> ls -l /tmp/backup*
+
+-rw-rw-r-- 1 aluno aluno 8686942 17 de abril 10:14 /tmp/backup2.tar.gz
+-rw-rw-r-- 1 aluno aluno 12226560 17 de abril 10:13 /tmp/backup.tar
+-rw-rw-r-- 1 aluno aluno 8720491 17 de abril 10:15 /tmp/backup.tar.bz2
+-rw-rw-r-- 1 aluno aluno 8686929 17 de abril 10:14 /tmp/backup.tar.gz
+-rw-rw-r-- 1 aluno aluno 8551064 17 de abril 10:15 /tmp/backup.tar.xz
+
+Observe que, neste caso, não há muita diferença nos diferentes métodos de arquivamento, mas esse diretório específico foi uma má escolha porque já continha muitos arquivos compactados. Um exemplo um pouco melhor envolvendo mais arquivos de texto:
+
+aluno:/tmp> tar cf /tmp/doc.tar /usr/share/doc
+aluno:/tmp> tar zcf /tmp/doc.tar.gz /usr/share/doc
+aluno:/tmp> tar jcf /tmp/doc.tar.bz2 /usr/share/doc
+aluno:/tmp> tar Jcf /tmp/doc.tar.xz /usr/share/doc
+aluno:/tmp> ls -lh /tmp/doc.tar*
+
+-rw-rw-r-- 1 aluno aluno 85M 17 de abril 10:34 /tmp/doc.tar
+-rw-rw-r-- 1 aluno aluno 31M 17 de abril 10:35 /tmp/doc.tar.bz2
+-rw-rw-r-- 1 aluno aluno 34M 17 de abril 10:34 /tmp/doc.tar.gz
+-rw-rw-r-- 1 aluno aluno 28M 17 de abril 10:36 /tmp/doc.tar.xz
+
+o que mostra que xz se saiu melhor, seguido por bz2 e depois gz. Você deve ter notado, porém, a relação inversa entre a redução do tamanho da compressão e o tempo que ela demorou!
+
+resumo
+
+Você concluiu o Capítulo 10. Vamos resumir os principais conceitos abordados:
+
+A árvore do sistema de arquivos começa no que costuma ser chamado de diretório raiz (ou tronco, ou /).
+O Filesystem Hierarchy Standard (FHS) fornece aos desenvolvedores Linux e administradores de sistema uma estrutura de diretório padrão para o sistema de arquivos.
+As partições ajudam a segregar os arquivos de acordo com uso, propriedade e tipo.
+Os sistemas de arquivos podem ser montados em qualquer lugar da árvore principal do sistema de arquivos em um ponto de montagem. A montagem automática do sistema de arquivos pode ser configurada editando /etc/fstab.
+NFS (Network File System) é um método útil para compartilhar arquivos e dados através de sistemas de rede.
+Sistemas de arquivos como /proc são chamados de pseudosistemas de arquivos porque existem apenas na memória.
+/root (barra-root) é o diretório inicial do usuário root.
+/var pode ser colocado em seu próprio sistema de arquivos para que o crescimento possa ser contido e não afetar fatalmente o sistema.
+/boot contém os arquivos básicos necessários para inicializar o sistema.
+patch é uma ferramenta muito útil no Linux. Muitas modificações no código-fonte e nos arquivos de configuração são distribuídas com arquivos de patch, pois contêm deltas ou alterações para ir de uma versão antiga de um arquivo para a nova versão de um arquivo.
+As extensões de arquivo no Linux não significam necessariamente que um arquivo seja de um determinado tipo.
+cp é usado para copiar arquivos na máquina local, enquanto rsync também pode ser usado para copiar arquivos de uma máquina para outra, bem como sincronizar conteúdos.
+gzip, bzip2, xz e zip são usados para compactar arquivos.
+tar permite criar ou extrair arquivos de um arquivo compactado, geralmente chamado de tarball. Opcionalmente, você pode compactar ao criar o arquivo e descompactar ao extrair seu conteúdo.
+dd pode ser usado para fazer cópias grandes e exatas, até mesmo de partições inteiras do disco, de forma eficiente.
+

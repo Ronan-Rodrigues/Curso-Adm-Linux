@@ -1,0 +1,50 @@
+A Linux Foundation é uma organização sem fins lucrativos,
+independente de fornecedores, dedicada a apoiar
+a comunidade de código aberto por meio de recursos
+financeiros e intelectuais, infraestrutura, serviços,
+eventos e treinamento.
+A Fundação hospeda centenas dos projetos de código aberto
+mais importantes do mundo,
+incluindo Linux, Kubernetes,
+Node.js, Hyperledger, ONAP, Cloud Foundry,
+Yocto, GraphQL, Jenkins e muitos outros.
+O grupo de treinamento da Linux Foundation
+trabalha com instrutores especializados
+e desenvolvedores de código aberto experientes para criar
+cursos de treinamento para todos os níveis de experiência,
+de iniciantes completos a desenvolvedores veteranos,
+bem como exames de certificação,
+que demonstram suas habilidades para empregadores potenciais
+de maneira confiável e verificável.
+Nossos cursos ministrados por instrutores
+são dados online ou presencialmente
+por nossos instrutores de primeira linha.
+Os cursos de e-learning permitem que você aprenda
+sobre um assunto no seu próprio ritmo,
+com uma mistura de materiais escritos,
+vídeos e laboratórios interativos.
+Também oferecemos dezenas de cursos on-line
+abertos e gratuitos
+em parceria com eDX,
+a organização educacional sem fins lucrativos
+fundada pela Harvard e MIT.
+Exames de cetificação da Linux Foundation são desenvolvidos
+em parceria com os projetos que eles cobrem.
+Exames são oferecidos online com um fiscal ao vivo.
+Com a maioria utilizando ambientes simulados do mundo real
+que testam as suas habilidades de fato,
+bem como o seu conhecimento.
+Também oferecemos pacotes de assinatura
+e soluções customizadas para se adequarem
+às necessidades de todos,
+de indivíduos a grandes organizações.
+Todos os programas da Linux Foundation Training
+são desenvolvidos para ajudá-lo a adquirir
+as habilidades necessárias para ter sucesso
+em uma carreira em alguns dos mais aquecidos setores
+da tecnologia atual,
+incluindo nuvem, DevOps, administração de sistemas,
+blockchain, redes, sistemas incorporados,
+desenvolvimento de aplicativos e muito mais.
+Treine diretamente com a fonte com a Linux Foundation.
+Para mais informações: https://training.linuxfoundation.org

@@ -1,0 +1,30 @@
+- [Instrutor] Vamos estudar a navegação
+pelos diversos diretórios da linha de comando.
+Usaremos um sistema Gentoo,
+mas poderíamos usar qualquer distribuição da Linux,
+todas funcionariam da mesma forma.
+Estou no diretório "tmp", que pode ser encontrado
+inserindo o comando "pwd" para imprimir o diretório atual.
+Posso alterar para "/usr/local", por exemplo,
+e ele mostrará que estou em "/usr/local".
+Mas há uma forma mais rápida e poderosa de se mover,
+e é usando a estrutura "pushd" e "popd".
+Usando "pushd /tmp", posso ver meu histórico de diretórios.
+Usando "pushd /tmp", posso ver meu histórico de diretórios.
+Posso usar "pushd /boot".
+Posso usar "pushd" para o diretório principal do sistema,
+"/" e, se eu digitar "dirs",
+verei precisamente todos os locais onde estive.
+Agora, se eu usar "popd",
+volto ao diretório "boot".
+Se eu usar o "popd" novamente,
+posso ver que agora estou em "tmp"
+e posso retornar ao ponto de início,
+que é "/usr/local".
+Mais uma vez.
+Comecei "/usr/local", está correto.
+A pilha de diretórios está vazia
+porque usei um simples "cd" para sair do "temp".
+A utilização dos comandos "pushd" e "popd" é simples assim.
+Isso ajuda você a lembrar onde estava
+e voltar facilmente ao início.

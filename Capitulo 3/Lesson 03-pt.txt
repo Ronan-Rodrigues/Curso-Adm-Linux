@@ -1,0 +1,205 @@
+Nesta sessão, discutiremos o processo de inicialização
+do Linux, desde o carregador de inicialização
+até a interface gráfica do usuário.
+Também falaremos sobre o planejamento de uma instalação
+do Linux, pois temos muitas opções a fazer
+e o guiaremos pela instalação de um sistema Linux.
+Vamos lá.
+
+Ao final deste capítulo, você deverá ser capaz de:
+
+Identifique sistemas de arquivos Linux.
+Identifique as diferenças entre partições e sistemas de arquivos.
+Descreva o processo de inicialização.
+Instale o Linux em um computador.
+
+O processo de inicialização do Linux é o procedimento para inicializar o sistema. Consiste em tudo o que acontece desde o momento em que o computador é ligado pela primeira vez até que a interface do usuário esteja totalmente operacional.
+
+Ter um bom entendimento das etapas do processo de inicialização pode ajudá-lo a solucionar problemas, bem como a adaptar o desempenho do computador às suas necessidades.
+
+Por outro lado, o processo de inicialização pode ser bastante técnico e você pode começar a usar o Linux sem conhecer todos os detalhes.
+
+NOTA: Você pode querer voltar e estudar esta seção mais tarde, se quiser primeiro ter uma boa noção de como usar um sistema Linux.
+
+Embora o Linux seja executado em muitos tipos de hardware, nos concentraremos na família x86, que é a base de quase todos os desktops e laptops. Iniciar um sistema Linux baseado em x86 envolve várias etapas. Quando o computador é ligado, o BIOS (Basic Input/Output System) inicializa o hardware, incluindo a tela e o teclado, e testa a memória principal. Este processo também é chamado de POST (Power On Self Test).
+
+O software BIOS é armazenado em um chip de memória somente leitura (ROM) na placa-mãe. Depois disso, o restante do processo de inicialização é controlado pelo sistema operacional (SO).
+
+Assim que o POST for concluído, o controle do sistema passa do BIOS para o carregador de boot. O carregador de inicialização geralmente é armazenado em um dos dispositivos de armazenamento do sistema, como um disco rígido ou unidade SSD, no setor de inicialização (para sistemas BIOS/MBR tradicionais) ou na partição EFI (para interface de firmware extensível (unificada) mais recente ou sistemas EFI/UEFI). Até este estágio, a máquina não acessa nenhuma mídia de armazenamento em massa. Em seguida, as informações de data, hora e os periféricos mais importantes são carregadas a partir dos valores CMOS (após uma tecnologia usada para armazenamento de memória alimentada por bateria, que permite ao sistema acompanhar a data e a hora mesmo quando está ligado). desligado).
+
+Existem vários carregadores de boot para Linux; os mais comuns são GRUB (para carregador GRand Unified Boot), ISOLINUX (para inicializar a partir de mídia removível) e DAS U-Boot (para inicializar em dispositivos/dispositivos incorporados). A maioria dos gerenciadores de inicialização do Linux pode apresentar uma interface de usuário para escolher opções alternativas para inicializar o Linux e até mesmo outros sistemas operacionais que possam estar instalados. Ao inicializar o Linux, o carregador de boot é responsável por carregar a imagem do kernel e o disco RAM inicial ou sistema de arquivos (que contém alguns arquivos críticos e drivers de dispositivo necessários para iniciar o sistema) na memória.
+
+O carregador de boot tem dois estágios distintos:
+
+Para sistemas que usam o método BIOS/MBR, o carregador de inicialização reside no primeiro setor do disco rígido, também conhecido como Master Boot Record (MBR). O tamanho do MBR é de apenas 512 bytes. Neste estágio, o carregador de boot examina a tabela de partições e encontra uma partição inicializável. Depois de encontrar uma partição inicializável, ele procura o carregador de inicialização de segundo estágio, por exemplo GRUB, e o carrega na RAM (memória de acesso aleatório). Para sistemas que usam o método EFI/UEFI, o firmware UEFI lê seus dados do Boot Manager para determinar qual aplicativo UEFI deve ser iniciado e de onde (ou seja, de qual disco e partição a partição EFI pode ser encontrada). O firmware então inicia o aplicativo UEFI, por exemplo GRUB, conforme definido na entrada de inicialização no gerenciador de inicialização do firmware. Este procedimento é mais complicado, mas mais versátil do que os métodos MBR mais antigos.
+
+O carregador de boot de segundo estágio reside em /boot. Uma tela inicial é exibida, o que nos permite escolher qual sistema operacional (SO) e/ou kernel inicializar. Depois que o sistema operacional e o kernel são selecionados, o carregador de boot carrega o kernel do sistema operacional na RAM e passa o controle para ele. Os kernels são quase sempre compactados, então a primeira tarefa que eles têm é descompactá-los. Depois disso, ele verificará e analisará o hardware do sistema e inicializará quaisquer drivers de dispositivos de hardware integrados ao kernel.
+
+A imagem do sistema de arquivos initramfs contém programas e arquivos binários que executam todas as ações necessárias para montar o sistema de arquivos raiz adequado, incluindo fornecer a funcionalidade do kernel necessária para o sistema de arquivos específico que será usado e carregar os drivers de dispositivo para controladores de armazenamento em massa, aproveitando o sistema udev (para dispositivo do usuário), que é responsável por descobrir quais dispositivos estão presentes, localizar os drivers de dispositivo necessários para operar corretamente e carregá-los. Depois que o sistema de arquivos raiz for encontrado, ele será verificado em busca de erros e montado.
+
+O programa de montagem informa ao sistema operacional que um sistema de arquivos está pronto para uso e o associa a um ponto específico na hierarquia geral do sistema de arquivos (o ponto de montagem). Se isso for bem-sucedido, o initramfs será limpo da RAM e o programa init no sistema de arquivos raiz (/sbin/init) será executado.
+
+init cuida da montagem e da rotação para o sistema de arquivos raiz real final. Se forem necessários drivers de hardware especiais antes que o armazenamento em massa possa ser acessado, eles deverão estar na imagem initramfs.
+
+Perto do final do processo de inicialização, o init inicia vários prompts de login em modo texto. Eles permitem que você digite seu nome de usuário, seguido de sua senha e, eventualmente, obtenha um shell de comando. No entanto, se você estiver executando um sistema com interface gráfica de login, você não os verá a princípio.
+
+Como você aprenderá no Capítulo 7: Operações de linha de comando, os terminais que executam os shells de comando podem ser acessados usando a tecla ALT mais uma tecla de função. A maioria das distribuições inicia seis terminais de texto e um terminal gráfico começando com F1 ou F2. Dentro de um ambiente gráfico, mudar para um console de texto requer pressionar CTRL-ALT + a tecla de função apropriada (com F7 ou F1 levando à GUI).
+
+Normalmente, o shell de comando padrão é o bash (GNU Bourne Again Shell), mas há vários outros shells de comando avançados disponíveis. O shell imprime um prompt de texto, indicando que está pronto para aceitar comandos; depois que o usuário digita o comando e pressiona Enter, o comando é executado e outro prompt é exibido após a conclusão do comando.
+
+O carregador de boot carrega o kernel e um sistema de arquivos inicial baseado em RAM (initramfs) na memória, para que possa ser usado diretamente pelo kernel.
+
+Quando o kernel é carregado na RAM, ele imediatamente inicializa e configura a memória do computador e também configura todo o hardware conectado ao sistema. Isso inclui todos os processadores, subsistemas de E/S, dispositivos de armazenamento, etc. O kernel também carrega alguns aplicativos de espaço do usuário necessários.
+
+Depois que o kernel tiver configurado todo o seu hardware e montado o sistema de arquivos raiz, o kernel executa /sbin/init. Este então se torna o processo inicial, que então inicia outros processos para colocar o sistema em funcionamento. A maioria dos outros processos no sistema tem sua origem, em última instância, no init; as exceções incluem os chamados processos de kernel. Eles são iniciados diretamente pelo kernel e sua função é gerenciar detalhes internos do sistema operacional.
+
+Além de iniciar o sistema, o init é responsável por manter o sistema funcionando e por desligá-lo de forma limpa. Uma de suas responsabilidades é atuar quando necessário como gestor de todos os processos não-kernel; ele limpa após a conclusão e reinicia os serviços de login do usuário conforme necessário quando os usuários fazem login e logout, e faz o mesmo para outros serviços do sistema em segundo plano.
+
+Tradicionalmente, a inicialização desse processo era feita usando convenções que datam da década de 1980 e da variedade System V do UNIX. Esse processo serial (chamado SysVinit) fazia o sistema passar por uma sequência de níveis de execução contendo coleções de scripts que iniciam e param serviços. Cada nível de execução suportava um modo diferente de execução do sistema. Dentro de cada nível de execução, serviços individuais podem ser configurados para execução ou para serem encerrados se estiverem em execução.
+
+No entanto, todas as principais distribuições abandonaram esse método sequencial de inicialização do sistema, embora geralmente possam emular muitos utilitários do System V para fins de compatibilidade. A seguir, discutiremos os novos métodos, dos quais o systemd se tornou dominante.
+
+SysVinit via as coisas como um processo serial, dividido em uma série de estágios sequenciais. Cada estágio exigia a conclusão antes que o próximo pudesse prosseguir. Assim, a startup não aproveitou facilmente o processamento paralelo que poderia ser feito com os múltiplos processadores ou núcleos encontrados nos sistemas modernos.
+
+Além disso, a inicialização e a reinicialização eram vistas como eventos relativamente raros; exatamente quanto tempo demoraram não foi considerado importante. Isso não é mais verdade, especialmente com dispositivos móveis e sistemas Linux embarcados. Alguns métodos modernos, como o uso de contêineres, podem exigir tempos de inicialização quase instantâneos. Assim, os sistemas agora exigem métodos com capacidades mais rápidas e aprimoradas. Finalmente, os métodos mais antigos exigiam scripts de inicialização bastante complicados, que eram difíceis de manter universais em versões de distribuição, versões de kernel, arquiteturas e tipos de sistemas. As duas principais alternativas desenvolvidas foram:
+
+Subir na vida
+
+Desenvolvido pelo Ubuntu e incluído pela primeira vez em 2006
+Adotado no Fedora 9 (em 2008) e no RHEL 6 e seus clones
+sistema
+
+Adotado primeiro pelo Fedora (em 2011)
+Adotado pelo RHEL 7 e SUSE
+Upstart substituído no Ubuntu 16.04
+Embora a migração para o systemd tenha sido bastante controversa, ela foi adotada por todas as principais distribuições e, portanto, não discutiremos o método antigo do System V ou o Upstart, que se tornou um beco sem saída. Independentemente de como se sinta sobre as controvérsias ou os métodos técnicos do systemd, a adoção quase universal tornou mais simples aprender a trabalhar em sistemas Linux, pois há menos diferenças entre as distribuições. Enumeramos os recursos do systemd a seguir.
+
+Sistemas com systemd iniciam mais rápido do que aqueles com métodos init anteriores. Isto ocorre principalmente porque ele substitui um conjunto serializado de etapas por técnicas agressivas de paralelização, o que permite que vários serviços sejam iniciados simultaneamente.
+
+Scripts de shell de inicialização complicados são substituídos por arquivos de configuração mais simples, que enumeram o que deve ser feito antes de um serviço ser iniciado, como executar a inicialização do serviço e quais condições o serviço deve indicar que foram realizadas quando a inicialização for concluída. Uma coisa a notar é que /sbin/init agora aponta apenas para /lib/systemd/systemd; ou seja, o systemd assume o processo de inicialização.
+
+Um comando systemd (systemctl) é usado para a maioria das tarefas básicas. Embora ainda não tenhamos falado sobre como trabalhar na linha de comando, aqui está uma breve lista de seu uso:
+
+Iniciando, parando e reiniciando um serviço (usando httpd, o servidor web Apache, por exemplo) em um sistema atualmente em execução:
+$ sudo systemctl iniciar|parar|reiniciar httpd.service
+Ativar ou desativar a inicialização de um serviço do sistema na inicialização do sistema:
+$ sudo systemctl ativar|desativar httpd.service
+Verificando o status de um serviço:
+$ sudo status do systemctl httpd.service
+Na maioria dos casos, o .service pode ser omitido. Existem muitas diferenças técnicas com métodos mais antigos que estão além do escopo da nossa discussão.
+
+Verifique o status do servidor httpd (Apache Web Server) em seu sistema.
+
+Se estiver em execução, pare e verifique novamente.
+
+Inicie o serviço e verifique o status.
+
+Você provavelmente desejará pará-lo novamente quando terminar.
+
+Confira a solução fornecida na próxima página.
+
+$ sudo systemctl status httpd
+$ sudo systemctl start httpd
+$ sudo systemctl status httpd
+$ sudo systemctl stop httpd
+
+
+As bibliotecas separam livros e outras mídias em múltiplas seções; esta organização dependerá do assunto, público, tipo de mídia e frequência de recuperação. O mesmo conceito se aplica a um sistema de arquivos, que é a personificação de um método de armazenamento e organização de coleções arbitrárias de dados em um formato utilizável por humanos.
+
+Diferentes tipos de sistemas de arquivos suportados pelo Linux:
+
+Sistemas de arquivos de disco convencionais: ext3, ext4, XFS, Btrfs, JFS, NTFS, vfat, exfat, etc.
+Sistemas de arquivos de armazenamento flash: ubifs, jffs2, yaffs, etc.
+Sistemas de arquivos de banco de dados
+Sistemas de arquivos para fins especiais: procfs, sysfs, tmpfs, squashfs, debugfs, fuse, etc.
+Esta seção descreverá o layout padrão do sistema de arquivos compartilhado pela maioria das distribuições Linux.
+
+Uma partição é uma subseção dedicada de mídia de armazenamento físico. Historicamente, isso significava uma parte fisicamente contígua de um disco rígido; os dispositivos de armazenamento atuais podem ser mais complicados, mas ainda pensamos em uma partição como uma área fixa a ser tratada como um todo.
+
+Um sistema de arquivos é apenas um método de armazenar e acessar arquivos.
+
+Pode-se pensar em uma partição como um contêiner no qual reside um sistema de arquivos. Entretanto, em algumas circunstâncias, um sistema de arquivos pode abranger mais de uma partição se usar links simbólicos, o que discutiremos mais tarde.
+
+ 
+
+Tabela: Uma comparação entre sistemas de arquivos no Windows e Linux
+
+					Windows			Linux
+Partition				Disk1			/dev/sda1
+Filesystem Type				NTFS/VFAT	EXT3/EXT4/XFS/BTRFS...
+Mounting Parameters			DriveLetter	MountPoint
+Base Folder (where OS is stored)	C:\		/
+
+Os sistemas Linux armazenam seus arquivos importantes de acordo com um layout padrão chamado Filesystem Hierarchy Standard (FHS), que é mantido há muito tempo pela Linux Foundation. Para mais informações, dê uma olhada no seguinte documento: "Filesystem Hierarchy Standard" criado pelo LSB Workgroup. Ter um padrão foi projetado para garantir que usuários, administradores e desenvolvedores possam alternar entre distribuições sem precisar reaprender como o sistema está organizado.
+
+O Linux usa o caractere ‘/’ para separar caminhos (assim como o UNIX, ao contrário do Windows, que usa ‘\’) e não possui letras de unidade. Múltiplas unidades e/ou partições são montadas como diretórios em um único sistema de arquivos. Mídias removíveis, como unidades USB, CDs e DVDs, aparecerão montadas em /run/media/yourusername/disklabel para sistemas Linux recentes ou em /media para distribuições mais antigas. Por exemplo, se o seu nome de usuário for estudante, um pen drive USB denominado FEDORA pode acabar sendo encontrado em /run/media/student/FEDORA, e um arquivo README.txt nesse disco estaria em /run/media/student/FEDORA /README.txt.
+
+Clique na imagem para ver uma versão ampliada.
+
+Todos os nomes de sistemas de arquivos Linux diferenciam maiúsculas de minúsculas, portanto /boot, /Boot e /BOOT representam três diretórios (ou pastas) diferentes. Muitas distribuições distinguem entre utilitários básicos necessários para a operação adequada do sistema e outros programas, e colocam estes últimos em diretórios sob /usr (pense em usuário). Para ter uma ideia de como os outros programas estão organizados, localize o diretório /usr no diagrama da página anterior e compare os subdiretórios com aqueles que existem diretamente no diretório raiz do sistema (/).
+
+Clique na imagem para ver uma versão ampliada.
+
+Determinar qual distribuição Linux implantar requer um planejamento cuidadoso. A figura mostra algumas opções, mas não todas. Observe que muitos sistemas Linux embarcados usam conteúdos personalizados em vez de Android ou Yocto.
+
+Algumas questões que vale a pena pensar antes de decidir sobre uma distribuição incluem:
+
+Qual é a principal função do sistema (servidor ou desktop)?
+Que tipos de pacotes são importantes para a organização? Por exemplo, servidor web, processamento de texto, etc.
+Quanto espaço de armazenamento é necessário e quanto está disponível? Por exemplo, ao instalar o Linux em um dispositivo embarcado, o espaço geralmente é limitado.
+Com que frequência os pacotes são atualizados?
+Quanto tempo dura o ciclo de suporte para cada versão? Por exemplo, as versões LTS têm suporte de longo prazo.
+Você precisa de personalização do kernel do fornecedor ou de terceiros?
+Em qual hardware você está executando? Por exemplo, pode ser X86, RISC-V, ARM, PPC, etc.
+Você precisa de estabilidade a longo prazo? Ou você pode aceitar (ou precisar) de um sistema de ponta mais volátil que execute as versões de software mais recentes?
+
+O layout da partição é melhor decidido no momento da instalação; pode ser difícil mudar mais tarde. Embora os sistemas Linux lidem com múltiplas partições montando-as em pontos específicos do sistema de arquivos, e você sempre possa modificar o design posteriormente, é sempre mais fácil tentar acertar para começar.
+
+Quase todos os instaladores de distribuições Linux fornecem um layout padrão razoável, com todo o espaço dedicado a arquivos normais em uma partição grande e uma partição swap menor ou com partições separadas para algumas áreas sensíveis ao espaço, como /home e /var. Talvez seja necessário substituir os padrões e fazer algo diferente se tiver necessidades especiais ou se quiser usar mais de um disco.
+
+Todas as instalações incluem o software mínimo para executar uma distribuição Linux.
+
+As distribuições também oferecem opções para adicionar categorias de software. Aplicativos comuns (como o navegador Firefox e o pacote de escritório LibreOffice), ferramentas de desenvolvedor (como os editores de texto vi e emacs, que exploraremos mais adiante neste curso) e outros serviços populares (como as ferramentas de servidor web Apache ou MySQL banco de dados) geralmente são incluídos. Além disso, para qualquer sistema com área de trabalho gráfica, uma área de trabalho escolhida (como GNOME ou KDE) é instalada por padrão.
+
+As distribuições modernas tendem a fazer uma instalação simples e rápida primeiro e depois permitem que você faça essas escolhas quando o sistema estiver rodando pelo menos de maneira básica. Antigamente, havia muitas escolhas a serem feitas durante a primeira instalação, o que poderia ser intimidante e confuso para um novo usuário, além de fazer com que a instalação demorasse muito mais tempo.
+
+Todos os instaladores configuraram alguns recursos de segurança iniciais no novo sistema. Um passo básico consiste em definir a senha do superusuário (root) e configurar um usuário inicial. Em alguns casos (como no Fedora e no Ubuntu), apenas um usuário inicial é configurado; o login root direto não está configurado e o acesso root requer login primeiro como um usuário normal e depois usando sudo, como descreveremos mais tarde. Algumas distribuições também instalarão estruturas de segurança mais avançadas, como SELinux ou AppArmor. Por exemplo, todos os sistemas baseados em Red Hat, incluindo Fedora e CentOS, sempre usam SELinux por padrão, e o Ubuntu vem com o AppArmor instalado e funcionando.
+
+Como outros sistemas operacionais, as distribuições do Linux são fornecidas em mídias removíveis, como unidades USB e CDs ou DVDs. A maioria das distribuições Linux também suporta a inicialização de uma imagem pequena e o download do restante do sistema pela rede. Essas pequenas imagens podem ser utilizadas em mídia ou como imagens de inicialização de rede; nesse caso, é possível realizar uma instalação sem usar nenhuma mídia local.
+
+Muitos instaladores podem fazer uma instalação de forma totalmente automática, usando um arquivo de configuração para especificar as opções de instalação. Este arquivo é chamado de arquivo Kickstart para sistemas baseados em Red Hat, perfil AutoYAST para sistemas baseados em SUSE e arquivo Preseed para sistemas baseados em Debian.
+
+Cada distribuição fornece sua própria documentação e ferramentas para criar e gerenciar esses arquivos.
+
+O processo de instalação real é bastante semelhante para todas as distribuições.
+
+Após inicializar a partir da mídia de instalação, o instalador inicia e faz perguntas sobre como o sistema deve ser configurado. Estas perguntas serão ignoradas se um arquivo de instalação automática for fornecido. Em seguida, a instalação é realizada.
+
+Finalmente, o computador é reinicializado no sistema recém-instalado e são feitas perguntas adicionais sobre configuração.
+
+A maioria dos instaladores tem a opção de baixar e instalar atualizações como parte do processo de instalação; isso requer acesso à Internet. Caso contrário, o sistema usará seu mecanismo normal de atualização para recuperar essas atualizações após a conclusão da instalação.
+
+NOTA: Demonstraremos o processo de instalação de duas das três famílias de distribuição Linux que abordamos neste curso. Você pode ver uma demonstração do tipo de distribuição de sua escolha.
+
+IMPORTANTE!
+
+As demonstrações mostram como instalar o Linux diretamente na sua máquina, apagando tudo o que estava lá. Embora as demonstrações não alterem o seu computador, seguir estes procedimentos na vida real apagará todos os dados atuais.
+
+A Linux Foundation possui um documento: "Preparando seu computador para treinamento em Linux" (veja abaixo) que descreve métodos alternativos de instalação do Linux sem substituir os dados existentes. Você pode consultá-lo se precisar preservar as informações do seu disco rígido.
+
+Esses métodos alternativos são:
+
+Reparticionar seu disco rígido para liberar espaço suficiente para permitir a instalação de inicialização dupla (lado a lado) do Linux, junto com seu sistema operacional atual.
+Usando um programa hipervisor de máquina host (como produtos VMWare ou Oracle Virtual Box) para instalar uma máquina virtual Linux cliente.
+Inicializando e usando um Live CD ou pendrive e não gravando no disco rígido.
+O primeiro método às vezes é complicado e deve ser executado quando sua confiança estiver alta e você compreender as etapas envolvidas. O segundo e o terceiro métodos são bastante seguros e dificultam danos ao sistema.
+
+resumo
+
+Você concluiu o Capítulo 3. Vamos resumir os principais conceitos abordados:
+
+Uma partição é uma parte lógica do disco.
+Um sistema de arquivos é um método de armazenar/localizar arquivos em um disco rígido.
+Ao dividir o disco rígido em partições, os dados podem ser agrupados e separados conforme necessário. Quando ocorre uma falha ou erro, apenas os dados da partição afetada serão danificados, enquanto os dados das outras partições provavelmente sobreviverão.
+O processo de inicialização tem várias etapas, começando com o BIOS, que aciona o carregador de inicialização para inicializar o kernel do Linux. A partir daí, o sistema de arquivos initramfs é invocado, o que aciona o programa init para concluir o processo de inicialização.
+Determinar a distribuição apropriada a ser implantada requer que você combine as necessidades específicas do seu sistema com os recursos das diferentes distribuições.

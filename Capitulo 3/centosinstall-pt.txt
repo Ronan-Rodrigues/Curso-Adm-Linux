@@ -1,0 +1,216 @@
+- [Instrutor] Vamos fazer uma instalação limpa
+do CentOS 9-Stream.
+Faremos isso no VMWare Workstation.
+Poderíamos fazê-la no VirtualBox,
+no KVM, em todos os três hipervisores.
+Ou poderíamos fazê-la em um computador físico.
+O procedimento é o mesmo exceto por como começamos.
+No VM Player, selecionamos 'Criar uma Nova Máquina Virtual'.
+No VM Player, selecionamos 'Criar uma Nova Máquina Virtual'.
+Temos que fornecer um arquivo ISO,
+o qual já tenho armazenado em minha máquina.
+Aqui.
+Vamos usar "CentOS-9-Stream-latest", que é
+uma versão que já existe há alguns meses.
+E então selecionarei 'Próximo'.
+Eu tenho que dar um nome,
+então vamos colocar "LF Estudante",
+e dar o nome "estudante".
+Tenho que colocar uma senha.
+Vou digitá-la duas vezes.
+Note que a senha é tanto para a conta usuário
+quanto para a conta raiz.
+Agora vai me pedir um nome para a máquina virtual.
+Vou colocar "CentOS9stream".
+Bom, vamos colocar "teste".
+Eu não gosto de colocá-lo no meu diretório pessoal,
+eu tenho um diretório especial
+para máquinas virtuais porque elas ocupam muito espaço.
+Então vou colocar lá.
+Vou ter que escolher o tamanho do disco rígido.
+Vou colocar trinta gigabytes.
+Vou armazená-lo como um único arquivo
+porque o VM Player costuma dividi-lo em várias fatias
+porque o VM Player costuma dividi-lo em várias fatias
+ou múltiplos arquivos,
+o que dá um pouco mais de trabalho para administrar.
+Então vamos mantê-lo simples.
+Agora vou personalizar o hardware um pouco.
+Só está usando um gigabyte,
+vamos colocar pelo menos quatro gigabytes.
+Quanto aos processadores, eu tenho muitos nessa máquina.
+Então vamos colocar quatro.
+Todo o resto será padrão.
+Agora selecionamos 'Terminar' para começar a instalação.
+Se eu estivesse usando
+um computador real e não uma máquina virtual,
+aqui seria aonde eu começaria,
+se eu tivesse acabado de inserir o disco ou uma chave USB
+ou um CD-ROM ou de qualquer outra maneira que eu faria isso.
+Ele está fazendo algumas análises do sistema,
+decidindo que tipos de drivers serão necessários, etc.
+E então ele vai me pedir algumas coisas básicas.
+O idioma em inglês me satisfaz
+então vou selecionar 'Continuar'.
+Agora existem muitas coisas que posso configurar.
+Posso alterá-las se eu quiser,
+mas vou deixar o teclado e idioma em inglês.
+Aqui diz Chicago para o meu fuso horário.
+Horário Padrão Central dos EUA, tudo bem.
+Está buscando a instalação na mídia local,
+o arquivo ISO.
+Em 'Seleção de Software' está 'Servidor com GUI'.
+Não é isso que eu quero aqui.
+Eu quero selecionar 'Estação de Trabalho'.
+Entendido?
+Portanto, é uma área de trabalho do usuário.
+Então selecionamos isso, e então colocaremos "Concluído".
+E então, preciso criar um usuário.
+Vamos dar o nome de "estudante".
+Na verdade, vamos voltar ao que fizemos anteriormente.
+Vamos colocar o nome de "LF Estudante".
+Vou colocar uma senha novamente, estudante.
+Estudante.
+Isso é o suficiente, vou clicar em 'Concluído'.
+Agora tem outras coisas que eu posso fazer.
+Posso ligar e desligar o KDUMP.
+São coisas que não precisamos saber agora,
+ou alterar o nome da rede.
+As opções padrões servem.
+Observe que diz: "A conta raiz está desabilitada".
+Isso significa que é uma configuração
+semelhante ao Bluetooth, onde você fará como normalmente faz
+e efetuará o login como estudante.
+Quanto ao destino da instalação,
+ele faz uma escolha de como configurar e onde colocar tudo.
+Então será colocado na máquina virtual, no disco
+de trinta gigabytes que nós configuramos.
+Podemos só deixar no automático
+e ver quais escolhas foram feitas por ele,
+mas eu não gosto muito disso.
+Então eu seleciono 'Personalizado',
+e seleciono 'Concluído'.
+Em vez de usar gerenciamento de volume lógico,
+vou dizer que quero usar a 'Partição Padrão'.
+Você pode, neste ponto, decidir criptografar seus dados.
+É muito mais fácil criptografar seu disco agora
+do que tentar fazer qualquer coisa mais tarde.
+Não faremos isso.
+Vou clicar no ícone de soma para configurar a partição.
+Vamos selecionar barra,
+pois é a partição principal.
+Na capacidade, se eu não fizer nada
+ele vai tomar o disco inteiro.
+Então vamos fazer isso.
+Portanto, esta é a configuração mais simples possível.
+Temos a máquina inteira como um disco.
+Para o sistema de arquivos,
+Red Hat e CentOS escolhem XFS como padrão.
+Como em nossos cursos
+costumamos mostrar muitas coisas sobre 'ext4',
+vou escolhê-lo como o sistema de arquivos.
+E isso é tudo que eu tenho que fazer.
+Então vou clicar em 'Concluído'.
+Certo, ele mostra o que será feito.
+Ele somente irá criar as partições que eu pedir.
+Vou selecionar 'Aceitar Alterações'.
+Agora perceba que aqui diz
+"Por favor conclua os itens marcados com este ícone
+antes de prosseguir para o próximo passo."
+Ele quer que eu resolva a questão da conta raiz.
+Portanto, devo determinar uma senha raiz.
+Então farei isso.
+Geralmente é considerada uma ideia ruim
+permitir um login de raiz SSH.
+Então não faremos isso.
+Selecione 'Concluído'.
+Ele não aprovou minha senha, ela é muito simples.
+Mas diz que se eu clicar em 'Concluído' novamente,
+ela será aceita.
+Agora deve funcionar e começar a instalação.
+Se você viu a nossa demonstração da instalação do Ubuntu,
+você vai perceber que esta demorou um pouco mais
+porque fizemos escolhas quanto ao disco rígido
+e se queríamos um servidor ou uma área de trabalho.
+Mas, fora isso, ainda é bem simples.
+Levará aproximadamente a mesma quantidade de tempo agora,
+dez a quinze minutos para concluir tudo.
+Em vez de assistir a instalação de 1.201 pacotes,
+vamos pausar e voltar quando estiver quase pronto.
+Ok, retomamos a gravação.
+Na verdade, levou apenas alguns minutos
+para chegar na instalação do último pacote.
+para chegar na instalação do último pacote.
+E agora está fazendo a configuração,
+e está configurando o núcleo.
+Ele terá que configurar alguns outros pacotes.
+Mas, novamente, isso não vai demorar muito.
+Vou pausar novamente para não termos que assistir.
+Está finalizando a configuração, está quase pronto.
+Está lidando com contas de usuário, endereços de rede,
+algumas coisas que são necessárias para o sistema
+inicializar corretamente,
+como o sistema de arquivos RAM inicial.
+Está quase pronto.
+Está executando scripts de pós-instalação.
+Está feito.
+Eu posso simplesmente reiniciar agora.
+Então deixe-me fazer isso.
+E agora posso logar.
+Então pronto.
+Bem como fizemos com a instalação do Ubuntu,
+ele vai me perguntar se eu quero fazer certas coisas.
+Vai me dar um passeio útil pelo sistema.
+Acho que isso é tudo.
+Está tudo pronto e funcionando.
+Se eu usar "df -h" para ver quanto espaço está sendo usado,
+você pode ver que está usando apenas 4,3 gigabytes.
+Então eu poderia instalar muitas coisas agora,
+se eu quisesse.
+Agora que o sistema está funcionando,
+é sempre bom fazer uma atualização inicial do sistema
+porque as coisas mudaram
+desde que o disco de instalação foi criado.
+Para fazer isso, eu tenho que ser usuário raiz.
+E nesse sistema, devo logar usando "su".
+Então farei "su".
+Vou escrever a senha raiz e pronto.
+Posteriormente, devemos configurá-lo para usar "sudo" etc.
+Essas são coisas que são abordadas nessa aula.
+Para esse sistema, se eu quiser atualizar o sistema,
+escrevo "dnf update".
+Como essa é a primeira vez que estou executando o "dnf",
+provavelmente vai me pedir para aceitar a chave.
+Ele quer baixar um gigabyte inteiro de coisas
+pois muita coisa mudou.
+Eu vou pausar por um tempo
+para não termos que assisti-lo baixar 600--
+Bom, está indo muito rápido.
+Vou deixar.
+Está baixando 674 pacotes.
+Certo?
+E se eu não tivesse digitado isso na linha de comando,
+ele trouxe uma janela aqui em cima dizendo
+que eu poderia ter clicado nela para fazer a instalação.
+Mas eu antecipei isso digitando
+diretamente na linha de comando.
+Então, deixe-me fazer uma pausa por um segundo.
+Essencialmente, ele baixou 674 pacotes.
+Ele quer que eu aceite a chave de acesso.
+Isso é importante para verificar
+que ele corresponde ao que está no meu sistema,
+para que seja um verdadeiro repositório
+de pacotes do CentOS.
+Então digitarei "Y" para sim.
+E agora ele vai prosseguir e fazer a instalação.
+E eu vou poupar você de ter que assistir a isso tudo.
+Ele tem que instalar
+metade de 1330 pacotes.
+A razão pela qual é o dobro do número de pacotes
+é que ele precisa limpar após cada um.
+Então isso da 1330 tarefas.
+Vou parar a gravação agora
+porque isso vai levar um bom tempo
+e não precisamos assistir.
+Então é assim que você faria
+uma instalação básica do CentOS.

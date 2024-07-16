@@ -1,0 +1,60 @@
+- Vamos ganhar experiência
+com operações básicas de arquivos do dia-a-dia
+em um sistema CentOS 8 Stream.
+Isso seria o mesmo em qualquer sistema Linux.
+Primeiro, vamos criar alguns arquivos.
+Eles podem estar vazios ou podem ser pequenos.
+Uma maneira de fazer isso é usando o comando "echo"
+e escrever echo > file1.
+Outra maneira de fazer isso é com o comando "touch".
+Usando touch file2.
+E se eu fizer ls -l file1 file2,
+vejo dois arquivos muito pequenos criados ao mesmo tempo.
+Se eu quiser renomear um deles,
+eu poderia renomeá-lo com o comando "move",
+com mv file1
+file1-newname.
+E se eu usar ls -l *file*,
+vejo que ele está lá.
+Já está com o novo nome.
+Se eu quiser removê-los,
+posso simplesmente usar rm file2.
+E funciona.
+Porém, é uma boa ideia sempre usar a opção "-i"
+para interação ao fazer a remoção.
+Então eu usaria rm -i file1-newname,
+e ele me perguntaria se eu quero mesmo fazer isso.
+Muitas distribuições ajustarão a opção "-i" como padrão
+para que você sempre tenha a chance de mudar de ideia
+sobre a remoção de algo antes de fazê-lo.
+E como eu faria um diretório?
+Eu poderia usar o mkdir dir1.
+E eu posso fazer mais de um diretório na mesma linha.
+Posso usar mkdir dir2 dir3.
+Se eu olhar agora,
+vejo que tenho três diretórios diferentes, todos vazios.
+Então vou colocar alguns arquivos em um dos diretórios.
+Eu usarei touch dir2/file1
+e usarei touch dir2/file2.
+Se eu usar ls -lR para ver se tudo está lá,
+nos arquivos do diretório, é isso que verei.
+"dir1" está vazio, "dir2" tem esses dois arquivos
+e "dir3" também está vazio.
+Agora o comando para remover diretórios é "rmdir".
+Digamos que eu tente remover todos
+com um rmdir dir*.
+Você percebe que ele se livrou de "dir1" e "dir2",
+mas não conseguiu remover "dir1" e "dir3".
+Não conseguiu se livrar de "dir2" porque há arquivos nele.
+Para fazer isso, em vez de usar "rmdir",
+eu usaria rm -rf dir2.
+E isso é enviado para o diretório
+e se livra de todos os arquivos.
+Tenha muito cuidado com o comando "rm -rf"
+porque se der o argumento ruim,
+você pode até eliminar todo o seu sistema.
+Mas essa é a maneira padrão
+de se livrar de uma árvore de diretórios inteira.
+Esses são apenas alguns dos comandos básicos
+para renomear arquivos, movê-los,
+criar diretórios, removê-los etc.

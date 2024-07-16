@@ -1,0 +1,120 @@
+Já se perguntou de onde veio o Linux?
+Nesta lição vamos discutir a história do linux, a filosofia,
+comunidade e os componentes de uma distribuição do Linux.
+Vamos lá.
+Tenha em mente o seguinte:
+
+As coisas mudam no Linux
+Não importa o quanto tenhamos trabalhado para nos mantermos atualizados, o Linux está em constante evolução, tanto no nível técnico (incluindo recursos do kernel) quanto no nível de distribuição e interface. Portanto, lembre-se de que, embora tenhamos tentado estar o mais atualizados possível no momento em que este curso foi lançado, é provável que haja alterações e novos recursos que não discutimos. Isto é inevitável.
+Repetimos algumas coisas no material da aula
+É praticamente impossível, em um curso tão abrangente, nunca revisitar tópicos que foram abordados anteriormente, e revisões curtas são úteis, para que você não precise vasculhar as seções anteriores para refrescar sua memória. Isso é particularmente verdadeiro com itens de configuração do sistema, como usar o sudo para obter privilégios de root temporários da maneira mais segura possível. Sabemos que fizemos isso e, pelo menos na maioria dos casos, é intencionalmente, não por acidente. Se não fizéssemos isso, levaria muito tempo até que soubéssemos o suficiente para realizar tarefas úteis e trabalhar em exercícios de laboratório.
+Tentamos evitar guerras santas
+Existem muitas áreas onde existem fortes divergências de preferência na comunidade Linux (e no código aberto mais amplo). Os exemplos incluem o melhor editor: emacs vs. vi; a melhor área de trabalho gráfica: GNOME vs. KDE, etc. Freqüentemente, escolhemos uma alternativa específica para enfatizar apenas para manter as coisas limpas. Por exemplo, falamos muito mais sobre GNOME do que sobre KDE simplesmente porque ele tem uma base de usuários maior e muito mais estudantes irão usá-lo, não porque estamos assumindo uma posição sobre qual é superior.
+
+Para que você aproveite ao máximo este curso, recomendamos que você tenha o Linux instalado em uma máquina que possa usar ao longo deste curso. Você não precisa visualizar o material do curso em uma máquina Linux (tudo que você precisa é de um navegador). No entanto, você verá que há muitas atividades e laboratórios de acompanhamento dos quais você só se beneficiará se puder realizá-los em sua própria máquina. Preparamos um breve guia de instalação, "Preparando seu computador para treinamento em Linux" (veja abaixo), que ajuda você a selecionar uma distribuição Linux para instalar, decidir se deseja fazer uma máquina Linux pura independente ou uma máquina dual- inicialize um, seja para fazer uma instalação física ou virtual, etc. E depois orienta as etapas. Também discutiremos o procedimento de instalação em detalhes em uma seção posterior.
+
+Não cobriremos tudo detalhadamente; tenha em mente que a maior parte da documentação do Linux já está em seu sistema na forma de páginas de manual, que discutiremos em detalhes posteriormente. Sempre que você não entender algo ou quiser saber mais sobre um comando, programa, tópico ou utilitário, basta digitar man <topic> na linha de comando. Assumiremos que você está pensando dessa maneira e não repetirá constantemente: "Para obter mais informações, consulte a página de manual de <topic>".
+
+Por falar no assunto, ao longo do curso, usamos uma abreviação que é comum na comunidade de código aberto. Ao nos referirmos a casos em que o usuário deve escolher o que inserir (por exemplo, nome de um programa ou arquivo), usamos uma abreviação como <insira o nome do arquivo aqui>. Portanto, cuidado, na verdade não estamos sugerindo que você digite essas palavras exatamente, mas que substitua um nome de arquivo apropriado ou outra string.
+
+Ao final deste capítulo, você deverá ser capaz de:
+
+Discuta a história e a filosofia do Linux.
+Descreva a comunidade Linux.
+Defina os termos comuns associados ao Linux.
+Discuta os componentes de uma distribuição Linux.
+
+Linux é um sistema operacional de computador de código aberto, inicialmente desenvolvido em e para computadores pessoais baseados em Intel x86. Posteriormente, foi portado para uma lista surpreendentemente longa de outras plataformas de hardware, desde pequenos dispositivos embarcados até os maiores supercomputadores do mundo.
+Nesta seção, acompanhamos a surpreendente história de como o Linux evoluiu de um projeto de um estudante universitário finlandês para um esforço massivo com um enorme impacto no mundo de hoje.
+
+Linus Torvalds era estudante em Helsinque, Finlândia, em 1991, quando iniciou um projeto: escrever o kernel do seu próprio sistema operacional. Ele também reuniu e/ou desenvolveu outros ingredientes essenciais necessários para construir um sistema operacional completo com seu kernel no centro. Não demorou muito para que isso se tornasse conhecido como kernel Linux.
+
+Em 1992, o Linux foi licenciado novamente usando a Licença Pública Geral (GPL) pela GNU (um projeto da Free Software Foundation ou FSF, que promove software disponível gratuitamente), o que lhe permitiu construir uma comunidade mundial de desenvolvedores. Ao combinar o kernel com outros componentes do sistema do projeto GNU, vários outros desenvolvedores criaram sistemas completos chamados Distribuições Linux, que apareceram pela primeira vez em meados dos anos 90.
+
+As distribuições Linux criadas em meados dos anos 90 forneceram a base para uma computação totalmente gratuita (no sentido de liberdade, não de custo zero) e tornaram-se uma força motriz no movimento do software de código aberto. Em 1998, grandes empresas como IBM e Oracle anunciaram seu apoio à plataforma Linux e também iniciaram grandes esforços de desenvolvimento.
+
+Hoje, o Linux alimenta mais da metade dos servidores na Internet, a maioria dos smartphones (através do sistema Android, que é construído sobre o Linux), mais de 90% da carga de trabalho da nuvem pública e todos os aplicativos mais poderosos do mundo. supercomputadores.
+
+Todo projeto ou organização de sucesso precisa de uma filosofia implícita ou explícita que enquadre seus objetivos e projete seu caminho de crescimento. Esta seção contém uma descrição da filosofia adotada pela comunidade Linux e como ela impactou a incrível evolução do Linux.
+
+O Linux é constantemente aprimorado e mantido por uma rede de desenvolvedores de todo o mundo que colaboram pela Internet, com Linus Torvalds à frente. Habilidades técnicas, desejo de contribuir e capacidade de colaborar com outras pessoas são as únicas qualificações para participar.
+
+O Linux se baseia fortemente na família bem estabelecida de sistemas operacionais UNIX. Foi escrito para ser uma alternativa gratuita e de código aberto; na época, o UNIX foi projetado para computadores muito mais poderosos que os PCs e, além disso, era bastante caro.
+
+Os arquivos são armazenados em um sistema de arquivos hierárquico, sendo o nó superior do sistema a raiz ou simplesmente “/”. Sempre que possível, o Linux disponibiliza seus componentes através de arquivos ou objetos que se parecem com arquivos. Processos, dispositivos e soquetes de rede são todos representados por objetos semelhantes a arquivos e muitas vezes podem ser trabalhados usando os mesmos utilitários usados para arquivos regulares. Linux é um sistema operacional totalmente multitarefa (ou seja, vários threads de execução são executados simultaneamente) e multiusuário com rede integrada e processos de serviço conhecidos como daemons no mundo UNIX.
+
+NOTA: O Linux foi inspirado no UNIX, mas não é UNIX.
+
+Suponha que, como parte do seu trabalho, você precise configurar um servidor de arquivos Linux e encontre algumas dificuldades. Se você não conseguir descobrir a resposta sozinho ou obter ajuda de um colega de trabalho, a comunidade Linux pode salvar o dia!
+
+Há muitas maneiras de interagir com a comunidade Linux, mesmo se você não for um desenvolvedor:
+
+Poste dúvidas em fóruns de discussão relevantes.
+Assine os tópicos de discussão.
+Junte-se a grupos Linux locais que se reúnem em sua área.
+
+A comunidade Linux é um ecossistema abrangente que consiste em desenvolvedores, administradores de sistema, usuários e fornecedores que usam vários fóruns diferentes para se conectarem entre si. Entre os mais populares estão:
+
+Software Internet Relay Chat (IRC) (como WeeChat, HexChat, Pidgin e XChat)
+Comunidades online e fóruns de discussão, incluindo grupos de usuários Linux (locais e online)
+Muitos projetos colaborativos hospedados em serviços como GitHub e GitLab
+Grupos de notícias e listas de discussão, incluindo a lista de discussão do kernel Linux
+Eventos comunitários, por exemplo, Hackathons, Install Fests, Open Source Summits, Embedded Linux Conferences e muitas outras conferências e encontros.
+Um portal para uma das comunidades de usuários online mais poderosas pode ser encontrado em linux.com. Este site é hospedado pela The Linux Foundation e atende mais de um milhão de visitantes únicos todos os meses. Possui seções ativas sobre:
+
+Notícias
+Tópicos de discussão da comunidade
+Tutoriais gratuitos e dicas de usuários.
+Iremos nos referir várias vezes neste curso a artigos ou tutoriais relevantes neste site.
+
+Existem também muitos cursos de e-learning sobre Linux e outras tecnologias relacionadas, como este curso sobre edX. Muitos são de baixo custo ou nenhum custo, e também existem oportunidades de treinamento mais caras com instrutores ao vivo, pessoalmente ou pela Internet. O site Linux Foundation Training oferece muitos desses cursos em todas essas categorias, mas não é de forma alguma o único lugar onde você pode procurar.
+
+Liste alguns dos produtos de código aberto que você provavelmente usa no dia a dia.
+
+Confira a solução fornecida na próxima página.
+
+Abaixo estão alguns exemplos de produtos de código aberto que você provavelmente encontra diariamente:
+
+Android: usado na maioria dos smartphones e outros dispositivos móveis em todo o mundo, construído sobre o kernel Linux.
+Servidor Web Apache (httpd): cerca de metade de todos os servidores web executam Apache e seus produtos relacionados.
+Mídia Social: praticamente todas as plataformas de mídia social (Facebook, Twitter, Instagram, etc.) usam componentes OSS.
+Mecanismos de busca: o Google e outros mecanismos de busca possuem vastos farms de dados rodando Linux.
+Previsão do tempo: essencialmente, 100% dos supercomputadores do mundo rodam Linux, e a previsão do tempo é um dos usos mais intensivos.
+Dispositivos de condicionamento físico pessoal: incluindo FitBit.
+DVRs: quase todos os decodificadores e gravadores de vídeo rodam Linux
+Dispositivos Médicos: um grande número de dispositivos médicos usados rotineiramente todos os dias executam Linux Embarcado.
+*Todos esses projetos fazem uso extensivo de ferramentas OSS, como gcc, make, glibc e linguagens como Python, Perl e Ruby.
+
+Ao começar a explorar o Linux, você logo se deparará com alguns termos que podem não ser familiares, como distribuição, carregador de boot, ambiente de desktop, etc. Antes de prosseguirmos, vamos parar e dar uma olhada em alguma terminologia básica usada no Linux para ajudar. você se atualiza.
+
+Se você estiver construindo um produto projetado para rodar em Linux, os requisitos do projeto certamente incluirão garantir que o projeto funcione corretamente nas distribuições Linux mais utilizadas. Para fazer isso, você precisa aprender sobre os diferentes componentes, serviços e configurações associados a cada distribuição. Estamos prestes a ver como você faria exatamente isso.
+
+Então, o que é uma distribuição Linux e como ela se relaciona com o kernel Linux?
+
+O kernel Linux é o núcleo do sistema operacional. Uma distribuição Linux completa consiste no kernel mais uma série de outras ferramentas de software para operações relacionadas a arquivos, gerenciamento de usuários e gerenciamento de pacotes de software. Cada uma dessas ferramentas fornece uma parte do sistema completo. Cada ferramenta geralmente é um projeto separado, com seus próprios desenvolvedores trabalhando para aperfeiçoar aquela parte do sistema.
+
+Embora o kernel Linux mais recente (e versões anteriores) sempre possa ser encontrado nos Arquivos do Kernel Linux, as distribuições Linux podem ser baseadas em diferentes versões do kernel. Por exemplo, a distribuição RHEL 8 muito popular é baseada no kernel 4.18, que não é novo, mas é extremamente estável, enquanto a distribuição RHEL 9 mais recente é baseada no kernel 5.14, muito posterior. Outras distribuições podem adotar mais rapidamente as versões mais recentes do kernel. É importante notar que o kernel não é uma proposição de tudo ou nada. Por exemplo, RHEL/CentOS incorporou muitas das melhorias mais recentes do kernel em suas versões mais antigas personalizadas, assim como Ubuntu, openSUSE, Fedora, etc.
+
+Exemplos de outras ferramentas e ingredientes essenciais fornecidos pelas distribuições incluem os compiladores C/C++ e Clang, o depurador gdb, as principais bibliotecas do sistema com as quais os aplicativos precisam se vincular para serem executados, a interface de baixo nível para desenhar gráficos na tela, como bem como o ambiente de desktop de nível superior e o sistema para instalação e atualização dos vários componentes, incluindo o próprio kernel. E todas as distribuições vêm com um conjunto bastante completo de aplicativos já instalados.
+
+A grande variedade de distribuições Linux é projetada para atender a diversos públicos e organizações de acordo com suas necessidades e gostos específicos. No entanto, grandes organizações, como empresas e instituições governamentais e outras entidades, tendem a escolher as principais distribuições com suporte comercial da Red Hat, SUSE e Canonical (Ubuntu).
+
+CentOS e CentOS Stream são alternativas populares gratuitas (ou sem custo) ao Red Hat Enterprise Linux (RHEL) e são frequentemente usadas por organizações que se sentem confortáveis operando sem suporte técnico pago. Observe que as novas versões do CentOS desapareceram no final de 2021 em favor do CentOS Stream. No entanto, pelo menos dois novos substitutos derivados do RHEL, Alma Linux e Rocky Linux, estabeleceram uma posição saudável.
+
+As variantes RHEL, como CentOS e AlmaLinux, são projetadas para serem compatíveis binariamente com RHEL; ou seja, na maioria dos casos, os pacotes de software binário serão instalados corretamente nas distribuições.
+
+Ubuntu e Fedora são amplamente utilizados por desenvolvedores e também populares no mundo educacional. Muitos distribuidores comerciais, incluindo Red Hat, Ubuntu, SUSE e Oracle, fornecem suporte pago de longo prazo para suas distribuições, bem como certificação de hardware e software. Todos os principais distribuidores fornecem serviços de atualização para manter seu sistema preparado com as mais recentes soluções de segurança, correções de bugs e melhorias de desempenho, além de fornecer recursos de suporte on-line.
+
+resumo
+
+resumo
+
+Você concluiu o Capítulo 2. Vamos resumir os principais conceitos abordados:
+
+O Linux se baseia muito no sistema operacional UNIX, com o qual seus criadores eram bem versados.
+O Linux acessa muitos recursos e serviços por meio de arquivos e objetos semelhantes a arquivos.
+O Linux é um sistema operacional totalmente multitarefa e multiusuário, com redes integradas e processos de serviço conhecidos como daemons.
+O Linux é desenvolvido por uma confederação independente de desenvolvedores de todo o mundo, colaborando pela Internet, com Linus Torvalds à frente. Habilidade técnica e desejo de contribuir são as únicas qualificações para participar.
+A comunidade Linux é um ecossistema abrangente de desenvolvedores, fornecedores e usuários que oferece suporte e avanço ao sistema operacional Linux.
+Alguns dos termos comuns usados no Linux são: kernel, distribuição, carregador de boot, serviço, sistema de arquivos, sistema X Window, ambiente de desktop e linha de comando.
+Uma distribuição Linux completa consiste no kernel mais uma série de outras ferramentas de software para operações relacionadas a arquivos, gerenciamento de usuários e gerenciamento de pacotes de software.

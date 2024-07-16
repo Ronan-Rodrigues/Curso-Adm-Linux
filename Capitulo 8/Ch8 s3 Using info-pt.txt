@@ -1,0 +1,37 @@
+Vamos adquirir um pouco de experiência usando
+o comando "Info" para documentar-se.
+Vamos supor que eu digite "Info make", irei receber
+informações sobre a raiz de utilidade que é usada
+em todos os programas.
+E isso me leva até o topo da página "Info"
+ou ao nó principal.
+Se preferir procurar um tópico específico, posso apertar /
+e se pode ver que pedido uma busca
+Então se pode inserir "Exemplo"
+O que me leva para "Exemplo de Regra".
+Se apertar "Enter", eu abro esta página.
+Então, no topo se pode ver que o nó é "Exemplo de Regra"
+o próximo é "Sintaxe de Regra". Então ao apertar "N", eu
+vou ter o "Sintaxe de Regra". O próximo é
+"Tipos pré-requisitados".
+Ao apertar "P", volto ao anterior.
+Então aperto "P" - "Sintaxe de Regra"
+Se quiser procurar novamente por "Exemplo", basta apertar /
+e a pesquisa requisitada está dentro dessa linha.
+Então basta apertar "Enter".
+E encontro um exemplo de um caractere-curinga. E se apertar
+"Enter", encontro informações sobre isso.
+Se quiser retornar ao topo, aperto "U".
+E isso me leva até o topo da seção 4.4.
+Se aperta "U" novamente
+vou para o capítulo 4, e ao apertar mais uma vez
+vai até o topo de tudo.
+Se eu quiser informações sobre os vários comandos
+de teclas, posso pedir ajudar apertando "H",
+e se pode ver no final da página, para onde vai
+o destaque, e lista todos os possíveis comandos e
+o que podem fazer.
+Então isso é basicamente como se usa o "Info".
+Ao apertar o "Q" já saio daqui.
+O que faltou pode ser aprendido ao navegar dentro da página
+"Info" de qualquer tópico que possa ser de interesse.

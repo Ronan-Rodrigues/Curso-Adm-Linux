@@ -1,0 +1,5 @@
+-chmod
+-ifconfig
+-ip
+-ip router
+-netstat

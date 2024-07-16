@@ -1,0 +1,519 @@
+O Linux é um sistema multiusuário
+que pode ter diferentes usuários e contas
+rodando ao mesmo tempo com diferentes ambientes.
+Nesta lição,
+falaremos de usuário root, atalhos de teclado,
+arquivos de inicialização
+e permissões de propriedade de arquivos.
+Vamos começar!
+
+
+Ao final deste capítulo, você deverá ser capaz de:
+
+Use e configure contas de usuários e grupos de usuários.
+Use e defina variáveis de ambiente.
+Use o histórico de comandos shell anterior.
+Use atalhos de teclado.
+Use e defina aliases.
+Use e defina permissões e propriedade de arquivos.
+
+Como você sabe, o Linux é um sistema operacional multiusuário, o que significa que mais de um usuário pode fazer logon ao mesmo tempo.
+
+Para identificar o usuário atual, digite whoami.
+Para listar os usuários conectados no momento, digite who.
+Dar a quem a opção -a fornecerá informações mais detalhadas.
+
+No Linux, o programa shell de comando (geralmente bash) usa um ou mais arquivos de inicialização para configurar o ambiente do usuário. Os arquivos no diretório /etc definem configurações globais para todos os usuários, enquanto os arquivos de inicialização no diretório inicial do usuário podem incluir e/ou substituir as configurações globais.
+
+  Os arquivos de inicialização podem fazer qualquer coisa que o usuário gostaria de fazer em cada shell de comando, como:
+
+Personalizando o prompt
+Definindo atalhos e aliases de linha de comando
+Configurando o editor de texto padrão
+Configurando o caminho para encontrar programas executáveis
+
+A prescrição padrão é que, quando você fizer login pela primeira vez no Linux, /etc/profile seja lido e avaliado, após o qual os seguintes arquivos serão pesquisados (se existirem) na ordem listada:
+
+~/.bash_profile
+~/.bash_login
+~/.profile
+onde ~/ denota o diretório inicial do usuário. O shell de login do Linux avalia qualquer arquivo de inicialização que encontrar primeiro e ignora o resto. Isso significa que se encontrar ~/.bash_profile, ele ignorará ~/.bash_login e ~/.profile. Distribuições diferentes podem usar arquivos de inicialização diferentes.
+
+No entanto, toda vez que você cria um novo shell, ou janela de terminal, etc., você não realiza um login completo no sistema; apenas um arquivo chamado ~/.bashrc file é lido e avaliado. Embora esse arquivo não seja lido e avaliado junto com o shell de login, a maioria das distribuições e/ou usuários incluem o arquivo ~/.bashrc de um dos três arquivos de inicialização de propriedade do usuário.
+
+Mais comumente, os usuários apenas mexem com ~/.bashrc, pois ele é invocado toda vez que um novo shell de linha de comando é iniciado ou outro programa é iniciado a partir de uma janela de terminal, enquanto os outros arquivos são lidos e executados somente quando o usuário faz login pela primeira vez. o sistema.
+
+Às vezes, distribuições recentes nem têm .bash_profile e/ou .bash_login, e algumas fazem pouco mais do que incluir .bashrc.
+
+Você pode criar comandos personalizados ou modificar o comportamento dos já existentes criando aliases. Na maioria das vezes, esses aliases são colocados em seu arquivo ~/.bashrc para que estejam disponíveis para qualquer shell de comando que você criar. unalias remove um alias.
+
+Digitar alias sem argumentos listará os aliases atualmente definidos.
+
+Observe que não deve haver espaços em nenhum dos lados do sinal de igual e a definição do alias precisa ser colocada entre aspas simples ou duplas se contiver espaços.
+
+Todos os usuários do Linux recebem um ID de usuário exclusivo (uid), que é apenas um número inteiro; usuários normais começam com um UID de 1000 ou superior.
+
+Linux usa grupos para organizar usuários. Grupos são coleções de contas com determinadas permissões compartilhadas; eles são usados para estabelecer um conjunto de usuários que têm interesses comuns para fins de direitos de acesso, privilégios e considerações de segurança. Os direitos de acesso aos arquivos (e dispositivos) são concedidos com base no usuário e no grupo ao qual pertencem.
+
+O controle de participação em grupos é administrado através do arquivo /etc/group, que mostra a lista de grupos e seus membros. Por padrão, cada usuário pertence a um grupo padrão (primário). Quando um usuário faz login, a associação ao grupo é definida para seu grupo principal e todos os membros desfrutam do mesmo nível de acesso e privilégio. As permissões em vários arquivos e diretórios podem ser modificadas no nível do grupo.
+
+Os usuários também possuem um ou mais IDs de grupo (gid), incluindo um padrão que é igual ao ID do usuário. Esses números são associados a nomes através dos arquivos /etc/passwd e /etc/group.
+
+Por exemplo, /etc/passwd pode conter john:x:1002:1002:John Garfield:/home/john:/bin/bash e /etc/group pode conter john:x:1002.
+
+As distribuições possuem interfaces gráficas simples para criar e remover usuários e grupos e manipular a associação a grupos. No entanto, muitas vezes é útil fazer isso na linha de comando ou em scripts de shell. Somente o usuário root pode adicionar e remover usuários e grupos.
+
+Adicionar um novo usuário é feito com useradd e remover um usuário existente é feito com userdel. Na forma mais simples, uma conta para o novo usuário bjmoose seria feita com:
+
+$ sudo useradd bjmoose
+
+que, por padrão, define o diretório inicial como /home/bjmoose, preenche-o com alguns arquivos básicos (copiados de /etc/skel) e adiciona uma linha a /etc/passwd como:
+
+bjmoose:x:1002:1002::/home/bjmoose:/bin/bash
+
+e define o shell padrão como /bin/bash. Remover uma conta de usuário é tão fácil quanto digitar userdel bjmoose. No entanto, isso deixará o diretório /home/bjmoose intacto. Isto pode ser útil se for uma inativação temporária. Para remover o diretório inicial enquanto remove a conta, é necessário usar a opção -r para userdel.
+
+Digitar id sem nenhum argumento fornece informações sobre o usuário atual, como em:
+
+$ identificação
+uid=1002(bjmoose) gid=1002(bjmoose) grupos=106(fusível),1002(bjmoose)
+
+Se for fornecido o nome de outro usuário como argumento, id reportará informações sobre esse outro usuário.
+
+Adicionar um novo grupo é feito com groupadd:
+
+$ sudo /usr/sbin/groupadd um novo grupo
+
+O grupo pode ser removido com:
+
+$ sudo /usr/sbin/groupdel anewgroup
+
+Adicionar um usuário a um grupo já existente é feito com usermod. Por exemplo, você veria primeiro a quais grupos o usuário já pertence:
+
+$ grupos rjsquirrel
+rjsquirrel : rjsquirrel
+
+e adicione o novo grupo:
+
+$ sudo /usr/sbin/usermod -a -G anewgroup rjsquirrel
+
+$ grupos rjsquirrel
+rjsquirrel: rjsquirrel um novo grupo
+
+Esses utilitários atualizam /etc/group conforme necessário. Certifique-se de usar a opção -a, para anexar, para evitar a remoção de grupos já existentes. groupmod pode ser usado para alterar as propriedades do grupo, como o ID do grupo (gid) com a opção -g ou seu nome com a opção -n.
+
+Remover um usuário do grupo é um pouco mais complicado. A opção -G para usermod deve fornecer uma lista completa de grupos. Assim, se você fizer:
+
+$ sudo /usr/sbin/usermod -G rjsquirrel rjsquirrel
+
+$ grupos rjsquirrel
+rjsquirrel : rjsquirrel
+
+apenas o grupo rjsquirrel permanecerá.
+
+A conta root é muito poderosa e tem acesso total ao sistema. Outros sistemas operacionais costumam chamar isso de conta de administrador; no Linux, costuma ser chamada de conta de superusuário. Você deve ser extremamente cauteloso antes de conceder acesso root total a um usuário; raramente, ou nunca, é justificado. Os ataques externos geralmente consistem em truques usados para subir para a conta root.
+
+No entanto, você pode usar sudo para atribuir privilégios mais limitados às contas de usuário:
+
+Apenas temporariamente
+Somente para um subconjunto específico de comandos.
+
+Ao atribuir privilégios elevados, você pode usar o comando su (alternar ou substituir usuário) para iniciar um novo shell rodando como outro usuário (você deve digitar a senha do usuário que está se tornando). Na maioria das vezes, esse outro usuário é root, e o novo shell permite o uso de privilégios elevados até que seja encerrado. Quase sempre é uma prática ruim (perigosa tanto para a segurança quanto para a estabilidade) usar su para se tornar root. Os erros resultantes podem incluir a exclusão de arquivos vitais do sistema e violações de segurança.
+
+Conceder privilégios usando sudo é menos perigoso e é preferível. Por padrão, o sudo deve ser habilitado por usuário. No entanto, algumas distribuições (como o Ubuntu) habilitam-no por padrão para pelo menos um usuário principal, ou oferecem isso como opção de instalação.
+
+No capítulo Princípios de Segurança Local, descreveremos e compararemos su e sudo em detalhes.
+
+Para se tornar temporariamente o superusuário de uma série de comandos, você pode digitar su e ser solicitada a senha de root.
+
+Para executar apenas um comando com privilégio de root, digite sudo <command>. Quando o comando for concluído, você voltará a ser um usuário normal sem privilégios.
+
+Os arquivos de configuração sudo são armazenados no arquivo /etc/sudoers e no diretório /etc/sudoers.d/. Por padrão, o diretório sudoers.d está vazio.
+
+Dê uma olhada no seguinte exercício de teste: Identifique o usuário atualmente conectado e seu nome de usuário.
+
+Digitar comandos longos e nomes de arquivos repetidamente é um tanto tedioso e leva a muitos erros triviais, como erros de digitação.
+
+A implantação de aliases nos permite definir atalhos para aliviar a dor de toda essa digitação.
+
+Suponha que você seja membro de uma equipe de projeto que trabalha em um diretório comum e compartilhado para seu projeto. Este diretório está localizado em /home/staff/RandD/projects/projectX/src.
+
+Ao trabalhar no Projeto X, muitas vezes você precisa criar e modificar seus arquivos neste diretório. Não demora muito para digitar:
+
+cd /home/staff/RandD/projects/projectX/src
+
+fica tedioso.
+
+Defina e use um alias chamado "projx" para executar o comando cd acima para você.
+
+A linha de alias ficaria assim:
+
+aluno:/tmp> alias projx='cd /home/staff/RandD/projects/projectX/src'
+
+Observe que você pode usar aspas duplas em vez de aspas simples ou não usar aspas, pois não há espaço em branco no alias definido. Tudo que você precisa fazer agora para mudar para o diretório é
+
+aluno:/tmp> projx
+
+Para tornar o alias persistente, basta colocá-lo em seu arquivo $HOME/.bashrc.
+
+Variáveis de ambiente são quantidades que possuem valores específicos que podem ser utilizados pelo shell de comando, como bash, ou outros utilitários e aplicativos. Algumas variáveis de ambiente recebem valores predefinidos pelo sistema (que geralmente podem ser substituídos), enquanto outras são definidas diretamente pelo usuário, na linha de comando ou na inicialização e outros scripts.
+
+Uma variável de ambiente é, na verdade, apenas uma sequência de caracteres que contém informações usadas por um ou mais aplicativos. Existem diversas maneiras de visualizar os valores das variáveis de ambiente definidas atualmente; pode-se digitar set, env ou export. Dependendo do estado do seu sistema, set pode imprimir muito mais linhas do que os outros dois métodos.
+
+Por padrão, as variáveis criadas em um script estão disponíveis apenas para o shell atual; processos filhos (sub-shells) não terão acesso a valores que foram definidos ou modificados. Permitir que processos filhos vejam os valores requer o uso do comando export.
+
+ 
+
+Tabela: Tarefas e Comandos
+					Comando de Tarefa
+Mostre o valor de uma variável específica 				echo $SHELL
+Exporte um novo valor de variável 					export VARIABLE=value (ou VARIABLE=value; export VARIABLE)
+Adicione uma variável permanentemente
+									Edite ~/.bashrc e adicione a linha export VARIABLE=value
+
+									Digite source ~/.bashrc ou apenas . ~/.bashrc (ponto ~/.bashrc); ou apenas inicie um novo shell digitando bash
+
+ 
+
+Você também pode definir variáveis de ambiente para serem alimentadas de uma só vez para um comando, como em:
+
+$ SDIRS="s_0*" KROOT=/lib/modules/$(uname -r)/build make module_install
+
+que alimenta os valores das variáveis de ambiente SDIRS e KROOT para o comando make module_install.
+
+
+HOME é uma variável de ambiente que representa o diretório inicial (ou login) do usuário. cd sem argumentos alterará o diretório de trabalho atual para o valor HOME. Observe que o caractere til (~) é frequentemente usado como abreviatura de $HOME. Assim, cd $HOME e cd ~ são declarações completamente equivalentes.
+
+ 
+
+Tabela: Comandos e Explicações
+Explicação do comando
+$echo $HOME
+/casa/aluno
+$cd/bin
+
+Mostre o valor da variável de ambiente HOME e altere o diretório (cd) para /bin.
+$ pwd
+/bin
+
+Onde estamos? Use o diretório de trabalho print (ou presente) (pwd) para descobrir. Como esperado, /bin.
+$ cd Muda o diretório sem argumento...
+$ pwd
+/casa/aluno
+
+...nos leva de volta para CASA, como vocês podem ver agora.
+ 
+
+A captura de tela demonstra isso.
+
+
+PATH é uma lista ordenada de diretórios (o caminho) que é verificada quando um comando é dado para encontrar o programa ou script apropriado para ser executado. Cada diretório no caminho é separado por dois pontos (:). Um nome de diretório nulo (vazio) (ou ./) indica o diretório atual em um determinado momento.
+
+:caminho1:caminho2
+caminho1::caminho2
+No exemplo :path1:path2, há um diretório nulo antes dos primeiros dois pontos (:). Da mesma forma, para path1::path2 existe um diretório nulo entre path1 e path2.
+
+Para prefixar um diretório bin privado ao seu caminho:
+
+$ exportar PATH=$HOME/bin:$PATH
+$ echo $PATH
+/home/aluno/bin:/usr/local/bin:/usr/bin:/bin/usr
+
+A variável de ambiente SHELL aponta para o shell de comando padrão do usuário (o programa que lida com tudo o que você digita em uma janela de comando, geralmente bash) e contém o nome completo do caminho para o shell:
+
+$ eco $SHELL
+/bin/bash
+$
+
+A instrução de prompt (PS) é usada para personalizar sua string de prompt nas janelas do terminal para exibir as informações desejadas.
+
+PS1 é a variável de prompt principal que controla a aparência do prompt de linha de comando. Os seguintes caracteres especiais podem ser incluídos no PS1:
+
+\u - Nome de usuário
+\h - Nome do host
+\w - Diretório de trabalho atual
+\! - Número histórico deste comando
+\d - Data
+
+Eles devem ser colocados entre aspas simples quando usados, como no exemplo a seguir:
+
+$ eco $ PS1
+$
+$ exportar PS1='\u@\h:\w$ '
+estudante@exemplo.com:~$ # novo prompt
+
+Para reverter as alterações:
+
+estudante@exemplo.com:~$ exportar PS1='$ '
+$
+
+Uma prática ainda melhor seria salvar primeiro o prompt antigo e depois restaurá-lo, como em:
+
+$ OLD_PS1=$PS1
+
+altere o prompt e, eventualmente, altere-o novamente com:
+
+$PS1=$OLD_PS1
+$
+
+Pode-se ficar bastante sofisticado com o prompt e fazer coisas como adicionar cores ou até sons!
+
+Crie um pequeno arquivo /tmp/ls, que contém apenas a linha:
+
+echo OLÁ, este é o programa ls falso.
+
+Em seguida, torne-o executável fazendo:
+
+$ chmod +x/tmp/ls
+
+Anexe /tmp ao seu caminho, para que ele seja pesquisado somente depois que seu caminho normal for considerado. Digite ls e veja qual programa é executado: /bin/ls ou /tmp/ls?
+Antecipe /tmp ao seu caminho, para que ele seja pesquisado antes que seu caminho normal seja considerado. Mais uma vez, digite ls e veja qual programa é executado: /bin/ls ou /tmp/ls?
+Quais são as considerações de segurança ao alterar o caminho dessa maneira?
+
+Confira a solução fornecida na próxima página.
+
+Primeiro, crie o programa ls falso usando um editor ou simplesmente fazendo:
+
+aluno:/tmp>echo "echo OLÁ, este é o programa ls falso." > /tmp/ls
+aluno:/tmp>chmod +x /tmp/ls
+
+Para as próximas duas etapas, é uma boa ideia trabalhar em outra janela de terminal ou apenas iniciar um novo shell, para que as alterações não persistam em comandos emitidos posteriormente. Você pode iniciar um novo shell apenas digitando bash.
+
+aluno:/tmp>bash
+aluno:/tmp>PATH=$PATH:/tmp
+aluno:/tmp>ls /usr
+jogos bin etc incluem lib lib64 libexec local sbin share src tmp
+aluno:/tmp>sair
+aluno:/tmp>bash
+aluno:/tmp>PATH=/tmp:$PATH
+aluno:/tmp>ls /usr
+OLÁ, este é o programa ls falso.
+aluno:/tmp>sair
+Observe que a segunda forma é algo muito perigoso de se fazer e é uma maneira trivial de inserir um programa Cavalo de Tróia; se alguém puder colocar um programa malicioso em /tmp, poderá induzi-lo a executá-lo acidentalmente.
+
+É bom ter seu diretório de trabalho atual como parte do seu prompt, para que uma rápida olhada forneça algumas informações sem digitar pwd todas as vezes.
+
+Se você costuma trabalhar em vários computadores, especialmente se você se conecta em rede com ssh, é muito conveniente ter o nome do computador como parte do seu prompt.
+
+Coloque seu diretório de trabalho atual no prompt da linha de comando.
+Coloque o nome do seu computador (máquina) no seu prompt.
+Coloque o diretório atual e o nome do computador no prompt.
+Como você pode tornar isso persistente, de modo que sempre que iniciar um shell de comando bash, este seja o seu prompt?
+
+Confira a solução fornecida na próxima página.
+
+$ echo $PWD
+/tmp
+$ PS1='\w>'
+/tmp>
+PS1='\h>'
+student>
+PS1='\h:\w>'
+student:/tmp>
+
+bash rastreia comandos e instruções inseridos anteriormente em um buffer de histórico. Você pode recuperar comandos usados anteriormente simplesmente usando as teclas de cursor para cima e para baixo. Para visualizar a lista de comandos executados anteriormente, basta digitar histórico na linha de comando.
+
+A lista de comandos é exibida com o comando mais recente aparecendo por último na lista. Essas informações são armazenadas em ~/.bash_history. Se você tiver vários terminais abertos, os comandos digitados em cada sessão não serão salvos até que a sessão termine.
+
+Várias variáveis de ambiente associadas podem ser usadas para obter informações sobre o arquivo histórico.
+
+HISTFILE
+A localização do arquivo de histórico.
+HISTFILESIZE
+O número máximo de linhas no arquivo de histórico (padrão 500).
+HISTSIZE
+O número máximo de comandos no arquivo de histórico.
+HISTCONTROL
+Como os comandos são armazenados.
+HISTOGNORE
+Quais linhas de comando não podem ser salvas.
+Para obter uma descrição completa do uso dessas variáveis de ambiente, consulte man bash.
+
+Chaves específicas para realizar diversas tarefas:
+
+ 
+
+Tabela: Chaves e Exemplos de Uso
+Uso de chave
+Teclas de seta para cima/para baixo Navegar pela lista de comandos executados anteriormente
+!! (Pronunciado como bang-bang) Execute o comando anterior
+CTRL-R Pesquisa comandos usados anteriormente
+ 
+
+Se quiser recuperar um comando da lista de histórico, mas não quiser pressionar a tecla de seta repetidamente, você pode pressionar CTRL-R para fazer uma pesquisa inteligente reversa.
+
+À medida que você começa a digitar, a pesquisa volta na ordem inversa até o primeiro comando que corresponde às letras digitadas. Ao digitar mais letras sucessivas, você torna a correspondência cada vez mais específica.
+
+A seguir está um exemplo de como você pode usar o comando CTRL-R para pesquisar no histórico de comandos:
+
+$ ^R (tudo isso acontece em 1 linha)
+(reverse-i-search)'s': sleep 1000 (Pesquisou por 's'; correspondeu a "sleep")
+$ sleep 1000 (Pressione Enter para executar o comando pesquisado)
+
+A tabela descreve a sintaxe usada para executar comandos usados anteriormente:
+
+ 
+
+Tabela: Sintaxe e Tarefas
+Tarefa de Sintaxe
+! Iniciar uma substituição de histórico
+!$ Refere-se ao último argumento de uma linha
+!n Consulte a enésima linha de comando
+!string Consulte o comando mais recente começando com string
+ 
+
+Todas as substituições do histórico começam com!. Ao digitar o comando: ls -l /bin /etc /var, !$ se referirá a /var, o último argumento do comando.
+
+Aqui estão mais exemplos:
+
+$ história
+
+ecoar $SHELL
+ecoar $HOME
+ecoar $PS1
+é -a
+ls -l /etc/senha
+durma 1000
+história
+$ !1 (Execute o comando nº 1 acima)
+ecoar $SHELL
+/bin/bash
+
+$ !sl (Execute o comando começando com "sl")
+durma 1000
+$
+
+Você pode usar atalhos de teclado para executar diferentes tarefas rapidamente. A tabela lista alguns desses atalhos de teclado e seus usos. Observe que o caso da "tecla de atalho" não importa, por ex. fazer CTRL-a é o mesmo que fazer CTRL-A .
+
+ 
+
+Tabela: Atalhos de teclado e tarefas
+Tarefa de atalho de teclado
+CTRL-L 		Limpa a tela
+CTRL-S 		Interrompe temporariamente a saída para a janela do terminal
+CTRL-Q 		Retoma a saída para a janela do terminal
+CTRL-D 		Sai do shell atual
+CTRL-Z 		Coloca o processo atual em segundo plano suspenso
+CTRL-C 		Mata o processo atual
+CTRL-H 		Funciona da mesma forma que backspace
+CTRL-A 		Vai para o início da linha
+CTRL-W 		Exclui a palavra antes do cursor
+CTRL-U 		Exclui do início da linha até a posição do cursor
+CTRL-E 		Vai para o fim da linha
+
+Tab Completa automaticamente arquivos, diretórios e binários
+*Observe que alguns aplicativos substituirão esses usos; por exemplo, o emacs tem outras idéias para CTRL-S e CTRL-U.
+
+
+Você está ocupado trabalhando com sua estação de trabalho Linux há tempo suficiente para digitar cerca de 100 comandos em um shell de comando bash específico.
+
+Em algum momento antes, você usou um novo comando, mas o nome exato passou despercebido.
+
+Ou talvez tenha sido um comando bastante complicado, com um monte de opções e argumentos, e você não quer passar pelo processo propenso a erros de descobrir o que digitar novamente.
+
+Como você descobre qual foi o comando?
+
+Depois de encontrar o comando em seu histórico, como você pode facilmente emitir o comando novamente sem precisar digitar tudo no prompt?
+
+Confira a solução fornecida na próxima página.
+
+O comando histórico é a maneira de exibir os comandos que você digitou:
+
+aluno:/tmp> história
+
+1 cd/
+2 litros
+3 CDs
+4 pessoas
+5 eco $SHELL
+6ls /var/
+7ls /usr/bin
+8ls /usr/local/bin
+9 homem fstab
+10 litros
+. . .
+
+Para executar novamente um comando anterior, você tem algumas opções. Digamos que você queira executar novamente o comando man que executou quando fez login pela primeira vez. Você pode digitar:
+
+aluno:/tmp> !9
+
+para executar novamente o comando listado como #9. Se este foi o único comando man que você digitou, você também pode digitar:
+
+aluno:/tmp> !homem
+
+agora que você se lembra do nome do comando que digitou. Finalmente, se você tivesse digitado alguns comandos man, você poderia usar CTRL-R para pesquisar retroativamente em seu histórico para encontrar o comando man específico que deseja executar novamente e, em seguida, pressionar Return para executá-lo.
+
+No Linux e em outros sistemas operacionais baseados em UNIX, cada arquivo está associado a um usuário que é o proprietário. Cada arquivo também está associado a um grupo (um subconjunto de todos os usuários) que tem interesse no arquivo e certos direitos ou permissões: leitura, gravação e execução.
+
+Os seguintes programas utilitários envolvem propriedade de usuário e grupo e configuração de permissão:
+
+ 
+
+Tabela: Comandos e Uso
+Uso de comando
+chown 			Usado para alterar a propriedade do usuário sobre um arquivo ou diretório
+chgrp 			Usado para alterar a propriedade do grupo
+chmod 			Usado para alterar as permissões no arquivo, o que pode ser feito separadamente para 					proprietário, grupo e o resto do mundo (geralmente nomeado como outro)
+
+Os arquivos têm três tipos de permissões: leitura (r), gravação (w), execução (x). Geralmente são representados como em rwx. Essas permissões afetam três grupos de proprietários: usuário/proprietário (u), grupo (g) e outros (o).
+
+Como resultado, você tem os seguintes três grupos de três permissões:
+
+rwx: rwx: rwx
+  você: g: o
+
+Existem várias maneiras diferentes de usar o chmod. Por exemplo, para conceder ao proprietário e a outros permissão de execução e remover a permissão de gravação do grupo:
+
+$ ls -l algum arquivo
+-rw-rw-r-- 1 aluno aluno 1601 9 de março 15:04 algum arquivo
+$ chmod uo+x,g-w algum arquivo
+$ ls -l algum arquivo
+-rwxr--rx 1 aluno aluno 1601 9 de março 15:04 algum arquivo
+
+onde u significa usuário (proprietário), o significa outro (mundo) e g significa grupo.
+
+Esse tipo de sintaxe pode ser difícil de digitar e lembrar, por isso costuma-se usar um atalho que permite definir todas as permissões em uma única etapa. Isto é feito com um algoritmo simples, e um único dígito é suficiente para especificar todos os três bits de permissão para cada entidade. Este dígito é a soma de:
+
+4 se a permissão de leitura for desejada
+2 se a permissão de gravação for desejada
+1 se a permissão de execução for desejada
+Assim, 7 significa ler/escrever/executar, 6 significa ler/escrever e 5 significa ler/executar.
+
+Ao aplicar isso ao comando chmod, você deve fornecer três dígitos para cada grau de liberdade, como em:
+
+$ chmod 755 algum arquivo
+$ ls -l algum arquivo
+-rwxr-xr-x 1 aluno aluno 1601 9 de março 15:04 algum arquivo
+
+Vamos ver um exemplo de alteração da propriedade do arquivo usando chown, conforme mostrado na imagem à direita. Primeiro, criamos dois arquivos vazios usando touch.
+
+Observe que é necessário que o sudo altere o proprietário do arquivo2 para root. O segundo comando chown muda o proprietário e o grupo ao mesmo tempo!
+
+Finalmente, apenas o superusuário pode remover os arquivos.
+
+Agora, vamos ver um exemplo de alteração da propriedade do grupo usando chgrp:
+
+Você concluiu o Capítulo 12. Vamos resumir os principais conceitos abordados:
+
+resumo
+
+
+Linux é um sistema multiusuário.
+Para encontrar os usuários conectados no momento, você pode usar o comando who.
+Para encontrar o ID do usuário atual, você pode usar o comando whoami.
+A conta root tem acesso total ao sistema. Nunca é sensato conceder acesso root completo a um usuário.
+Você pode atribuir privilégios de root a contas de usuários regulares temporariamente usando o comando sudo.
+O programa shell (bash) usa vários arquivos de inicialização para criar o ambiente do usuário. Cada arquivo afeta o ambiente interativo de uma maneira diferente. /etc/profile fornece as configurações globais.
+As vantagens dos arquivos de inicialização incluem que eles personalizam o prompt do usuário, definem o tipo de terminal do usuário, definem os atalhos e aliases da linha de comando e definem o editor de texto padrão, etc.
+Uma variável de ambiente é uma sequência de caracteres que contém dados usados por um ou mais aplicativos. As variáveis de shell integradas podem ser personalizadas para atender às suas necessidades.
+O comando histórico recupera uma lista de comandos anteriores, que podem ser editados e reciclados.
+No Linux, vários atalhos de teclado podem ser usados no prompt de comando, em vez de comandos longos e reais.
+Você pode personalizar comandos criando aliases. Adicionar um alias a ~/.bashrc o tornará disponível para outros shells.
+As permissões de arquivo podem ser alteradas digitando chmod permissions filename.
+A propriedade do arquivo é alterada digitando chown proprietário nome do arquivo.
+A propriedade do grupo de arquivos é alterada digitando chgrp group filename.
+
+
+
+
+

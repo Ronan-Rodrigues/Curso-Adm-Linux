@@ -1,0 +1,75 @@
+Oi, meu nome é Greg Kroah-Hartman.
+Trabalho na Linux Foundation.
+Sou desenvolvedor de kernel Linux.
+Libero kernels Linux estáveis
+e faço o desenvolvimento de outros drivers.
+O Linux lança kernels de desenvolvimento trimestralmente,
+faço os kernels estáveis uma vez por semana.
+Envolvi-me com o Linux há muitos anos.
+Costumava usá-lo onde eu trabalhava.
+Era programador. Inventei dispositivos embutidos,
+firmware para dispositivos embutidos.
+Tive de usar meus dispositivos
+com todos os sistemas operacionais.
+O Linux tinha recém-aparecido.
+Mal havia suporte USB.
+Eu estava apenas criando um dispositivo USB.
+Tive que fazer com que funcionasse.
+Eu tinha contribuído com um patch
+para fazer uma mudança e me aceitaram.
+Fiquei surpreso. Que legal!
+Com o tempo, enviei mais patches,
+escrevi um driver para um dispositivo não suportado
+porque eu estava usando o Linux no meu desktop.
+Com o tempo, fui vendo que mais pessoas estavam usando
+meu dispositivo gratuito, mais que qualquer coisa
+pela qual já fui pago,
+porque as empresas onde trabalhei nunca se saíram muito bem.
+E o boom das pontocom começou
+e havia cada vez mais necessidade de desenvolvedores Linux.
+Consegui um emprego como desenvolvedor de kernel Linux
+em tempo integral e nunca mais olhei para trás.
+Tem sido uma grande oportunidade,
+gosto muito de fazer isso.
+Linux é um sistema operacional
+e seu núcleo é apenas um kernel.
+Interage com o hardware, faz o hardware funcionar.
+Permite que você execute programas e faça o que quiser.
+É muito original, já que existem
+muitos outros sistemas operacionais por aí,
+mas nossa comunidade de desenvolvimento é bem diferente.
+Temos mais de 2 mil desenvolvedores
+contribuindo anualmente para quase 500 empresas.
+É o maior projeto de software único
+da história da humanidade.
+Contribuímos a uma taxa de cerca dez patches por dia,
+o dia todo, sete dias por semana, desde 2014.
+É constantemente atualizado, revisado, alterado,
+porque o mundo está sempre mudando.
+Temos de reagir conforme.
+Se um sistema operacional para de mudar,
+ele fica para trás porque o mundo não para.
+O Linux é constantemente aprimorado e atualizado
+para lidar com o mundo em mudança.
+Quanto mais você souber sobre o Linux,
+melhor vai ser para você.
+Ele é usado em todo lugar e precisamos de ajuda para usá-lo.
+Quase não há um lugar no mundo que não o use.
+Se você tem habilidade com Linux, há muito emprego por aí.
+Precisamos de pessoas que sejam programadores,
+administradores de sistemas, pessoas que documentem,
+pessoas para testar, sendo que é algo divertido.
+Você pode brincar com ele e criar coisas a partir dele.
+Então você também pode se divertir enquanto faz isso.
+Ajudará você a se sentir parte de uma comunidade maior
+que tem feito algo importante.
+Este curso ensinará os fundamentos do que é o Linux,
+como usar a linha de comando, como usar a interface gráfica,
+é autoguiado, você pode se inscrever a qualquer momento,
+e avançar no próprio ritmo.
+Obrigado pelo seu interesse no Linux.
+Espero que goste do curso.
+Linux é uma experiência maravilhosa.
+Oferece grandes oportunidades de emprego,
+para o futuro, para criar novos dispositivos.
+Espero que goste.

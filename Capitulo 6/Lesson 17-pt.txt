@@ -1,0 +1,126 @@
+Há milhares de aplicativos no Linux
+e surgem novos quase todo dia.
+Nesta aula, cobriremos aplicativos comuns de internet,
+multimídia, editores gráficos
+e outras ferramentas e utilidades.
+Vamos começar!
+
+Ao final deste capítulo, você deverá estar familiarizado com os aplicativos Linux comuns, incluindo:
+
+Aplicativos de Internet, como navegadores e programas de e-mail.
+Suítes de produtividade do Office, como o LibreOffice.
+Ferramentas de desenvolvedor, como compiladores, depuradores, etc.
+Aplicativos multimídia, como áudio e vídeo.
+Editores gráficos como GIMP e outros utilitários gráficos.
+
+A Internet é uma rede global que permite que usuários de todo o mundo realizem diversas tarefas, como busca de dados, comunicação por e-mail e compras online. Obviamente, você precisa usar aplicativos com reconhecimento de rede para aproveitar as vantagens da Internet. Esses incluem:
+
+Navegadores da web
+Clientes de e-mail
+Aplicativos de streaming de mídia
+Bate-papos de retransmissão da Internet
+Software de conferência
+
+Conforme discutido no capítulo Interface Gráfica, o Linux oferece uma ampla variedade de navegadores web, tanto gráficos quanto baseados em texto, incluindo:
+
+Raposa de fogo
+Google Chrome
+Cromo
+Epifania (renomeada web)
+Konqueror
+linx, lince, w3m
+Ópera
+
+Os aplicativos de e-mail permitem enviar, receber e ler mensagens pela Internet. Os sistemas Linux oferecem um grande número de clientes de email, tanto gráficos quanto baseados em texto. Além disso, muitos usuários simplesmente usam seus navegadores para acessar suas contas de e-mail.
+
+A maioria dos clientes de e-mail usa o Internet Message Access Protocol (IMAP) ou o antigo Post Office Protocol (POP) para acessar e-mails armazenados em um servidor de e-mail remoto. A maioria dos aplicativos de e-mail também exibe e-mails formatados em HTML (HyperText Markup Language) que exibem objetos, como imagens e hiperlinks. Os recursos de aplicativos de e-mail avançados incluem a capacidade de importar catálogos de endereços/listas de contatos, informações de configuração e e-mails de outros aplicativos de e-mail.
+
+O Linux oferece suporte aos seguintes tipos de aplicativos de e-mail:
+
+Clientes de e-mail gráficos, como Thunderbird, Evolution e Claws Mail.
+Clientes de e-mail em modo texto, como Mutt e mail.
+Todos os clientes baseados em navegador da web, como Gmail, Yahoo Mail e Office 365.
+
+Os sistemas Linux fornecem muitos outros aplicativos para executar tarefas relacionadas à Internet. Esses incluem:
+
+A maioria dos sistemas de computador do dia-a-dia possui aplicativos de produtividade (às vezes chamados de suítes de escritório) disponíveis ou instalados. Cada suíte é uma coleção de programas intimamente acoplados usados para criar e editar diferentes tipos de arquivos, como:
+
+Texto (artigos, livros, relatórios, etc.)
+Planilhas
+Apresentações
+Objetos gráficos.
+A maioria das distribuições Linux oferece o LibreOffice, um pacote de escritório de código aberto que começou em 2010 e evoluiu do OpenOffice. Embora outras suítes de escritório estejam disponíveis, o LibreOffice é o mais maduro, amplamente utilizado e intensamente desenvolvido.
+
+Além disso, os usuários do Linux têm acesso total a pacotes de escritório baseados na Internet, como Google Docs e Microsoft Office 365.
+
+Os aplicativos componentes incluídos no LibreOffice são:
+
+Escritor: Processador de Texto
+Calc: planilhas
+Impressionar: Apresentações
+Desenhar: Crie e edite gráficos e diagramas.
+Os aplicativos do LibreOffice podem ler e gravar formatos de documentos não nativos, como os usados pelo Microsoft Office. Normalmente, a fidelidade é mantida muito bem, mas documentos complicados podem ter algumas conversões imperfeitas.
+
+As distribuições Linux vêm com um conjunto completo de aplicativos e ferramentas necessários para aqueles que desenvolvem ou mantêm aplicativos de usuário e o próprio kernel.
+
+Essas ferramentas estão totalmente integradas e incluem:
+
+Editores avançados personalizados para as necessidades dos programadores, como vi e emacs.
+Compiladores (como gcc e clang para programas em C e C++) para todas as linguagens de computador que já existiram, incluindo novas e muito populares, como Golang e Rust.
+Depuradores como gdb e vários front-ends gráficos para ele e muitas outras ferramentas de depuração (como Valgrind).
+Programas de medição e monitoramento de desempenho, alguns com interfaces gráficas fáceis de usar, outros mais misteriosos e destinados a serem usados apenas por engenheiros de desenvolvimento experientes e sérios.
+Sistemas de controle de origem e revisão, como git (e interfaces associadas a ele, incluindo GitHub e GitLab) e sistemas mais antigos, como Apache Subversion.
+Ambientes de desenvolvimento integrados (IDEs) completos, como Eclipse e Visual Studio Code, que reúnem todas essas ferramentas.
+Em outros sistemas operacionais, essas ferramentas devem ser obtidas e instaladas separadamente, muitas vezes a um custo elevado, enquanto no Linux elas estão todas disponíveis gratuitamente, seja por meio de sistemas de instalação de pacotes padrão ou por download direto dos mantenedores e hosts responsáveis.
+
+As aplicações multimídia são utilizadas para ouvir música, assistir vídeos, etc., bem como para apresentar e visualizar textos e gráficos. Os sistemas Linux oferecem vários aplicativos de reprodução de som, incluindo:
+
+É claro que os sistemas Linux também podem se conectar a serviços comerciais de streaming de música online, como Pandora e Spotify, por meio de navegadores da web.
+
+Os reprodutores de filme (vídeo) podem reproduzir entradas de muitas fontes diferentes, sejam locais na máquina ou na Internet.
+
+Os sistemas Linux oferecem vários reprodutores de filmes, incluindo:
+
+VLC
+MPlayer
+Xine
+Totem
+
+Editores de filmes são usados para editar vídeos ou filmes. Os sistemas Linux oferecem vários editores de filmes, incluindo:
+
+Os editores gráficos permitem criar, editar, visualizar e organizar imagens de vários formatos, como Joint Photographic Experts Group (JPEG ou JPG), Portable Network Graphics (PNG), Graphics Interchange Format (GIF) e Tagged Image File Format (TIFF). ).
+
+O GNU Image Manipulation Program (GIMP) é uma ferramenta de retoque e edição de imagens rica em recursos, semelhante ao Adobe Photoshop e está disponível em todas as distribuições Linux. Alguns recursos do GIMP são:
+
+Ele pode lidar com qualquer formato de arquivo de imagem.
+Possui muitos plug-ins e filtros para fins especiais.
+Ele fornece informações abrangentes sobre a imagem, como camadas, canais e histogramas.
+
+Além do GIMP, existem outros utilitários gráficos que ajudam a realizar diversas tarefas relacionadas a imagens, incluindo:
+
+Usando o aplicativo gnome-software, examine a lista de aplicativos instalados em seu sistema.
+
+Confira a solução fornecida na próxima página.
+
+O aplicativo gnome-software deve estar disponível em qualquer distribuição recente. A localização exata nos menus pode variar, mas você poderá encontrá-lo em Aplicativos > Ferramentas do sistema > Software. Você também pode iniciá-lo digitando gnome-software em uma janela de terminal ou pressionando Alt-F2 e digitando.
+
+Depois de abrir a GUI, você pode clicar em Instalado para ver a lista, que provavelmente não está completa e irá variar de acordo com a distribuição e o que você instalou.
+
+A maioria das distribuições possui outros aplicativos gráficos que mostram a lista completa de pacotes instalados (e disponíveis) organizados em categorias, muitos dos quais (mas não a maioria) são aplicativos. Em sistemas baseados em Debian, como Ubuntu, você pode executar o synaptic. No OpenSuse, você pode executar o Yast, etc.
+
+resumo
+
+Você concluiu o Capítulo 6. Vamos resumir os principais conceitos abordados:
+
+O Linux oferece uma ampla variedade de aplicativos de Internet, como navegadores da Web, clientes de e-mail, aplicativos de mídia on-line e outros.
+Os navegadores da Web suportados pelo Linux podem ser gráficos ou baseados em texto, como Firefox, Google Chrome, Epiphany, w3m, lynx e outros.
+O Linux oferece suporte a clientes de e-mail gráficos, como Thunderbird, Evolution e Claws Mail, e clientes de e-mail em modo texto, como Mutt e mail.
+Os sistemas Linux fornecem muitos outros aplicativos para realizar tarefas relacionadas à Internet, como Filezilla, XChat, Pidgin e outros.
+A maioria das distribuições Linux oferece o LibreOffice para criar e editar diferentes tipos de documentos.
+Os sistemas Linux oferecem conjuntos completos de aplicativos e ferramentas de desenvolvimento, incluindo compiladores e depuradores.
+Os sistemas Linux oferecem vários reprodutores de som, incluindo Amarok, Audacity, Audacious e Rhythmbox.
+Os sistemas Linux oferecem vários reprodutores de filmes, incluindo VLC, MPlayer, Xine e Totem.
+Os sistemas Linux oferecem vários editores de filmes, incluindo Kino, Blender, entre outros.
+O utilitário GIMP (GNU Image Manipulation Program) é uma ferramenta de retoque e edição de imagens rica em recursos, disponível em todas as distribuições Linux.
+Outros utilitários gráficos que ajudam a realizar várias tarefas relacionadas a imagens são eog, Inkscape, convert e Scribus.
+

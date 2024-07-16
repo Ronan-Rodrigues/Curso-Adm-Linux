@@ -1,0 +1,23 @@
+<img src="https://prod-edx-ai-translations-assets.s3.amazonaws.com/google-translate.png" alt="Traduzido pelo logotipo do Google"><br><br>[GERADO AUTOMATICAMENTE ]<br>Vamos praticar a localização e localização de arquivos em um sistema Ubuntu.
+Então, suponha que eu queira encontrar todos os arquivos que contenham a string LFS300.
+Então eu poderia "localizar o LFS300".
+E, de fato, encontra apenas um arquivo que está no diretório "/home/student" ou no subdiretório dele.
+E eu também poderia encontrá-lo fazendo "find. -name LFS300*".
+E então, vou ver se ele encontra.
+E se eu quiser saber um pouco mais, posso dar a opção "-ls" que vai me mostrar quem é o dono, em que grupo está, o tamanho do arquivo, o inode, a data, etc.
+Agora, se eu criar outro arquivo apenas fazendo "echo > LFS300" para criar essencialmente um arquivo vazio, o comando "find" encontrará o novo arquivo, bem como o antigo.
+Mas o comando "locate" não funcionará porque preciso atualizar o banco de dados que o comando "locate" usa.
+E eu faço isso executando como root.
+Então eu preciso de "sudo atualizadob".
+E isso foi bem rápido.
+E então, se eu disser "localize", agora ele encontrará os dois arquivos.
+Só para me livrar do arquivo que eu realmente não precisava, vou removê-lo.
+Eu executo o "updatedb" novamente.
+Bem, eu preciso que seja root, então tenho que dizer "sudo" e mais uma vez "localizar LFS300" não encontrarei este novo arquivo.
+Agora, posso configurar "updatedb" e "locate" para fazer um monte de coisas, então se eu for para o diretório "/etc", você verá que há um arquivo chamado updateb.conf.
+E controla onde "updatedb" não olha, onde "locate" não olha.
+Então, por exemplo, na tarefa "PRUNE", diz para não procurar nesses locais como o diretório temporário porque eles são temporários e você não deseja acompanhar o que está lá em particular.
+E "PRUNEFS", estes são sistemas de arquivos, na verdade pseudo sistemas de arquivos, que não são sistemas de arquivos reais que você não deveria procurar porque seu conteúdo muda toda vez que você inicializa, digamos.
+Então, por exemplo, você não procura no diretório "proc" ou no diretório "sysfs", ou no diretório "dev", bem, no diretório "devfs" porque essas coisas desaparecem toda vez que você reinicia.
+E então é muito fácil de configurar.
+Há algumas outras coisas que você pode fazer e aprender consultando a documentação do seu sistema.

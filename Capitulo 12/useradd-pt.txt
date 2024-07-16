@@ -1,0 +1,106 @@
+[Jerry Cooperstein] Vamos obter alguma experiência com a
+criação, modificação e remoção de contas de usuário em um
+sistema CentOS.
+Esse procedimento não varia segundo a distro,
+mas alguns dos padrões variam.
+Portanto, os comandos básicos para fazer isso podem ser
+vistos com o comando which, ou seja
+"which useradd usermod userdel".
+E eles estão todos no diretório sbin ou no diretório
+/usr/sbin, que neste sistema é o mesmo.
+Eles estão ligados entre si.
+Se eu fosse usar "useradd" com apenas uma opção "--help",
+eu poderia ver os parâmetros padrão que posso especificar.
+E alguns dos mais importantes são "-s", o shell.
+Normalmente, será o bin/bash que o usuário gosta de usar.
+Outro muito importante é -m para criar o diretório inicial.
+Algumas distros, a maioria delas, cria um diretório inicial
+em /home e, em seguida, o nome do usuário.
+Outras, como algumas versões do Ubuntu e OpenSUSE, não.
+Você deve criar ou fazer isso depois que a conta for criada.
+- c é o campo GECOS.
+É um nome meio obscuro, mas costuma
+ser usado para especificar o nome completo da conta.
+Então vamos criar uma conta.
+Farei com "sudo" porque precisa ter privilégios de root.
+Usarei "sudo useradd" e "-m"
+para garantir a criação um diretório inicial.
+Vou dar um nome completo aqui com a opção "-c" e vou
+chamá-lo de, digamos, "Linux Penguin".
+Esse é o nome completo do usuário.
+Eu usarei "-s /bin/bash".
+E o nome desse usuário será apenas "pinguim".
+E se eu olhar em "/home" agora, verei que agora há uma conta
+de pinguim que foi configurada.
+No entanto, ainda preciso definir, por exemplo, uma senha.
+Então direi "sudo passwd" e depois "pinguim".
+Isso me levará a dar um nome, então darei um.
+E dei uma senha ruim, tinha menos de oito caracteres.
+Vou remover esta conta de qualquer maneira,
+mas isso mostra que a conta realmente existe agora.
+Então, se eu olhasse para o diretório inicial desta conta e
+fosse para "/home/pinguim"...
+Ah, não posso fazer isso a menos que seja root,
+porque não tenho permissão como aluno para fazer isso.
+Vamos fazer login como Penguin e ver como fica,
+então farei "ssh penguin@localhost".
+Ele dirá sim, quero continuar fazendo isso,
+e então darei a senha e estarei logado.
+Agora posso ir para "/home/pinguim".
+os seguintes arquivos foram criados: arquivos básicos para
+entrar e sair do bash, bash-logout, profile e bashrc,
+e então pode haver outros arquivos
+dependendo do que está instalado em seu sistema.
+Provavelmente Emacs e Firefox,
+pois os dois estão instalados.
+Conforme diferentes pacotes forem instalados no sistema,
+eles irão configurar alguns arquivos básicos que devem ser
+criados para qualquer novo usuário.
+Como posso ver onde essas coisas estão?
+Vou sair da conta do Penguin.
+Se eu for para o diretório "/etc",
+existe um diretório chamado "skel"...
+Que significa esqueleto.
+E nele há os mesmos arquivos que vimos na conta que criamos.
+Eles serão fornecidos aos novos usuários
+que iniciarem o sistema.
+Se eu quiser ver como outras propriedades básicas estão,
+posso ir para "etc]$ cd default",
+onde há um arquivo chamado useradd.
+Em "useradd" estão os parâmetros definidos.
+Se eu modificá-los como root e tentar adicionar
+um novo usuário ao sistema, essas coisas mudarão.
+Você pode ver que o diretório HOME está definido,
+o SHELL está definido e ele receberá os arquivos skel.
+Eu poderia ter outro conjunto de arquivos, pois
+eu preferiria que todos os novos usuários obtivessem
+quando o sistema iniciasse, e tudo bem.
+Além disso, no diretório "/etc" posso dar "grep" no arquivo
+"passwd" e no "group"
+para ver como Penguin está.
+Há uma nova entrada adicionada ao arquivo de senha
+com as informações que fornecemos.
+Existe um novo grupo para Pinguim, é o usuário número 1002.
+Lembre-se de que os usuários normais começam em 1.000 e,
+à medida que adicionamos outros os números aumentam.
+A outra coisa que quero mostrar é como excluir a conta.
+Posso fazer isso com sudo.
+Vamos ver as opções para "userdel".
+Vou digitar "--help", e o importante aqui é dar -r.
+Se você não especificar a opção -r, o que acontecerá
+é que os arquivos permanecerão em um diretório inicial,
+caso a conta seja reativada ou reinstalada é como um backup.
+Se você quiser encerrar de vez, deve usar -r.
+Vamos ver o que acontece se eu não fizer isso,
+vou fazer um "sudo userdel pinguim".
+E então não consigo mais fazer login,
+posso verificar, posso fazer "ssh penguin@localhost".
+Nnão vai funcionar porque a conta não existe mais.
+Se eu for para "/home", verei que o Penguin ainda está lá,
+mas não posso tentar o userdel novamente.
+Se eu der "userdel -r penguin",
+dirá que não existe.
+Portanto, terei que apenas "sudo rm -rf penguin"
+e não há mais evidências de que essa conta existe.
+Essa é a experiência básica de como você adicionaria uma
+conta e depois se livraria dela quando terminar.

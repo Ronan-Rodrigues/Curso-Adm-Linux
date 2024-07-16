@@ -1,0 +1,35 @@
+- [Instrutor] Vou demonstrar como entrar e sair
+de um sistema já inicializado.
+É praticamente igual em todas as distribuições recentes.
+Aqui, estamos vendo o CentOS Stream,
+com três usuários no sistema,
+e posso entrar usando qualquer um.
+Vamos usar o segundo, "bjmoose".
+Veja que, quando entro, se eu clicar na engrenagem,
+posso escolher diversos desktops.
+Aqui está predefinido no CentOS Stream, que é um Wayland,
+mas posso escolher alguns tipos de X11.
+Vou digitar a senha.
+Entrei. Dependendo do que esteja acontecendo,
+posso ver algumas informações.
+O acesso só requer isso.
+Provavelmente não verei muita coisa.
+Este é um usuário novo, sem muita atividade.
+Se eu clicar em "Atividades",
+verei alguns aplicativos favoritos.
+Clicando em "Terminal", posso abrir um terminal
+se eu quiser usar as linhas de comando.
+Para sair, só preciso clicar no meu nome
+aqui no canto superior direito.
+Posso selecionar "Alternar Usuário" ou "Sair".
+Eu alterno o usuário para manter mais de uma sessão ativa
+para várias pessoas ao mesmo tempo,
+algo que não se faz com frequência.
+Mas isso significaria que, se eu voltasse para esta sessão,
+eu veria quaisquer aplicações abertas,
+mas vou escolher "Sair".
+Então, clico em "Sair".
+E estou de volta à tela de acesso.
+Posso acessar usando qualquer um desses usuários.
+Essa é uma breve demonstração
+de como entrar e sair de um sistema.

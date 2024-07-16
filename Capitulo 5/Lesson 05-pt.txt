@@ -1,0 +1,187 @@
+Depois de se familiarizar com a interface gráfica,
+você vai querer configurar seu sistema,
+fazendo com que aproveite completamente o hardware
+e modificando-o para que funcione bem para você.
+Nesta aula, cobriremos alguns tópicos:
+mudando a resolução da tela, adicionando vários monitores,
+configurando a rede, mudando a data e o horário
+e adicionando e removendo softwares do sistema,
+tudo a partir da interface gráfica.
+Vamos começar!
+
+Ao final deste capítulo, você deverá ser capaz de:
+
+Aplique configurações de sistema, exibição e data e hora usando o painel Configurações do sistema.
+Rastreie as configurações de rede e gerencie conexões usando o Network Manager no Linux.
+Instale e atualize software no Linux a partir de uma interface gráfica.
+NOTA: Revisitaremos todas essas tarefas posteriormente, quando discutirmos como realizá-las na interface de linha de comando.
+
+O painel Configurações do sistema permite controlar a maioria das opções básicas de configuração e configurações da área de trabalho, como especificar a resolução da tela, gerenciar conexões de rede ou alterar a data e hora do sistema.
+
+Para o GNOME Desktop Manager, clique no canto superior direito e selecione a imagem das ferramentas (chave de fenda cruzada com uma chave inglesa ou uma engrenagem). Dependendo da sua distribuição, você também pode encontrar outras maneiras de acessar as configurações. Você também encontrará variações no layout do menu entre distribuições e versões do Linux, portanto, talvez seja necessário procurar as configurações que você precisa examinar ou modificar.
+
+Para se aprofundar na configuração do dispositivo, pode-se clicar nos itens apropriados no menu anterior para configurar itens como a tela, o teclado, as impressoras, etc. Clicar em Aplicativos permite configurar as opções relevantes para muitos programas instalados.
+
+Também é possível clicar no ícone Usuários (que pode estar em Detalhes) para definir valores para os usuários do sistema, como imagem de login, senha, etc.
+
+Muitas definições de configuração personalizadas não aparecem nos menus de configurações. Em vez disso, você deve iniciar uma ferramenta chamada gnome-tweaks (ou gnome-Tweak-tool em distribuições Linux mais antigas). Ainda não discutimos o trabalho na linha de comando, mas você sempre pode iniciar um programa como este pressionando Alt-F2 e digitando o comando. Algumas distribuições têm um link para os menus de ajustes nas configurações, mas por alguma razão misteriosa, muitas obscurecem a existência dessa ferramenta, e fica difícil descobrir como modificar atributos e comportamentos básicos da área de trabalho.
+
+Coisas importantes que você pode fazer com esta ferramenta incluem selecionar um tema, configurar extensões que você pode obter de sua distribuição ou baixar da Internet, controlar fontes, modificar o layout do teclado e definir quais programas são iniciados quando você faz login.
+
+As versões mais recentes do GNOME removeram muitas funcionalidades dos ajustes do gnome; as extensões agora precisam ser configuradas usando um novo aplicativo chamado gnome-extensions-app. O raciocínio para isso é obscuro.
+
+A captura de tela aqui mostra a execução do gnome-extensions-app em um sistema Red Hat com algumas extensões instaladas, mas nem todas sendo usadas.
+
+Clicar em Configurações > Monitores (ou Configurações > Dispositivos > Monitores) irá expor as configurações mais comuns para alterar a aparência da área de trabalho. Você também pode abrir isso clicando com o botão direito em qualquer lugar da área de trabalho e selecionando Configurações de vídeo. Essas configurações funcionam independentemente dos drivers de vídeo específicos que você está executando. A aparência exata dependerá enormemente de quantos monitores você possui e de outros fatores, como distribuição do Linux e versão específica.
+
+Se o seu sistema usa um driver de placa de vídeo proprietário (geralmente da nVidia ou AMD), você provavelmente terá um programa de configuração separado para esse driver. Este programa pode oferecer mais opções de configuração, mas também pode ser mais complicado e exigir acesso de administrador de sistema (root). Se possível, você deve definir as configurações no painel Displays e não no programa proprietário.
+
+Em sistemas que utilizam o sistema X Window, o servidor que realmente fornece a GUI usa /etc/X11/xorg.conf como seu arquivo de configuração, se existir; Nas distribuições modernas do Linux, esse arquivo geralmente está presente apenas em circunstâncias incomuns, como quando determinados drivers gráficos menos comuns estão em uso. Alterar este arquivo de configuração diretamente geralmente é para usuários mais avançados.
+
+Embora seu sistema normalmente descubra automaticamente a melhor resolução para sua tela, isso pode dar errado em alguns casos, ou você pode querer alterar a resolução para atender às suas necessidades.
+
+Você pode fazer isso usando o painel Displays. A mudança para a nova resolução entrará em vigor quando você clicar em Aplicar e confirmar se a resolução está funcionando. Caso a resolução selecionada não funcione ou você simplesmente não esteja satisfeito com a aparência, o sistema voltará à resolução original após um curto período de tempo. Mais uma vez, a aparência exata da tela de configuração irá variar muito entre distribuições e versões, mas geralmente é bastante intuitiva e fácil, uma vez encontrados os menus de configuração.
+
+Na maioria dos casos, a configuração para vários monitores é definida automaticamente como uma tela grande abrangendo todos os monitores, usando uma estimativa razoável para o layout da tela. Se o layout da tela não for o desejado, uma caixa de seleção pode ativar o modo espelhado, onde a mesma exibição é vista em todos os monitores. Clicar em uma determinada imagem do monitor permite configurar a resolução de cada um, e se eles formam uma tela grande, ou espelham o mesmo vídeo, etc.
+
+Por padrão, o Linux sempre usa o Tempo Universal Coordenado (UTC) para sua própria cronometragem interna. Os valores de hora exibidos ou armazenados dependem da configuração de fuso horário do sistema para obter a hora adequada. UTC é semelhante, mas mais preciso que o Horário de Greenwich (GMT).
+
+Se você clicar na hora exibida no painel superior, poderá ajustar o formato com que a data e a hora são mostradas; em algumas distribuições, você também pode alterar os valores.
+
+As configurações mais detalhadas de data e hora podem ser selecionadas na janela Data e hora no menu Configurações do sistema.
+
+As configurações “automáticas” referem-se ao uso do Network Time Protocol (NTP), que discutiremos a seguir.
+
+O Network Time Protocol (NTP) é o protocolo mais popular e confiável para definir a hora local consultando servidores da Internet estabelecidos. As distribuições Linux sempre vêm com uma configuração NTP funcional, que se refere a servidores de horário específicos executados ou nos quais a distribuição depende. Isso significa que geralmente nenhuma configuração, além de "ligado" ou "desligado", é necessária para a sincronização de horário da rede.
+
+Descubra a resolução de tela atual da sua área de trabalho.
+
+Mude-o para outra coisa e volte ao seu valor original.
+
+NOTA: Você também pode verificar sua resolução atual digitando na linha de comando:
+
+aluno:/tmp> $ xdpyinfo | grep escuro
+dimensões: 3200x1080 pixels (847x286 milímetros)
+
+Confira a solução fornecida na próxima página.
+
+Clique no ícone de engrenagem ou ferramenta no canto superior direito, dependendo da sua distribuição, e selecione Configurações do sistema.
+
+Clique em Monitores ou Dispositivos > Monitores. A lista suspensa de resolução deve ser evidente e intuitiva de usar.
+
+Altere o fuso horário do seu sistema para o horário de Londres (ou horário de Nova York, se você estiver no horário de Londres). Como a hora exibida muda?
+
+Depois de observar a mudança de horário, altere o fuso horário de volta para o fuso horário local.
+
+Confira a solução fornecida na próxima página.
+
+Em uma área de trabalho GNOME, clique em Configurações do sistema > Data e hora ou Configurações do sistema > Detalhes > Data e hora e anote as configurações de localização atuais.
+
+Você terá que clicar em Desbloquear para fornecer a senha de root ou será solicitada quando tentar alterar o fuso horário, dependendo da sua versão do GNOME.
+
+Use os menus suspensos Região e Cidade para mudar a região para Europa e a cidade para Londres, ou digite Londres no widget Localização e escolha o local adequado na lista que aparece. (Você também pode clicar no lugar certo em um mapa do mundo.)
+
+Olhe para o relógio e observe que a hora exibida mudou. Agora, defina o fuso horário da mesma maneira.
+
+Nos desktops KDE, os detalhes são um pouco diferentes, mas não é difícil descobrir como fazer isso, e você levará menos tempo para encontrar os métodos de configuração do que para descrevê-los.
+
+Todas as distribuições do Linux possuem arquivos de configuração de rede, mas os formatos e locais dos arquivos podem diferir de uma distribuição para outra. A edição manual desses arquivos pode lidar com configurações bastante complicadas, mas não é muito dinâmica ou fácil de aprender e usar. O Network Manager foi desenvolvido para tornar as coisas mais fáceis e uniformes entre as distribuições. Ele pode listar todas as redes disponíveis (com e sem fio), permitir a escolha de uma rede de banda larga com fio, sem fio ou móvel, gerenciar senhas e configurar redes privadas virtuais (VPNs). Exceto em situações incomuns, geralmente é melhor permitir que o Network Manager estabeleça suas conexões e controle suas configurações.
+
+Nesta seção, você aprenderá como gerenciar conexões de rede, incluindo conexões com e sem fio, além de conexões de banda larga móvel e VPN.
+
+As conexões com fio geralmente não requerem configuração complicada ou manual. A interface de hardware e a presença do sinal são detectadas automaticamente e, em seguida, o Network Manager define as configurações reais da rede por meio do Dynamic Host Configuration Protocol (DHCP).
+
+Para configurações estáticas que não usam DHCP, a configuração manual também pode ser feita facilmente através do Network Manager. Você também pode alterar o endereço Ethernet Media Access Control (MAC) se o seu hardware suportar. O endereço MAC é um número hexadecimal exclusivo da sua placa de rede.
+
+As redes sem fio geralmente não estão conectadas por padrão. Você pode visualizar a lista de redes sem fio disponíveis e ver a qual delas (se houver) você está conectado no momento usando o Network Manager. Você pode então adicionar, editar ou remover redes sem fio conhecidas e também especificar quais deseja conectar por padrão, quando presentes.
+
+Para configurar uma rede sem fio em qualquer distribuição recente baseada no GNOME:
+
+Clique no canto superior direito do painel superior, que abre uma janela de configurações e/ou rede. Embora a aparência exata dependa da distribuição e versão do Linux, sempre será possível clicar em um submenu Wi-Fi, desde que o hardware esteja presente. Aqui está um exemplo de um sistema RHEL 8:
+
+Selecione a rede sem fio à qual deseja se conectar. Se for uma rede segura, na primeira vez solicitará que você insira a senha apropriada. Por padrão, a senha será salva para conexões subsequentes.
+
+Se você clicar em Configurações de Wi-Fi, a terceira captura de tela será exibida. Se você clicar no ícone de engrenagem de qualquer conexão, poderá configurá-la com mais detalhes.
+
+Outras distribuições e versões do Linux podem parecer diferentes em detalhes, mas as etapas e escolhas são essencialmente idênticas, pois todas executam o Network Manager com roupas talvez um pouco diferentes.
+
+Você pode configurar uma conexão de banda larga móvel com o Network Manager, que iniciará um assistente para configurar os detalhes de conexão para cada conexão.
+
+Depois de concluída a configuração, a rede é configurada automaticamente sempre que a rede de banda larga é conectada.
+
+O Network Manager também pode gerenciar suas conexões VPN.
+
+Ele suporta muitas tecnologias VPN, como IPSec nativo, Cisco OpenConnect (por meio do cliente Cisco ou de um cliente nativo de código aberto), Microsoft PPTP e OpenVPN.
+
+Você pode obter suporte para VPN como um pacote separado do seu distribuidor. Você precisa instalar este pacote se sua VPN preferida não for compatível.
+
+Obtenha a configuração de rede atual do seu desktop.
+
+Você está em uma conexão com ou sem fio? Ou ambos?
+
+Se você tiver hardware sem fio, veja quais redes sem fio estão disponíveis, se houver.
+
+Confira a solução fornecida na próxima página.
+
+Clique no ícone do Network Manager no canto superior direito da sua área de trabalho (a aparência pode variar de acordo com a distribuição). Isso deve exibir o estado da conexão com e sem fio e quais redes sem fio estão disponíveis.
+
+Cada pacote em uma distribuição Linux fornece uma parte do sistema, como o kernel Linux, o compilador C, utilitários para manipulação de texto ou configuração de rede, ou para seus navegadores web e clientes de e-mail favoritos.
+
+Os pacotes geralmente dependem uns dos outros. Por exemplo, como seu cliente de e-mail pode se comunicar usando SSL/TLS, ele dependerá de um pacote que forneça a capacidade de criptografar e descriptografar a comunicação SSL e TLS e não será instalado a menos que esse pacote também seja instalado ao mesmo tempo.
+
+Todos os sistemas possuem um utilitário de nível inferior que cuida dos detalhes de desembalar um pacote e colocar as peças nos lugares certos. No entanto, na maioria das vezes, você trabalhará com um utilitário de nível superior que sabe como baixar e instalar pacotes diretamente da Internet e pode gerenciar dependências e grupos para você.
+
+Nesta seção, você aprenderá como instalar e atualizar software no Linux usando o sistema de empacotamento Debian (usado também por sistemas como Ubuntu) e sistemas de empacotamento RPM (que são usados pelos sistemas da família Red Hat e SUSE). Estes são os principais em uso, embora outros funcionem bem para outras distribuições que possuem uma base de usuários menor, como Archlinux e Gentoo.
+
+Vejamos o gerenciamento de pacotes para o sistema da família Debian.
+
+dpkg é o gerenciador de pacotes subjacente para esses sistemas. Ele pode instalar, remover e construir pacotes. Ao contrário dos sistemas de gerenciamento de pacotes de nível superior, ele não baixa e instala pacotes automaticamente e satisfaz suas dependências.
+
+Para sistemas baseados em Debian, o sistema de gerenciamento de pacotes de nível superior é o sistema de utilitários Advanced Package Tool (APT). Geralmente, embora cada distribuição dentro da família Debian use APT, ela cria sua própria interface de usuário sobre ela (por exemplo, apt e apt-get, synaptic, gnome-software, Ubuntu Software Center, etc). Embora os repositórios apt sejam geralmente compatíveis entre si, o software que eles contêm geralmente não o é. Portanto, a maioria dos repositórios tem como alvo uma distribuição específica (como o Ubuntu), e muitas vezes os distribuidores de software enviam vários repositórios para suportar múltiplas distribuições. As demonstrações são mostradas posteriormente nesta seção.
+
+Red Hat Package Manager (RPM) é outro sistema de gerenciamento de pacotes popular em distribuições Linux. Foi desenvolvido pela Red Hat e adotado por diversas outras distribuições, incluindo Fedora, CentOS, SUSE/openSUSE, Oracle Linux e outras.
+
+O gerenciador de pacotes de nível superior difere entre as distribuições. As distribuições da família Red Hat historicamente usam RHEL/CentOS, e o Fedora usa dnf, enquanto as distribuições da família SUSE, como o openSUSE, também usam RPM, mas usam a interface zypper.
+
+O gerenciador de software Yet another Setup Tool (YaST) é semelhante a outros gerenciadores de pacotes gráficos. É um aplicativo baseado em RPM. Você pode adicionar, remover ou atualizar pacotes usando este aplicativo com muita facilidade. Para acessar o gerenciador de software YaST:
+
+Clique em Atividades
+Na caixa Pesquisar, digite YaST
+Clique no ícone do YaST
+Clique em Gerenciamento de Software
+Você também pode encontrar o YaST clicando em Aplicativos > Outro-YaST, que é um lugar estranho para colocá-lo.
+
+O aplicativo de gerenciamento de software YaST do openSUSE é semelhante aos gerenciadores gráficos de pacotes de outras distribuições. Uma demonstração do gerenciador de software YaST é mostrada posteriormente nesta seção.
+
+Usando ferramentas gráficas de gerenciamento de pacotes, encontre o pacote dump.
+
+Se não estiver instalado, instale-o.
+
+Em qualquer sistema recente baseado em GNOME, você pode executar o utilitário gnome-software conforme descrevemos. Você pode executá-lo em algum local do menu, ou em uma linha de comando, ou digitando-o após pressionar ALT-F2.
+
+No Ubuntu, use o Ubuntu Software Center ou o synaptic. Em qualquer outro sistema baseado em Debian, você pode usar synaptic.
+
+Em sistemas baseados em Red Hat 7, incluindo CentOS 7, clique em Aplicativos na barra de menu superior e depois em Ferramentas do Sistema > Software.
+
+Em sistemas baseados em SUSE, você pode clicar no ícone Configurações do sistema no canto superior direito (a chave inglesa e a chave de fenda) e depois em Sistema > YaST.
+
+Em qualquer um desses sistemas, você pode simplesmente digitar dump na caixa de pesquisa e prosseguir a partir daí.
+
+NOTA: Realmente não podemos fornecer instruções precisas aqui; as coisas mudam com muita frequência de versão para versão e de distribuição para distribuição. No entanto, as coisas são bastante intuitivas hoje em dia. Assim, mais uma vez, você apenas terá que aprender a navegar pelos menus até encontrar a interface de gerenciamento de pacotes, mas quando chegar lá, é bastante fácil de brincar.
+
+resumo
+
+Você concluiu o Capítulo 5. Vamos resumir os principais conceitos abordados:
+
+Você pode controlar as opções de configuração básica e as configurações da área de trabalho por meio do painel Configurações do sistema.
+O Linux sempre usa o Tempo Universal Coordenado (UTC) para sua própria cronometragem interna. Você pode definir as configurações de data e hora na janela Configurações do sistema.
+O Network Time Protocol é o protocolo mais popular e confiável para definir a hora local por meio de servidores da Internet.
+O painel Monitores permite alterar a resolução do seu monitor e configurar várias telas.
+O Network Manager pode apresentar redes sem fio disponíveis, permitir a escolha de uma rede de banda larga móvel ou sem fio, gerenciar senhas e configurar VPNs.
+dpkg e RPM são os sistemas de gerenciamento de pacotes mais populares usados em distribuições Linux.
+As distribuições Debian usam utilitários baseados em dpkg e apt para gerenciamento de pacotes.
+O RPM foi desenvolvido pela Red Hat e adotado por diversas outras distribuições, incluindo openSUSE, Mandriva, CentOS, Oracle Linux e outras.
+
+
+
+

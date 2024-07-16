@@ -1,0 +1,34 @@
+Vamos usar o utilitário "Man" para colher algumas
+informação sobre Soquete de rede no sistema.
+Ao digitar "Man Socket", me abre o capítulo 2 de programação
+do Linux na página que corresponde aos soquetes.
+É uma página bem genérica e me mostra muitas informações
+sobre soquetes e diferentes protocolos que eles podem usar.
+Se quiser a lista de todas as páginas chamadas soquete,
+basta inserir "-f Socket"
+Se pode ver que existem 5 deles em diferentes capítulos.
+Isso, por sinal, é o mesmo que colocar "whatis socket".
+Então "man-f" e o "apropos" são os mesmos.
+Se quiser ver uma página em especial, digamos capítulo 7,
+posso inserir "man 7 socket",
+e irá me mostrar a página "man 7",
+que é bem detalhada. Se quiser ver todas ao mesmo tempo,
+posso inserir "man -a socket", para todos, creio.
+E eu posso sair daqui ao apertar "Q",
+e se agora apertar "Enter" irei ver o próximo,
+então faremos isso.
+Novamente "Q", e veja, se quiser sair sem ter que ir
+através de todos eles, o próximo seria o 7
+posso colocar "Ctrl-C".
+"Ctrl-D" apenas iria pular para o próximo.
+Se quiser ver todas as páginas "man" que tem um
+soquete na sua descrição principal, posso colocar
+"man-k" e recebo uma lista bem grande já que os
+soquetes são bem básicos e estão envolvidos em
+várias coisas no sistema.
+"man-k" é a mesma coisa que "apropos socket"
+acontece a mesma coisa.
+Então isso foram só algumas informações básicas sobre
+a funcionalidade do comando "man" para obter infomação.
+É interessante usar algumas páginas diferentes e observar
+o conteúdo de cada e ver como elas se diferem entre si.

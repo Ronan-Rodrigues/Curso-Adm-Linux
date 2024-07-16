@@ -1,0 +1,50 @@
+Vamos dar uma breve olhada em algumas das ferramentas de
+monitoramento de sistema disponíveis em seu sistema.
+Na janela à esquerda,
+estou executando o Gnome System Monitor,
+que me fornece uma imagem gráfica do histórico da CPU
+na parte de cima,
+com uma linha para cada CPU no sistema.
+Este é um sistema com quatro núcleos,
+cada um dos quais é hyper-threaded,
+então aparece como oito CPUs.
+Na segunda linha,
+vemos o histórico de memória e swap.
+Aqui é o uso de memória neste gráfico circular.
+E o swap está aqui.
+E o terceiro, vemos o histórico da rede,
+tanto o envio quanto o recebimento.
+Na janela no canto superior direito,
+irei simplesmente executar 'top', que basicamente fornece
+o monitoramento de processos no meu sistema.
+Na janela inferior, irei executar 'vmstat',
+com um comando de '-a' para exibir tudo,
+e irei executá-lo a cada dois segundos, mil vezes,
+só para que não pare.
+Na parte inferior direita,
+executarei uma tarefa muito intensiva em CPU,
+que é um 'kernel compile',
+que corre em paralelo em cada CPU.
+É muito intensiva em CPU.
+Deixe-me fazer isso.
+Isso está em execução agora.
+Primeiramente, você rapidamente verá que o uso da CPU
+irá subir aqui no topo.
+Leva alguns segundos para cruzar,
+mas depois cruza, todas as CPUs estão ocupadas no topo.
+Também posso ver que na saída 'top',
+o sistema está usando 80% do seu tempo de CPU,
+nos processos de usuário, que significa
+o espaço de compilação e do usuário.
+E cerca de 10% fazendo atividade do sistema,
+que lidará com chamadas do sistema, em sua maior parte.
+Se eu clicar no número um,
+posso obter uma leitura para cada CPU,
+em vez de apenas a soma dos totais, que agora vemos no topo.
+Vemos que todas estão bem ocupadas.
+Na parte de baixo, podemos ver toda a atividade acontecendo
+com a memória no sistema.
+Em particular, quantas páginas estão ativas, inativas,
+swaps entrando e saindo, quanto espaço está livre, etc.
+Essa é apenas uma breve visão de algumas das ferramentas
+que estão disponíveis em seu sistema.

@@ -1,0 +1,35 @@
+Vamos fazer um gerenciamento básico de pacotes
+em um sistema Ubuntu usando o pacote Debian.
+Vamos usar os utilitários de alto nível
+que abrange as dependências: apt-cache e apt-get.
+Primeiro, vamos procurar todos os pacotes
+que contenham a string wget2.
+Fazemos isso com apt-cache search wget2,
+e aparece o wget2 e o wget2-dev.
+Este é um aprimoramento do utilitário wget padrão,
+que é usado para download recursivo do conteúdo de um site
+ou de outros tipos de recursos.
+Vamos tentar instalar.
+Faça sudo apt-get install wget2-dev.
+Ele está me dizendo que também preciso instalar
+o libwget0 e wget2.
+Não deveria ser surpreendente que você precise instalar
+os pacotes básicos
+nos quais eles foram desenvolvidos.
+E ele baixará 264 kB de arquivos,
+mas depois que estiver instalado,
+ele se expandirá para 805 kB.
+Vamos dizer sim. Vou digitar "y".
+E ele rapidamente continua e faz tudo isso.
+Agora, suponha que queremos remover o wget2-dev.
+Ou, mais interessante, vamos tentar remover o próprio wget.
+O que ele está fazendo? Eu não deveria ter removido o wget.
+Eu quero o wget2. Eu não quero remover o wget.
+Então, vou digitar mais uma vez o 2.
+E veja, ele quer remover o wget2-dev também,
+porque sem o wget2, o wget2-dev não tem função.
+Não precisamos mais do libwget0.
+Ele está sozinho, mas vamos deixá-lo aí por enquanto.
+Direi "sim" e removi as coisas do meu sistema.
+Essas são as operações básicas que você precisaria fazer
+em um sistema Ubuntu usando o pacote Debian.

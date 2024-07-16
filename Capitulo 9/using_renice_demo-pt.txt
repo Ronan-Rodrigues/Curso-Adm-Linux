@@ -1,0 +1,45 @@
+Vamos mostrar como ver
+qual é a prioridade, ou gentileza, de um processo,
+como você pode alterá-lo com um comando 'renice',
+ou como fazer a partir de uma interface gráfica do usuário.
+Vejamos os processos nesta tela atual com o comando 'ps',
+que discutiremos em detalhes posteriormente.
+E vemos que este shell 'bash' atual é '3077'.
+Para ver a prioridade, executo 'ps' com as opções 'lf',
+e aqui o '3077',
+o comando 'bash' e a gentileza é '0'.
+Tentaremos mudar a gentileza.
+Posso usar 'renice +5 3077',
+e mudar a prioridade para '5',
+que eu posso ver mais uma vez com o comando 'ps'.
+Ele fez esse '5' aqui.
+O processo filho que rodei lá, o comando 'ps lf',
+também tem uma gentileza de '5'.
+Qualquer coisa que eu criar neste shell terá essa gentileza.
+É uma prioridade baixa,
+lembre-se, aumentar a gentileza diminui a prioridade.
+Suponha que eu tente aumentar a prioridade
+diminuindo a gentileza para '-5' ['renice -5 3077'].
+Diz que eu não posso fazer isso.
+Apenas o superusuário ou root tem permissão para aumentar
+a prioridade de um processo.
+Mas, se eu digitar o mesmo comando novamente com 'sudo',
+funcionará bem. E, posso verificar outra vez com 'ps lf'.
+Ele está configurado para ser '-5' agora,
+assim como o novo comando 'ps' que eu emiti.
+Se eu quiser fazer isso a partir de um utilitário gráfico,
+posso executar o 'gnome-system-monitor'.
+Vou começar a partir da linha de comando aqui,
+embora eu possa obtê-lo em um menu.
+E isso está na primeira tela possível
+aqui em "Processos".
+Se eu ver que foi o processo '3077',
+e está bem aqui.
+E diz: "High Priority", eu poderia clicar com o botão
+direito do mouse e ir para "Change Priority",
+e então, dizer "Low", e agora você vê que é "Low".
+Se eu sair do utilitário gráfico, e olhar para a gentileza,
+você vê agora, a prioridade chegou a '5'...
+a gentileza de '5', uma prioridade baixa novamente .
+É assim que se pode manipular a prioridade de um processo
+a partir da linha de comando ou de um utilitário gráfico.

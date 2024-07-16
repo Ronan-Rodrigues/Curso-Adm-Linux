@@ -1,0 +1,18 @@
+Vamos praticar navegação em diretórios na linha de comando.
+Suponha que eu vá para o diretório temporário, "cd /tmp".
+Digito "pwd" para o Diretório de Trabalho de Impressão.
+Estou em "/tmp".
+Eu poderia ir para o diretório inicial com "cd $HOME".
+Vamos ver, "pwd" agora é "/home/student".
+Se fizer "cd ..", só subo um nível para "home".
+Outro modo de navegar é com os comandos "pushd" e "popd".
+Eu poderia fazer "pushd /tmp".
+Certo.
+Está me mostrando minha história anterior.
+Eu estava em "tmp" e em "home" e vou para "tmp".
+Agora, se eu digitar "popd" ...
+... ele me põe de volta no diretório "home".
+Outra coisa que posso fazer é "cd -".
+Isso me leva ao diretório anterior, assim como "popd".
+Isso resume algumas bases de navegação
+em diretórios comuns no sistema Linux.

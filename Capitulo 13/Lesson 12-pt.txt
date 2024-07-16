@@ -1,0 +1,572 @@
+Neste curso,
+abordamos como trabalhar e editar arquivos de texto.
+No Linux, muitos dados estão em arquivos de texto,
+de modo que é melhor trabalhar com sequências de texto.
+Nesta lição,
+vamos trabalhar com edição, classificação,
+manuseio e pesquisa de sequências de texto.
+Vamos começar!
+
+Ao final deste capítulo, você deverá ser capaz de:
+
+Exiba e anexe ao conteúdo do arquivo usando cat e echo.
+Edite e imprima o conteúdo do arquivo usando sed e awk.
+Procure padrões usando grep.
+Use vários outros utilitários para manipulação de arquivos e texto.
+
+Independentemente da função que você desempenha no Linux (administrador de sistema, desenvolvedor ou usuário), muitas vezes você precisa navegar e analisar arquivos de texto e/ou extrair dados deles. Portanto, é essencial que os usuários do Linux que funcionam em qualquer uma dessas capacidades se tornem adeptos da execução dessas operações de manipulação de arquivos. Na maioria das vezes, essa manipulação de arquivos é feita na linha de comando, o que permite aos usuários executar tarefas com mais eficiência do que usando uma GUI. Além disso, a linha de comando é mais adequada para automatizar tarefas executadas com frequência.
+
+Na verdade, administradores de sistemas experientes escrevem scripts personalizados para realizar essas tarefas repetitivas, padronizados para cada ambiente específico. Discutiremos esse script em detalhes em uma seção posterior.
+
+Aqui, nos concentraremos nos utilitários de linha de comando empregados para realizar manipulação de arquivos e texto.
+
+cat é a abreviação de concatenate e é um dos utilitários de linha de comando do Linux usados com mais frequência. Muitas vezes é usado para ler e imprimir arquivos, bem como simplesmente visualizar o conteúdo dos arquivos. Para visualizar um arquivo, use o seguinte comando:
+
+$ gato <nome do arquivo>
+
+Por exemplo, cat readme.txt exibirá o conteúdo de readme.txt no terminal. No entanto, o objetivo principal do cat geralmente é combinar (concatenar) vários arquivos. Você pode executar as ações listadas na tabela usando cat.
+
+O comando tac (cat escrito ao contrário) imprime as linhas de um arquivo na ordem inversa. Cada linha permanece a mesma, mas a ordem das linhas é invertida. A sintaxe de tac é exatamente a mesma de cat, como em:
+
+arquivo $ tac
+$ tac arquivo1 arquivo2 > novo arquivo
+
+ 
+
+Tabela: Comandos e Uso
+Uso de comando
+cat file1 file2 Concatene vários arquivos e exiba a saída; ou seja, todo o conteúdo do primeiro arquivo é seguido pelo do segundo arquivo
+cat arquivo1 arquivo2 > novo arquivo Combine vários arquivos e salve a saída em um novo arquivo
+arquivo cat >> arquivo existente Acrescenta um arquivo ao final de um arquivo existente
+cat > file Quaisquer linhas subsequentes digitadas irão para o arquivo, até que CTRL-D seja digitado
+cat >> arquivo Quaisquer linhas subsequentes serão anexadas ao arquivo, até que CTRL-D seja digitado
+
+cat pode ser usado para ler a entrada padrão (como a janela do terminal) se nenhum arquivo for especificado. Você pode usar o operador > para criar e adicionar linhas em um novo arquivo e o operador >> para anexar linhas (ou arquivos) a um arquivo existente. Mencionamos isso ao falar sobre como criar arquivos sem editor.
+
+Para criar um novo arquivo, no prompt de comando digite cat > <nome do arquivo> e pressione a tecla Enter.
+
+Este comando cria um novo arquivo e espera que o usuário edite/insira o texto. Após terminar de digitar o texto desejado, pressione CTRL-D no início da próxima linha para salvar e sair da edição.
+
+Outra forma de criar um arquivo no terminal é cat > <filename> << EOF. Um novo arquivo é criado e você pode digitar a entrada necessária. Para sair, insira EOF no início de uma linha.
+
+Observe que EOF diferencia maiúsculas de minúsculas. Também se pode usar outra palavra, como STOP.
+
+Por favor, dê uma olhada no seguinte exercício Experimente você mesmo: Usando cat.
+
+echo simplesmente exibe (ecoa) o texto. É usado simplesmente, como em:
+
+$ string de eco
+
+echo pode ser usado para exibir uma string na saída padrão (ou seja, o terminal) ou para colocar em um novo arquivo (usando o operador >) ou anexar a um arquivo já existente (usando o operador >>).
+
+A opção –e, juntamente com as seguintes opções, é usada para ativar sequências de caracteres especiais, como o caractere de nova linha ou tabulação horizontal:
+
+\n representa nova linha
+\t representa guia horizontal.
+
+echo é particularmente útil para visualizar os valores de variáveis de ambiente (variáveis internas do shell). Por exemplo, echo $USERNAME imprimirá o nome do usuário que efetuou login no terminal atual.
+
+A tabela a seguir lista comandos de eco e seu uso.
+
+ 
+
+Tabela: Comandos e Uso
+Uso de comando
+echo string > newfile 			A string especificada é colocada em um novo arquivo
+echo string >> arquivo existente 	A string especificada é anexada ao final de um arquivo já existente
+echo $variable 				O conteúdo da variável de ambiente especificada é exibido
+
+Por favor, dê uma olhada no seguinte exercício: Experimente você mesmo: Usando echo.
+
+Os administradores de sistema precisam trabalhar com arquivos de configuração, arquivos de texto, arquivos de documentação e arquivos de log. Alguns desses arquivos podem ser grandes ou ficar muito grandes à medida que acumulam dados com o tempo. Esses arquivos exigirão visualização e atualização administrativa. Nesta seção, você aprenderá como trabalhar com arquivos tão grandes.
+
+Por exemplo, um sistema pode manter um arquivo de log simples e grande para registrar detalhes de todos os avisos e erros do sistema. (Os sistemas modernos tendem a ter recursos de registro mais detalhados, mas ainda podem ter alguns arquivos de registro grandes.) Devido a um ataque de segurança ou mau funcionamento, o administrador pode ser forçado a verificar alguns dados navegando dentro do arquivo. Nesses casos, abrir o arquivo diretamente em um editor provavelmente será ineficiente (devido à alta utilização de memória) porque a maioria dos editores de texto geralmente tenta ler primeiro o arquivo inteiro na memória. Em vez disso, pode-se usar less para visualizar o conteúdo de um arquivo tão grande, rolando para cima e para baixo página por página, sem que o sistema precise colocar o arquivo inteiro na memória antes de iniciar. Isso é muito mais rápido do que usar um editor de texto.
+
+A visualização de algum arquivo pode ser feita digitando um dos dois comandos a seguir:
+
+$ menos algum arquivo
+$ cat algum arquivo | menos
+
+Por padrão, as páginas man são enviadas por meio do comando less. Você pode ter encontrado o utilitário mais antigo, que tem a mesma função básica, mas com menos recursos: ou seja, menos é mais!
+
+head lê as primeiras linhas de cada arquivo nomeado (10 por padrão) e as exibe na saída padrão. Você pode fornecer um número diferente de linhas em uma opção.
+
+Por exemplo, se você deseja imprimir as primeiras 5 linhas de /etc/default/grub, use o seguinte comando:
+
+$ head –n 5 /etc/default/grub
+
+Você também pode simplesmente dizer:
+
+head -5 /etc/default/grub
+
+tail imprime as últimas linhas de cada arquivo nomeado e as exibe na saída padrão. Por padrão, ele exibe as últimas 10 linhas. Você pode fornecer um número diferente de linhas como opção. tail é especialmente útil quando você está solucionando qualquer problema usando arquivos de log, pois provavelmente deseja ver as linhas de saída mais recentes.
+
+Por exemplo, para exibir as últimas 15 linhas de somefile.log, use o seguinte comando:
+
+$ tail -n 15 algum arquivo.log
+
+Você também pode simplesmente dizer:
+
+tail -15 algum arquivo.log
+
+Para monitorar continuamente a nova saída em um arquivo de log crescente:
+
+$ tail -f algum arquivo.log
+
+Este comando exibirá continuamente quaisquer novas linhas de saída em somefile.log assim que aparecerem. Assim, permite monitorar qualquer atividade atual que esteja sendo relatada e registrada.
+
+Por favor, dê uma olhada no seguinte exercício Experimente você mesmo: Usando cabeça e cauda.
+
+Ao trabalhar com arquivos compactados, muitos comandos padrão não podem ser usados diretamente. Para muitos programas de manipulação de arquivos e texto comumente usados, há também uma versão especialmente projetada para trabalhar diretamente com arquivos compactados. Esses utilitários associados geralmente têm a letra “z” prefixada ao nome. Por exemplo, temos programas utilitários como zcat, zless, zdiff e zgrep.
+
+Aqui está uma tabela listando alguns comandos da família z:
+
+ 
+
+Tabela: Comandos e Descrições da Família z
+Descrição do comando
+$ zcat arquivo compactado.txt.gz Para visualizar um arquivo compactado
+$ zless somefile.gz
+ou
+$ zmore somefile.gz Para percorrer um arquivo compactado
+$ zgrep -i less somefile.gz Para pesquisar dentro de um arquivo compactado
+$ zdiff file1.txt.gz file2.txt.gz Para comparar dois arquivos compactados
+ 
+
+Observe que se você executar o zless em um arquivo descompactado, ele ainda funcionará e ignorará o estágio de descompactação. Existem também programas utilitários equivalentes para outros métodos de compactação além do gzip (por exemplo, xz ou bzip2); temos xzcat, xzless e xzdiff associados a xz e bzcat, bzless e bzdiff associados a bzip2.
+
+É muito comum criar e depois editar e/ou extrair repetidamente o conteúdo de um arquivo. Vamos aprender como usar sed e awk para realizar tais operações facilmente.
+
+Observe que muitos usuários e administradores de Linux escreverão scripts usando linguagens de script abrangentes, como Python e Perl, em vez de usar sed e awk (e alguns outros utilitários que discutiremos mais tarde). Usar esses utilitários certamente é adequado na maioria das circunstâncias; deve-se sempre sentir-se à vontade para usar as ferramentas com as quais se tem experiência. Entretanto, os utilitários descritos aqui são muito mais leves; ou seja, eles usam menos recursos do sistema e executam mais rapidamente. Existem situações (como durante a inicialização do sistema) em que muito tempo seria desperdiçado usando ferramentas mais complicadas e o sistema pode nem conseguir executá-las. Portanto, sempre serão necessárias ferramentas mais simples.
+
+sed é uma poderosa ferramenta de processamento de texto e um dos utilitários UNIX mais antigos, antigos e populares. É usado para modificar o conteúdo de um arquivo ou fluxo de entrada, geralmente colocando o conteúdo em um novo arquivo ou fluxo de saída. Seu nome é uma abreviatura de editor de fluxo.
+
+sed pode filtrar texto, bem como realizar substituições em fluxos de dados.
+
+Os dados de uma fonte/arquivo de entrada (ou fluxo) são obtidos e movidos para um espaço de trabalho. Toda a lista de operações/modificações é aplicada sobre os dados no espaço de trabalho e o conteúdo final é movido para o espaço de saída padrão (ou fluxo).
+
+Você pode invocar o sed usando comandos como os listados na tabela a seguir.
+
+ 
+
+Tabela: Comandos e Exemplos de Uso
+Uso de comando
+comando sed -e <nome do arquivo>
+
+Especifique comandos de edição na linha de comando, processe a entrada de um arquivo e coloque a saída na saída padrão (por exemplo, o terminal)
+
+sed -f scriptfile <nome do arquivo> 		Especifique um arquivo de script contendo comandos sed, opere no arquivo e coloque a saída na saída padrão
+
+echo "Eu te odeio" | sed s/hate/love/ 		Use sed para filtrar a entrada padrão, colocando a saída na saída padrão
+ 
+
+A opção -e permite especificar vários comandos de edição simultaneamente na linha de comando. É desnecessário se você tiver apenas uma operação invocada.
+
+Agora que você sabe que pode realizar diversas operações de edição e filtragem com sed, vamos explicar algumas delas com mais detalhes. A tabela explica algumas operações básicas, onde padrão é a string atual e replace_string é a nova string.
+
+Tabela: Comandos e Exemplos de Uso
+Uso de comando
+sed s/pattern/replace_string/ file Substitui a primeira ocorrência de string em cada linha
+sed s/pattern/replace_string/g arquivo Substitua todas as ocorrências de string em cada linha
+sed 1,3s/pattern/replace_string/g file Substitui todas as ocorrências de string em um intervalo de linhas
+sed -i s/pattern/replace_string/g arquivo Salva as alterações para substituição de string no mesmo arquivo
+ 
+
+Você deve usar a opção -i com cuidado, pois a ação não é reversível. É sempre mais seguro usar sed sem a opção –i e então substituir o arquivo você mesmo, conforme mostrado no exemplo a seguir:
+
+$ sed s/pattern/replace_string/g arquivo1 > arquivo2
+
+O comando acima substituirá todas as ocorrências de padrão por replace_string no arquivo1 e moverá o conteúdo para o arquivo2. O conteúdo do arquivo2 pode ser visualizado com cat file2. Se você aprovar, poderá substituir o arquivo original por mv arquivo2 arquivo1.
+
+Exemplo: Para converter 01/02/… para JAN/FEV/…
+
+sed -e 's/01/JAN/' \
+     -e 's/02/FEV/' \
+     -e 's/03/MAR/' \
+     -e 's/04/APR/' \
+     -e 's/05/MAIO/' \
+     -e 's/06/JUN/' \
+     -e 's/07/JUL/' \
+     -e 's/08/AGO/' \
+     -e 's/09/SET/' \
+     -e 's/10/OUT/' \
+     -e 's/11/NOV/' \
+     -e 's/12/DEZ/'
+
+awk é usado para extrair e imprimir conteúdos específicos de um arquivo e geralmente é usado para construir relatórios. Foi criado no Bell Labs na década de 1970 e seu nome deriva dos sobrenomes de seus autores: Alfred Aho, Peter Weinberger e Brian Kernighan.
+
+awk tem os seguintes recursos:
+
+É um utilitário poderoso e uma linguagem de programação interpretada.
+É usado para manipular arquivos de dados e para recuperar e processar texto.
+Funciona bem com campos (contendo um único dado, essencialmente uma coluna) e registros (uma coleção de campos, essencialmente uma linha em um arquivo).
+awk é invocado conforme mostrado a seguir:
+
+Assim como acontece com o sed, comandos curtos do awk podem ser especificados diretamente na linha de comando, mas um script mais complexo pode ser salvo em um arquivo que você pode especificar usando a opção -f.
+
+ 
+
+Tabela: Comandos e Exemplos de Uso
+Uso de comando
+arquivo awk ‘command’ Especifique um comando diretamente na linha de comando
+awk -f scriptfile file Especifique um arquivo que contenha o script a ser executado
+
+The table explains the basic tasks that can be performed using awk. The input file is read one line at a time, and, for each line, awk matches the given pattern in the given order and performs the requested action. The -F option allows you to specify a particular field separator character. For example, the /etc/passwd file uses ":" to separate the fields, so the -F: option is used with the /etc/passwd file.
+
+The command/action in awk needs to be surrounded with apostrophes (or single-quote (')). awk can be used as follows:
+
+ 
+
+Table: Commands and Usage Examples
+Command	Usage
+awk '{ print $0 }' /etc/passwd	Print entire file
+awk -F: '{ print $1 }' /etc/passwd	Print first field (column) of every line, separated by a colon
+awk -F: '{ print $1 $7 }' /etc/passwd	Print first and seventh field of every line
+
+A tabela explica as tarefas básicas que podem ser executadas usando o awk. O arquivo de entrada é lido uma linha por vez e, para cada linha, awk corresponde ao padrão fornecido na ordem especificada e executa a ação solicitada. A opção -F permite especificar um caractere separador de campo específico. Por exemplo, o arquivo /etc/passwd usa ":" para separar os campos, então a opção -F: é usada com o arquivo /etc/passwd.
+
+O comando/ação no awk precisa ser colocado entre apóstrofos (ou aspas simples (')). awk pode ser usado da seguinte maneira:
+
+ 
+Procure todas as instâncias do interpretador de comandos do usuário (shell) iguais a /sbin/nologin em /etc/passwd e substitua-as por /bin/bash (não substitua /etc/passwd).
+
+Confira a solução fornecida na próxima página.
+
+Para obter saída padrão (tela do terminal):
+
+aluno:/tmp> sed s/'\/sbin\/nologin'/'\/bin\/bash'/g /etc/passwd
+
+ou para direcionar para um arquivo:
+
+aluno:/tmp> sed s/'\/sbin\/nologin'/'\/bin\/bash'/g /etc/passwd > passwd_new
+
+Observe que isso é um pouco doloroso e obscuro porque estamos tentando usar a barra (/) como uma string e um delimitador entre os campos. Em vez disso, pode-se fazer:
+
+aluno:/tmp> sed s:'/sbin/nologin':'/bin/bash':g /etc/passwd
+
+onde usamos dois pontos (:) como delimitador (você é livre para escolher seu caractere delimitador!). Na verdade, ao fazer isso, nem precisamos das aspas simples:
+
+aluno:/tmp> sed s:/sbin/nologin:/bin/bash:g /etc/passwd
+
+funciona muito bem.
+
+Ao gerenciar seus arquivos, pode ser necessário executar tarefas como classificar e copiar dados de um local para outro. O Linux fornece vários utilitários de manipulação de arquivos que você pode usar ao trabalhar com arquivos de texto. Nesta seção, você aprenderá sobre os seguintes programas de manipulação de arquivos:
+
+organizar
+único
+colar
+juntar
+dividir.
+Você também aprenderá sobre expressões regulares e padrões de pesquisa.
+
+sort é usado para reorganizar as linhas de um arquivo de texto, em ordem crescente ou decrescente, de acordo com uma chave de classificação. Você pode aplicar a chave t para classificar de acordo com um campo específico (coluna) em um arquivo. A chave de classificação padrão é a ordem dos caracteres ASCII (ou seja, essencialmente em ordem alfabética).
+
+ 
+
+Tabela: Usando classificação
+Uso de sintaxe
+sort <nome do arquivo> Classifica as linhas no arquivo especificado, de acordo com os caracteres no início de cada linha
+gato arquivo1 arquivo2 | sort Combine os dois arquivos, classifique as linhas e exiba a saída no terminal
+sort -r <nome do arquivo> Classifica as linhas na ordem inversa
+sort -k 3 <nome do arquivo> Classifica as linhas pelo terceiro campo de cada linha em vez do início
+ 
+
+Quando usado com a opção -u, sort verifica valores exclusivos após classificar os registros (linhas). É equivalente a executar uniq (que discutiremos) na saída de sort.
+
+uniq remove linhas consecutivas duplicadas em um arquivo de texto e é útil para simplificar a exibição do texto.
+
+Como o uniq exige que as entradas duplicadas sejam consecutivas, geralmente executa-se a classificação primeiro e depois canaliza a saída para o uniq; se sort for usado com a opção -u, ele poderá fazer tudo isso em uma única etapa.
+
+Para remover entradas duplicadas de vários arquivos de uma vez, use o seguinte comando:
+
+classificar arquivo1 arquivo2 | uniq > arquivo3
+
+ou
+
+classificar -u arquivo1 arquivo2 > arquivo3
+
+Para contar o número de entradas duplicadas, use o seguinte comando:
+
+uniq -c nome do arquivo
+
+Por favor, dê uma olhada no seguinte exercício Experimente você mesmo: Usando sort e uniq.
+
+Suponha que você tenha um arquivo que contém o nome completo de todos os funcionários e outro arquivo que lista seus números de telefone e IDs de funcionários. Você deseja criar um novo arquivo que contenha todos os dados listados em três colunas: nome, ID do funcionário e número de telefone. Como você pode fazer isso de forma eficaz, sem investir muito tempo?
+
+paste pode ser usado para criar um único arquivo contendo todas as três colunas. As diferentes colunas são identificadas com base em delimitadores (espaçamento utilizado para separar dois campos). Por exemplo, os delimitadores podem ser um espaço em branco, uma tabulação ou um Enter. Na imagem fornecida, um único espaço é utilizado como delimitador em todos os arquivos.
+
+paste aceita as seguintes opções:
+
+-d delimitadores, que especificam uma lista de delimitadores a serem usados em vez de tabulações para separar valores consecutivos em uma única linha. Cada delimitador é usado por vez; quando a lista estiver esgotada, a colagem começa novamente no primeiro delimitador.
+-s, que faz com que paste anexe os dados em série e não em paralelo; isto é, de forma horizontal e não vertical.
+
+
+colar pode ser usado para combinar campos (como nome ou número de telefone) de arquivos diferentes, bem como combinar linhas de vários arquivos. Por exemplo, a linha um do arquivo1 pode ser combinada com a linha um do arquivo2, a linha dois do arquivo1 pode ser combinada com a linha dois do arquivo2 e assim por diante.
+
+Para colar o conteúdo de dois arquivos pode-se fazer:
+
+$ colar arquivo1 arquivo2
+
+A sintaxe para usar um delimitador diferente é a seguinte:
+
+$ colar -d, arquivo1 arquivo2
+
+Delimitadores comuns são ‘espaço’, ‘tab’, ‘|’, ‘vírgula’, etc.
+
+Suponha que você tenha dois arquivos com colunas semelhantes. Você salvou os números de telefone dos funcionários em dois arquivos, um com o nome e outro com o sobrenome. Você deseja combinar os arquivos sem repetir os dados das colunas comuns. Como você consegue isso?
+
+A tarefa acima pode ser realizada usando join, que é essencialmente uma versão aprimorada de paste. Primeiro, ele verifica se os arquivos compartilham campos comuns, como nomes ou números de telefone, e depois une as linhas em dois arquivos com base em um campo comum.
+
+Para combinar dois arquivos em um campo comum, no prompt de comando digite join file1 file2 e pressione a tecla Enter.
+
+Por exemplo, o campo comum (ou seja, contém os mesmos valores) entre os arquivos da agenda telefônica e das cidades é o número do telefone, e o resultado da junção desses dois arquivos é mostrado na captura de tela.
+
+split é usado para dividir (ou dividir) um arquivo em segmentos de tamanhos iguais para facilitar a visualização e manipulação e geralmente é usado apenas em arquivos relativamente grandes. Por padrão, split divide um arquivo em segmentos de 1.000 linhas. O arquivo original permanece inalterado e um conjunto de novos arquivos com o mesmo nome e um prefixo adicionado é criado. Por padrão, o prefixo x é adicionado. Para dividir um arquivo em segmentos, use o comando split infile.
+
+Para dividir um arquivo em segmentos usando um prefixo diferente, use o comando split infile <Prefix>.
+
+Aplicaremos split a um arquivo de dicionário de quase 500.000 linhas:
+
+$ wc -l linux.palavras
+99171 inglês-americano
+
+onde usamos wc (contagem de palavras, que será discutido em breve) para relatar o número de linhas no arquivo. Então, digitando:
+
+$ dividir linux.words lwords
+
+dividirá o arquivo inglês americano em segmentos de tamanhos iguais chamados lwordsxx. É claro que o último será um pouco menor.
+
+Expressões regulares são sequências de texto usadas para corresponder a um padrão específico ou para pesquisar um local específico, como o início ou o fim de uma linha ou palavra. Expressões regulares podem conter caracteres normais ou os chamados metacaracteres, como * e $.
+
+Muitos editores de texto e utilitários como vi, sed, awk, find e grep funcionam extensivamente com expressões regulares. Algumas das linguagens de computador populares que usam expressões regulares incluem Perl, Python e Ruby. Pode ficar bastante complicado e existem livros inteiros escritos sobre expressões regulares. Assim, não faremos mais do que roçar a superfície aqui.
+
+Essas expressões regulares são diferentes dos curingas (ou metacaracteres) usados na correspondência de nomes de arquivos em shells de comando como o bash (que foram abordados no capítulo Operações de linha de comando). A tabela lista os padrões de pesquisa e seu uso.
+
+ 
+
+Tabela: Padrões de pesquisa e exemplos de uso
+Uso de padrões de pesquisa
+.(ponto) Corresponde a qualquer caractere único
+a|z Corresponde a ou z
+$ Corresponde ao final de uma linha
+^ Corresponder ao início de uma linha
+* Combine o item anterior 0 ou mais vezes
+
+Por exemplo, considere a seguinte frase: a rápida raposa marrom saltou sobre o cachorro preguiçoso.
+
+Alguns dos padrões que podem ser aplicados a esta frase são os seguintes:
+
+ 
+
+Tabela: Comandos e Exemplos de Uso
+Uso de comando
+a.. 		corresponde a azy
+b.|j. 		combina com br e ju
+..$ 		corresponde e
+l.* 		corresponde a cachorro preguiçoso
+l.*y 		corresponde a preguiçoso
+o.* 		corresponde à frase inteira
+
+Gere uma coluna contendo uma lista exclusiva de todos os shells usados pelos usuários em /etc/passwd.
+
+Talvez seja necessário consultar a página de manual do /etc/passwd como em:
+
+aluno:/tmp> man 5 senha
+
+Qual campo em /etc/passwd contém o shell padrão da conta (interpretador de comandos do usuário)?
+
+Como você faz uma lista de entradas únicas (sem repetições)?
+
+Confira a solução fornecida na próxima página.
+
+O campo em /etc/passwd que contém o shell é o número 7. Para exibir o campo que contém o shell em /etc/passwd usando awk e produzir uma lista exclusiva, faça:
+
+$ awk -F: '{print $7}' /etc/passwd | classificar -você
+
+ou
+
+$ awk -F: '{print $7}' /etc/passwd | classificar | único
+
+Por exemplo:
+
+$ awk -F: '{print $7}' /etc/passwd | classificar -você
+
+/bin/bash
+/bin/sincronizar
+/sbin/halt
+/sbin/nologin
+/sbin/desligamento
+
+grep é amplamente usado como ferramenta primária de pesquisa de texto. Ele verifica os arquivos em busca de padrões especificados e pode ser usado com expressões regulares, bem como com strings simples, conforme mostrado na tabela:
+
+ 
+
+Tabela: Comandos e Exemplos de Uso
+Uso de comando
+grep [pattern] <filename> 		Procure um padrão em um arquivo e imprima todas as linhas correspondentes
+grep -v [pattern] <filename> 		Imprime todas as linhas que não correspondem ao padrão
+grep [0-9] <nome do arquivo> 		Imprime as linhas que contêm os números de 0 a 9
+grep -C 3 [padrão] <nome do arquivo> 	Imprime o contexto das linhas (número especificado de linhas acima e abaixo do padrão) para corresponder ao padrão. Aqui, o número de linhas é especificado como 3
+
+strings é usado para extrair todas as strings de caracteres imprimíveis encontradas no arquivo ou arquivos fornecidos como argumentos. É útil para localizar conteúdo legível incorporado em arquivos binários; para arquivos de texto, basta usar grep.
+
+Por exemplo, para pesquisar a string my_string em uma planilha:
+
+$ strings livro1.xls | grep minha_string
+
+A captura de tela mostra uma pesquisa em vários programas para ver quais deles possuem licenças GPL de várias versões.
+
+strings é usado para extrair todas as strings de caracteres imprimíveis encontradas no arquivo ou arquivos fornecidos como argumentos. É útil para localizar conteúdo legível incorporado em arquivos binários; para arquivos de texto, basta usar grep.
+
+Por exemplo, para pesquisar a string my_string em uma planilha:
+
+$ strings livro1.xls | grep minha_string
+
+A captura de tela mostra uma pesquisa em vários programas para ver quais deles possuem licenças GPL de várias versões.
+
+A seguir damos alguns exemplos de coisas que você pode fazer com o comando grep; sua tarefa é experimentar esses exemplos e estendê-los.
+
+Procure seu nome de usuário no arquivo /etc/passwd .
+Encontre todas as entradas em /etc/services que incluam a string ftp.
+Restrinja àqueles que usam o protocolo tcp.
+Agora restrinja aqueles que não usam o protocolo tcp, ao imprimir o número da linha.
+Obtenha todas as strings que começam com ts ou terminam com st.
+
+Confira a solução fornecida na próxima página.
+
+student:/tmp> grep student /etc/passwd
+student:/tmp> grep ftp /etc/services
+student:/tmp> grep ftp /etc/services | grep tcp
+student:/tmp> grep -n ftp /etc/services | grep -v tcp s
+tudent:/tmp> grep -e ^ts -e st$ /etc/services
+
+Nesta seção, você aprenderá sobre alguns utilitários de texto adicionais que podem ser usados para executar diversas ações em seus arquivos Linux, como alterar a caixa das letras ou determinar a contagem de palavras, linhas e caracteres em um arquivo.
+
+O utilitário tr é usado para traduzir caracteres especificados em outros caracteres ou para excluí-los. A sintaxe geral é a seguinte:
+
+$ tr [opções] set1 [set2]
+
+Os itens entre colchetes são opcionais. tr requer pelo menos um argumento e aceita no máximo dois. O primeiro, designado set1 no exemplo, lista os caracteres do texto a serem substituídos ou removidos. O segundo, set2, lista os caracteres que devem ser substituídos pelos caracteres listados no primeiro argumento. Às vezes, esses conjuntos precisam ser colocados entre apóstrofos (ou aspas simples (')) para que o shell ignore que eles significam algo especial para o shell. Geralmente é seguro (e pode ser obrigatório) usar aspas simples em torno de cada um dos conjuntos, como você verá nos exemplos abaixo.
+
+Por exemplo, suponha que você tenha um arquivo chamado cidade contendo diversas linhas de texto em letras maiúsculas e minúsculas. Para traduzir todos os caracteres minúsculos para maiúsculos, no prompt de comando digite cat city | tr a-z A-Z e pressione a tecla Enter.
+
+ 
+
+Tabela: Exemplo de Comando e Uso
+Uso de comando
+tr abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ Converter letras minúsculas em maiúsculas
+tr '{}' '()' < inputfile > outputfile Traduza chaves entre parênteses
+echo "Isto é para teste" | tr [:space:] '\t' Traduzir espaço em branco para guias
+echo "Isto é para teste" | tr -s [:espaço:]
+Aperte a repetição de caracteres usando -s
+echo "as coisas geeks" | tr -d 't' Exclua caracteres especificados usando a opção -d
+echo "meu nome de usuário é 432234" | tr -cd [:digit:] Complemente os conjuntos usando a opção -c
+tr -cd [:print:] < file.txt Remove todos os caracteres não imprimíveis de um arquivo
+tr -s '\n' ' ' < file.txt Junte todas as linhas de um arquivo em uma única linha
+
+Por favor, dê uma olhada no seguinte exercício Experimente você mesmo: Usando tr.
+
+tee pega a saída de qualquer comando e, ao enviá-la para a saída padrão, também a salva em um arquivo. Em outras palavras, ele indica o fluxo de saída do comando: um fluxo é exibido na saída padrão e o outro é salvo em um arquivo.
+
+Por exemplo, para listar o conteúdo de um diretório na tela e salvar a saída em um arquivo, no prompt de comando digite ls -l | tee novo arquivo e pressione a tecla Enter.
+
+Digitar cat newfile exibirá a saída de ls –l.
+
+wc (contagem de palavras) conta o número de linhas, palavras e caracteres em um arquivo ou lista de arquivos. As opções são fornecidas na tabela abaixo.
+
+ 
+
+Tabela: Opções e Descrições
+Descrição da opção
+–l Exibe o número de linhas
+-c Exibe o número de bytes
+-w Exibe o número de palavras
+ 
+
+Por padrão, todas essas três opções estão ativas.
+
+Por exemplo, para imprimir apenas o número de linhas contidas em um arquivo, digite wc -l filename e pressione a tecla Enter.
+
+Por favor, dê uma olhada no seguinte exercício: Experimente você mesmo: Usando wc.
+
+cut é usado para manipular arquivos baseados em colunas e foi projetado para extrair colunas específicas. O separador de colunas padrão é o caractere TAB. Um delimitador diferente pode ser fornecido como opção de comando.
+
+Por exemplo, para exibir a terceira coluna delimitada por um espaço em branco, no prompt de comando digite ls -l | corte -d" " -f3 e pressione a tecla Enter.
+
+O utilitário tee é muito útil para salvar uma cópia de sua saída enquanto você a observa sendo gerada.
+
+Execute um comando como fazer uma listagem do diretório /etc:
+
+aluno:/tmp> ls -l /etc
+
+enquanto salva a saída em um arquivo e a exibe em seu terminal.
+
+Confira a solução fornecida na próxima página.
+
+
+student:/tmp> ls -l /etc | tee /tmp/ls-output
+student:/tmp> less /tmp/ls-output
+
+total 2948
+drwxr-xr-x.  3 root root     4096 Nov  3 07:27 abrt
+-rw-r--r--.  1 root root       16 Jan 15  2015 adjtime
+-rw-r--r--   1 root root     1518 Jun  7  2013 aliases
+-rw-r--r--.  1 root root    12288 Nov  3 07:49 aliases.db
+drwxr-xr-x.  2 root root     4096 Nov  3 07:26 alsa
+drwxr-xr-x.  2 root root     4096 Jan 20 07:28 alternatives
+-rw-------   1 root root      541 Feb 23  2016 anacrontab
+-rw-r--r--   1 root root       55 Jun  6  2016 asound.conf
+-rw-r--r--   1 root root        1 May 23  2016 at.deny
+drwxr-xr-x.  2 root root     4096 Nov  3 07:26 at-spi2
+drwxr-x---.  3 root root     4096 Nov  3 07:26 audisp
+drwxr-x---.  3 root root     4096 Nov  3 07:26 audit
+drwxr-xr-x.  4 root root     4096 Nov  3 07:32 avahi
+drwxr-xr-x.  2 root root     4096 Jan 18 06:59 bash_completion.d
+-rw-r--r--   1 root root     2853 May  4  2016 bashrc
+drwxr-xr-x.  2 root root     4096 Nov  7 10:20 binfmt.d
+drwxr-xr-x   2 root root     4096 Nov  3 07:26 bluetooth
+drwxr-xr-x.  2 root root     4096 Apr  9  2015 bonobo-activation
+drwxr-xr-x   2 root root    12288 Nov  3 07:26 brltty
+-rw-r--r--   1 root root    21929 May  6  2016 brltty.conf
+-rw-r--r--   1 root root      676 Jun 23  2016 cgconfig.conf
+
+Usando wc (contagem de palavras), descubra quantas linhas, palavras e caracteres existem em todos os arquivos em /var/log que possuem a extensão .log.
+
+Confira a solução fornecida na próxima página.
+
+student:/tmp> wc /var/log/*.log
+
+  wc: /var/log/boot.log: Permission denied
+  3204  19307 501473 /var/log/dnf.librepo.log
+  4398  34678 383061 /var/log/dnf.log
+  1051   5171  73466 /var/log/dnf.rpm.log
+    10     60    600 /var/log/hawkey.log
+  8663  59216 958600 total
+
+resumo
+
+Você concluiu o Capítulo 13. Vamos resumir os principais conceitos abordados:
+
+A linha de comando geralmente permite que os usuários executem tarefas com mais eficiência do que a GUI.
+cat, abreviação de concatenar, é usado para ler, imprimir e combinar arquivos.
+echo exibe uma linha de texto na saída padrão ou para colocar em um arquivo.
+sed é um editor de fluxo popular, frequentemente usado para filtrar e realizar substituições em arquivos e fluxos de dados de texto.
+awk é uma linguagem de programação interpretada, normalmente usada como ferramenta de extração de dados e geração de relatórios.
+sort é usado para classificar arquivos de texto e fluxos de saída em ordem crescente ou decrescente.
+uniq elimina entradas duplicadas em um arquivo de texto.
+paste combina campos de arquivos diferentes. Também pode extrair e combinar linhas de múltiplas fontes.
+join combina linhas de dois arquivos com base em um campo comum. Funciona apenas se os arquivos compartilharem um campo comum.
+split divide um arquivo grande em segmentos de tamanhos iguais.
+Expressões regulares são strings de texto usadas para correspondência de padrões. O padrão pode ser usado para pesquisar um local específico, como o início ou o fim de uma linha ou palavra.
+grep pesquisa padrões em arquivos de texto e fluxos de dados e pode ser usado com expressões regulares.
+tr traduz caracteres, copia a entrada padrão para a saída padrão e lida com caracteres especiais.
+tee salva uma cópia da saída padrão em um arquivo enquanto ainda é exibida no terminal.
+wc (contagem de palavras) exibe o número de linhas, palavras e caracteres em um arquivo ou grupo de arquivos.
+cut extrai colunas de um arquivo.
+less visualiza os arquivos uma página por vez e permite a rolagem em ambas as direções.
+head exibe as primeiras linhas de um arquivo ou fluxo de dados na saída padrão. Por padrão, ele exibe 10 linhas.
+tail exibe as últimas linhas de um arquivo ou fluxo de dados na saída padrão. Por padrão, ele exibe 10 linhas.
+strings extrai strings de caracteres imprimíveis de arquivos binários.
+A família de comandos z é usada para ler e trabalhar com arquivos compactados.
+
+

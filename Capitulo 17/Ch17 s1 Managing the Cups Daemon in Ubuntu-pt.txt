@@ -1,0 +1,29 @@
+O gerenciamento serviços de CUPS é idêntico
+nas distros recentes do Linux.
+Tendo base em "systemd", usam apenas o sistema de comandos.
+Se eu quiser checar o status atual,
+digito "sudo systemctl status cups".
+Está habilitado para rodar na inicialização do sistema.
+Também informa o processo
+em que o cups.service está rodando.
+Para interromper, substituo "status"
+por "stop".
+Daí, busco status novamente.
+Note que está inativo.
+Estava rodando, agora está inativo.
+Posso entrar "restart" ,
+mas vou usar "restart".
+Peço "status" novamente e ele informa que está ativo.
+Para evitar inicialização com o sistema,
+o que pode ser útil se não há impressora,
+digito "disable".
+Com "status" novamente, note que o serviço está inativo.
+"Disabled", aqui.
+O serviço não vai iniciar com o sistema.
+Isso não altera o status atual,
+pois ainda está rodando.
+Mas não vai iniciar com o sistema.
+Vou restaurar a configuração
+para iniciar com o sistema.
+Essas são as opções básicas de gerenciamento
+para checar o funcionamento, iniciar com o sistema e parar.

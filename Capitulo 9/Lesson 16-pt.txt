@@ -1,0 +1,393 @@
+No Linux, todos os aplicativos que estamos executando
+são processos.
+Nesta lição, vamos explorar o conceito de processos.
+Vamos descobrir quais processos estão em execução,
+como iniciar processos automaticamente
+e como listar os recursos consumidos por um processo.
+Vamos começar!
+
+Ao final deste capítulo, você deverá ser capaz de:
+
+Descrever o que é um processo e distinguir entre tipos de processos.
+Enumerar atributos do processo.
+Gerencie processos usando ps e top.
+Entenda o uso de médias de carga e outras métricas de processo.
+Manipule processos colocando-os em segundo plano e restaurando-os em primeiro plano.
+Use at, cron e sleep para agendar processos no futuro ou pausá-los.
+
+Um processo é simplesmente uma instância de uma ou mais tarefas relacionadas (threads) em execução no seu computador. Não é o mesmo que um programa ou comando. Na verdade, um único comando pode iniciar vários processos simultaneamente. Alguns processos são independentes entre si e outros estão relacionados. A falha de um processo pode ou não afetar os outros em execução no sistema.
+
+Os processos usam muitos recursos do sistema, como memória, ciclos de CPU (unidade central de processamento) e dispositivos periféricos, como placas de rede, discos rígidos, impressoras e monitores. O sistema operacional (especialmente o kernel) é responsável por alocar uma parcela adequada desses recursos para cada processo e garantir a utilização otimizada geral do sistema.
+
+Uma janela de terminal (um tipo de shell de comando) é um processo que é executado pelo tempo que for necessário. Ele permite aos usuários executar programas e acessar recursos em um ambiente interativo. Você também pode executar programas em segundo plano, o que significa que eles serão separados do shell.
+
+Os processos podem ser de diferentes tipos de acordo com a tarefa que está sendo executada.
+
+Processos Interativos Precisam ser iniciados por um usuário, seja em uma linha de comando ou por meio de uma interface gráfica, como um ícone ou uma seleção de menu. bash, firefox, topo, Slack, Libreoffice
+Processos em lote Processos automáticos que são agendados e depois desconectados do terminal. Essas tarefas são enfileiradas e funcionam numa base FIFO (First-In, First-Out). atualizadob, ldconfig
+Processos do Daemons Server que são executados continuamente. Muitos são iniciados durante a inicialização do sistema e aguardam uma solicitação do usuário ou do sistema indicando que seu serviço é necessário. httpd, sshd, libvirtd, cupsd
+Threads Processos leves. São tarefas executadas sob a égide de um processo principal, compartilhando memória e outros recursos, mas que são agendadas e executadas pelo sistema individualmente. Um thread individual pode terminar sem encerrar todo o processo e um processo pode criar novos threads a qualquer momento. Muitos programas não triviais são multithread. serviço dconf, servidor de terminal gnome
+Threads do Kernel Tarefas do kernel que os usuários não iniciam nem terminam e sobre as quais têm pouco controle. Eles podem executar ações como mover um thread de uma CPU para outra ou garantir que as operações de entrada/saída no disco sejam concluídas. kthreadd, migração, ksoftirqd
+
+Uma função crítica do kernel chamada agendador liga e desliga constantemente os processos da CPU, compartilhando o tempo de acordo com a prioridade relativa, quanto tempo é necessário e quanto já foi concedido a uma tarefa.
+
+Quando um processo está no chamado estado de execução, significa que ele está executando instruções em uma CPU ou aguardando a concessão de um compartilhamento de tempo (uma fatia de tempo) para poder ser executado. Todos os processos neste estado residem no que é chamado de fila de execução e em um computador com múltiplas CPUs, ou núcleos, há uma fila de execução em cada um. Conforme observado, a palavra corrida é um pouco enganosa, pois o processo pode, na verdade, ser trocado, aguardando sua vez de voltar à corrida.
+
+No entanto, às vezes os processos entram no que é chamado de estado de suspensão, geralmente quando estão esperando que algo aconteça antes de serem retomados, talvez até que o usuário digite algo. Nessa condição, diz-se que um processo está em uma fila de espera.
+
+Existem alguns outros estados de processo menos frequentes, especialmente quando um processo está sendo encerrado. Às vezes, um processo filho é concluído, mas o processo pai não pergunta sobre seu estado. Curiosamente, diz-se que tal processo está em estado zumbi; ele não está realmente ativo, mas ainda aparece na lista de processos do sistema.
+
+A qualquer momento, sempre há vários processos sendo executados. O sistema operacional os monitora atribuindo a cada um um número exclusivo de ID de processo (PID). O PID é usado para rastrear o estado do processo, o uso da CPU, o uso da memória, exatamente onde os recursos estão localizados na memória e outras características.
+
+Novos PIDs geralmente são atribuídos em ordem crescente à medida que os processos nascem. Assim, PID 1 denota o processo init (processo de inicialização do sistema), e os processos subsequentes recebem gradualmente números mais altos.
+
+Descrição do tipo de identificação
+ID do processo (PID) Número exclusivo do ID do processo.
+
+ID do processo pai (PPID) Processo (pai) que iniciou este processo. Se o progenitor falecer, o PPID referir-se-á ao progenitor adoptivo; em kernels modernos, este é o kthreadd que possui PPID=2.
+
+ID do thread (TID) Número de ID do thread. É o mesmo que o PID para processos de thread único. Para um processo multithread, cada thread compartilha o mesmo PID, mas possui um TID exclusivo.
+
+Em algum momento, um dos seus aplicativos pode parar de funcionar corretamente. Como você elimina isso?
+
+Para encerrar um processo, você pode digitar kill -SIGKILL <pid> ou kill -9 <pid>.
+
+Observe, entretanto, que você só pode eliminar seus próprios processos; aqueles pertencentes a outro usuário estão fora dos limites, a menos que você seja root (o nome kill é histórico e um tanto enganoso; o comando pode ser usado para enviar qualquer tipo de sinal para um processo, não apenas um de encerramento).
+
+Muitos usuários podem acessar um sistema simultaneamente e cada usuário pode executar vários processos. O sistema operacional identifica o usuário que inicia o processo pelo Real User ID (RUID) atribuído ao usuário.
+
+O usuário que determina os direitos de acesso dos usuários é identificado pelo UID Efetivo (EUID). O EUID pode ou não ser igual ao RUID.
+
+Os usuários podem ser organizados em grupos enumerados. Cada grupo é identificado pelo Real Group ID (RGID). Os direitos de acesso do grupo são determinados pelo ID de Grupo Efetivo (EGID). Cada usuário pode ser membro de um ou mais grupos.
+
+Na maioria das vezes ignoramos esses detalhes e falamos apenas sobre o ID do usuário (UID) e o ID do grupo (GID).
+
+A qualquer momento, muitos processos estão em execução (ou seja, na fila de execução) no sistema. No entanto, uma CPU pode acomodar apenas uma tarefa por vez, assim como um carro pode ter apenas um motorista por vez. Alguns processos são mais importantes que outros, então o Linux permite definir e manipular a prioridade do processo. Processos de prioridade mais alta obtêm acesso preferencial à CPU.
+
+A prioridade de um processo pode ser definida especificando um valor agradável, ou gentileza, para o processo. Quanto menor o valor de Nice, maior será a prioridade. Valores baixos são atribuídos a processos importantes, enquanto valores altos são atribuídos a processos que podem esperar mais tempo. Um processo com um valor alto simplesmente permite que outros processos sejam executados primeiro. No Linux, um bom valor de -20 representa a prioridade mais alta e +19 representa a mais baixa. Embora isso possa parecer um retrocesso, esta convenção (quanto melhor o processo, menor a prioridade) remonta aos primeiros dias do UNIX.
+
+Você também pode atribuir a chamada prioridade em tempo real a tarefas urgentes, como controlar máquinas por meio de um computador ou coletar dados recebidos. Esta é apenas uma prioridade muito alta e não deve ser confundida com o que é chamado de tempo real difícil, que é conceitualmente diferente e tem mais a ver com garantir que um trabalho seja concluído dentro de uma janela de tempo muito bem definida.
+
+A média de carga é a média do número de carga para um determinado período de tempo. Leva em consideração processos que são:
+
+Executando ativamente em uma CPU.
+Considerado executável, mas aguardando na fila de execução até que uma CPU fique disponível.
+Dormindo: ou seja, aguardando que algum tipo de recurso (normalmente, E/S) fique disponível.
+NOTA: O Linux difere de outros sistemas operacionais semelhantes ao UNIX porque inclui os processos inativos. Além disso, inclui apenas os chamados dorminhocos ininterruptos, aqueles que não podem ser acordados facilmente.
+
+A média de carga pode ser visualizada executando w, top ou uptime. Explicaremos os números a seguir.
+
+A média de carga é exibida usando três números (0,45, 0,17 e 0,12) na captura de tela abaixo. Supondo que nosso sistema seja um sistema de CPU única, os três números médios de carga são interpretados da seguinte forma:
+
+0,45: No último minuto o sistema foi utilizado em média 45%.
+0,17: Nos últimos 5 minutos a utilização foi de 17%.
+0,12: Nos últimos 15 minutos a utilização foi de 12%.
+Se víssemos um valor de 1,00 na segunda posição, isso implicaria que o sistema de CPU única foi 100% utilizado, em média, nos últimos 5 minutos; isso é bom se quisermos usar totalmente um sistema. Um valor acima de 1,00 para um sistema de CPU única implica que o sistema foi superutilizado: havia mais processos precisando de CPU do que CPU disponível.
+
+Se tivéssemos mais de uma CPU, digamos, um sistema com quatro CPUs, dividiríamos os números médios de carga pelo número de CPUs. Neste caso, por exemplo, ver uma média de carga de 1 minuto de 4,00 implica que o sistema como um todo foi 100% (4,00/4) utilizado durante o último minuto.
+
+Aumentos de curto prazo geralmente não são um problema. Um pico alto que você vê é provavelmente uma explosão de atividade, não um novo nível. Por exemplo, na inicialização, muitos processos são iniciados e então a atividade se estabiliza. Se um pico alto for observado nas médias de carga de 5 e 15 minutos, isso pode ser motivo de preocupação.
+
+O Linux oferece suporte ao processamento de trabalhos em segundo e primeiro plano. Um trabalho neste contexto é apenas um comando iniciado a partir de uma janela de terminal. Os trabalhos em primeiro plano são executados diretamente do shell e, quando um trabalho em primeiro plano está em execução, outros trabalhos precisam aguardar o acesso ao shell (pelo menos naquela janela do terminal, se estiver usando a GUI) até que ele seja concluído. Isso é bom quando os trabalhos são concluídos rapidamente. Mas isto pode ter um efeito adverso se o trabalho atual demorar muito tempo (até várias horas) para ser concluído.
+
+Nesses casos, você pode executar o trabalho em segundo plano e liberar o shell para outras tarefas. O trabalho em segundo plano será executado com prioridade mais baixa, o que, por sua vez, permitirá a execução suave das tarefas interativas, e você poderá digitar outros comandos na janela do terminal enquanto o trabalho em segundo plano estiver em execução. Por padrão, todos os trabalhos são executados em primeiro plano. Você pode colocar um trabalho em segundo plano adicionando o sufixo & ao comando, por exemplo: atualizadob &.
+
+Você pode usar CTRL-Z para suspender um trabalho em primeiro plano (ou seja, colocá-lo em segundo plano) e CTRL-C para encerrá-lo. Você sempre pode usar o comando bg para executar um processo suspenso em segundo plano ou o comando fg para executar um processo em segundo plano em primeiro plano.
+
+O utilitário jobs exibe todos os jobs em execução em segundo plano. A exibição mostra o ID do trabalho, o estado e o nome do comando, conforme mostrado aqui.
+
+jobs -l fornece as mesmas informações dos jobs e adiciona o PID dos jobs em segundo plano.
+
+Os trabalhos em segundo plano estão conectados à janela do terminal, portanto, se você fizer logoff, o utilitário de trabalhos não mostrará os iniciados nessa janela.
+
+O utilitário jobs exibe todos os jobs em execução em segundo plano. A exibição mostra o ID do trabalho, o estado e o nome do comando, conforme mostrado aqui.
+
+jobs -l fornece as mesmas informações dos jobs e adiciona o PID dos jobs em segundo plano.
+
+Os trabalhos em segundo plano estão conectados à janela do terminal, portanto, se você fizer logoff, o utilitário de trabalhos não mostrará os iniciados nessa janela.
+
+Um método muito simples é usar o utilitário uptime:
+
+aluno:/tmp> tempo de atividade
+
+15:59:35 até 8:13, 1 usuário, média de carga: 2,51, 2,55, 2,58
+
+Um segundo método é observar a primeira linha da saída desde o início (a ser discutida em detalhes em breve):
+
+aluno:/tmp> topo | cabeça -3
+
+início - 15:59:37 até 8:13, 1 usuário, média de carga: 2,51, 2,55, 2,58
+Tarefas: 403 no total, 1 correndo, 402 dormindo, 0 parado, 0 zumbi
+
+Um terceiro método é usar w:
+
+aluno:/tmp> w
+
+cooperativo:0 07:48 ?xdm? 2:25m 0,00s /usr/libexec/gdm-x-session --register-session --run
+
+Vamos lançar um programa gráfico a partir de uma janela de terminal, para que não seja mais possível digitar na janela. O gedit é uma escolha fácil, mas você pode substituí-lo por qualquer outro programa que faça isso.
+
+O arquivo de solução contém um procedimento passo a passo para colocar trabalhos em segundo plano, trazê-los de volta para primeiro plano, etc. Repita os passos, substituindo o programa que você está usando se não for o gedit.
+
+Confira a solução fornecida na próxima página.
+
+Vamos lançar um programa gráfico a partir de uma janela de terminal para que não seja mais possível digitar na janela. O gedit é uma escolha fácil, mas você pode substituí-lo por qualquer outro programa que faça isso.
+
+Abra o gedit em um novo arquivo como em:
+
+$ gedit algum arquivo
+
+Embora você ainda possa digitar na janela do terminal, o shell não prestará atenção ao que você inserir.
+Enquanto o ponteiro estiver sobre a janela do terminal, pressione TCTRL-Z.
+
+^ Z
+[3]+ Parou o gedit somefile
+
+Você não pode mais digitar na janela do gedit.
+Com jobs -l, veja quais processos foram iniciados nesta janela do terminal:
+
+$ empregos -l
+[1] 17705 Evidência em execução *pdf &
+[2]- 18248 Executando emacs /tmp/hello.tex &
+[3]+ 19827 Interrompeu o gedit somefile
+
+Agora coloque o trabalho mais recente (gedit somefile) em segundo plano:
+
+$ mil
+[3]+ gedit algum arquivo &
+
+Agora você deve conseguir digitar na janela do gedit.
+
+Coloque o processo em primeiro plano novamente:
+
+$fg
+
+gedit algum arquivo
+
+Observe que você mais uma vez entra na janela do terminal. Não tem efeito.
+
+Para limpar, suspenda o processo novamente e use kill para encerrá-lo:
+
+^ Z
+[3]+ Parou o gedit somefile
+$ empregos -l
+[1] 17705 Evidência em execução *pdf
+[2]- 18248 Executando emacs /tmp/hello.tex
+[3]+ 19827 Interrompeu o gedit somefile
+$ matar -9 19827
+$ empregos -l
+[1] 17705 Evidência em execução *pdf &
+[2]- 18248 Executando emacs /tmp/hello.tex &
+[3]+ 19827 Morto gedit somefile
+$ empregos -l
+[1]- 17705 Evidência em execução *pdf &
+[2]- 18248 Executando emacs /tmp/hello.tex &
+
+ps (status do processo) fornece informações sobre os processos em execução atualmente codificados por PID. Se quiser uma atualização periódica desse status, você pode usar top ou outras variantes comumente instaladas (como htop, atop ou btop) na linha de comando ou invocar o aplicativo de monitor gráfico do sistema da sua distribuição (como gnome-system-monitor ou ksysguard).
+
+ps tem muitas opções para especificar exatamente quais tarefas examinar, quais informações exibir sobre elas e precisamente qual formato de saída deve ser usado.
+
+Sem opções, ps exibirá todos os processos em execução no shell atual. Você pode usar a opção -u para exibir informações de processos para um nome de usuário especificado. O comando ps -ef exibe todos os processos do sistema em detalhes. O comando ps -eLf vai um passo além e exibe uma linha de informações para cada thread (lembre-se, um processo pode conter vários threads).
+
+ps tem outro estilo de especificação de opções, que deriva da variedade BSD do UNIX, onde as opções são especificadas sem travessões anteriores. Por exemplo, o comando ps aux exibe todos os processos de todos os usuários. O comando ps axo permite especificar quais atributos você deseja visualizar.
+
+A captura de tela mostra um exemplo de saída de ps com os qualificadores aux e axo.
+
+pstree exibe os processos em execução no sistema na forma de um diagrama de árvore mostrando o relacionamento entre um processo e seu processo pai e quaisquer outros processos que ele criou. As entradas repetidas de um processo não são exibidas e os threads são exibidos entre chaves.
+
+Embora uma visão estática do que o sistema está fazendo seja útil, monitorar o desempenho do sistema ao vivo ao longo do tempo também é valioso. Uma opção seria executar o ps em intervalos regulares, digamos, a cada poucos segundos. Uma alternativa melhor é usar top para obter atualizações constantes em tempo real (a cada dois segundos por padrão), até sair digitando q.top destaca claramente quais processos estão consumindo mais ciclos de CPU e memória (usando comandos apropriados de dentro de top) .
+
+A primeira linha da saída superior exibe um rápido resumo do que está acontecendo no sistema, incluindo:
+
+Há quanto tempo o sistema está ativo
+Quantos usuários estão conectados
+Qual é a média de carga
+A média de carga determina o quão ocupado o sistema está. Uma média de carga de 1,00 por CPU indica um sistema totalmente inscrito, mas não sobrecarregado. Se a média de carga ultrapassar esse valor, indica que os processos estão competindo pelo tempo de CPU. Se a média de carga for muito alta, isso poderá indicar que o sistema está tendo um problema, como um processo descontrolado (um processo em estado de não resposta).
+
+A segunda linha da saída superior exibe o número total de processos, o número de processos em execução, em suspensão, interrompidos e zumbis. Comparar o número de processos em execução com a média de carga ajuda a determinar se o sistema atingiu sua capacidade ou talvez um usuário específico esteja executando muitos processos. Os processos interrompidos devem ser examinados para verificar se tudo está funcionando corretamente.
+
+A terceira linha da saída superior indica como o tempo de CPU está sendo dividido entre os usuários (us) e o kernel (sy), exibindo a porcentagem de tempo de CPU usado para cada um.
+
+A porcentagem de tarefas de usuário executadas com prioridade mais baixa (gentileza - ni) é então listada. O modo inativo (id) deve ser baixo se a média de carga for alta e vice-versa. A porcentagem de jobs aguardando (wa) por E/S é listada. As interrupções incluem a porcentagem de interrupções de hardware (hi) versus interrupções de software (si). O tempo de roubo (st) geralmente é usado com máquinas virtuais, que têm parte do tempo ocioso da CPU utilizado para outros usos.
+
+A quarta e quinta linhas da saída superior indicam o uso de memória, que é dividido em duas categorias:
+
+Memória física (RAM) – exibida na linha 4.
+Espaço de troca – exibido na linha 5.
+Ambas as categorias exibem memória total, memória usada e espaço livre.
+
+Você precisa monitorar o uso da memória com muito cuidado para garantir um bom desempenho do sistema. Quando a memória física se esgota, o sistema começa a usar o espaço de troca (espaço de armazenamento temporário no disco rígido) como um conjunto de memória estendida e, como o acesso ao disco é muito mais lento do que o acesso à memória, isso afetará negativamente o desempenho do sistema.
+
+Se o sistema começar a usar swap com frequência, você poderá adicionar mais espaço de swap. No entanto, adicionar mais memória física também deve ser considerado.
+
+Cada linha na lista de processos da saída superior exibe informações sobre um processo. Por padrão, os processos são ordenados pelo maior uso de CPU. As seguintes informações sobre cada processo são exibidas:
+
+Número de identificação do processo (PID)
+Proprietário do processo (USUÁRIO)
+Prioridade (PR) e bons valores (NI)
+Memória virtual (VIRT), física (RES) e compartilhada (SHR)
+Estado (S)
+Porcentagem de CPU (%CPU) e memória (%MEM) usada
+Tempo de execução (TIME+)
+Comando (COMANDO).
+
+Além de relatar informações, o top pode ser utilizado de forma interativa para monitorar e controlar processos. Enquanto top está sendo executado em uma janela de terminal, você pode inserir comandos de uma única letra para alterar seu comportamento. Por exemplo, você pode visualizar os processos mais bem classificados com base no uso de CPU ou memória. Se necessário, você pode alterar as prioridades dos processos em execução ou pode interromper/interromper um processo.
+
+Tabela: O que acontece ao pressionar várias teclas durante a execução
+Saída de comando
+h ou ? Exibir teclas interativas disponíveis e suas funções
+t Exibir ou ocultar informações resumidas (linhas 2 e 3)
+m Exibir ou ocultar informações de memória (linhas 4 e 5)
+l Mostrar informações para cada CPU e não apenas totais
+d Alterar intervalo de atualização de exibição
+A Classifique a lista de processos pelos principais consumidores de recursos
+r Renice (alterar a prioridade de) um processo específico
+k Eliminar um processo específico
+f Entre na tela de configuração superior
+o Selecione interativamente uma nova ordem de classificação na lista de processos
+
+A maioria dessas teclas interativas são, na verdade, alternadas; acertá-los uma segunda vez reverte para a exibição original. Existem muito mais opções interativas; consulte a página de manual top para obter uma lista abrangente.
+
+Existem diversas alternativas ao top com telas mais bonitas e recursos adicionais, incluindo atop, btop e htop; cada programa tem seus fãs. Mostramos uma captura de tela mostrando todos os quatro programas operando simultaneamente para ter uma ideia do que eles fornecem.
+
+
+Suponha que você precise realizar uma tarefa em um dia específico em algum momento no futuro. Porém, você sabe que estará longe da máquina naquele dia. Como você executará a tarefa? Você pode usar o programa utilitário at para executar qualquer comando não interativo em um horário especificado, conforme ilustrado na captura de tela abaixo:
+
+cron é um programa utilitário de agendamento baseado em tempo. Ele pode lançar trabalhos rotineiros em segundo plano em horários e/ou dias específicos de forma contínua. O cron é controlado por um arquivo de configuração chamado /etc/crontab (tabela cron), que contém os vários comandos shell que precisam ser executados nos horários programados corretamente. Existem arquivos crontab para todo o sistema e arquivos individuais baseados em usuários. Cada linha de um arquivo crontab representa um trabalho e é composto por uma chamada expressão CRON, seguida por um comando shell para execução.
+
+Digitar crontab -e abrirá o editor crontab para editar trabalhos existentes ou criar novos trabalhos. Cada linha do arquivo crontab conterá 6 campos:
+
+Table: Fields, Descriptions, Values
+Field	Description	Values
+MIN	Minutes		0 to 59
+HOUR	Hour field	0 to 23
+DOM	Day of Month	1-31
+MON	Month field	1-12
+DOW	Day Of Week	0-6 (0 = Sunday)
+CMD	Command		Any command to be executed
+
+Exemplos:
+
+A entrada * * * * * /usr/local/bin/execute/this/script.sh agendará um trabalho para executar script.sh a cada minuto de cada hora de cada dia do mês, e todos os meses e todos os dias no semana.
+A entrada 30 08 10 06 * /home/sysadmin/full-backup agendará um backup completo às 8h30 do dia 10 de junho, independentemente do dia da semana.
+
+Embora o cron tenha sido usado em sistemas operacionais semelhantes ao UNIX por décadas, as distribuições modernas do Linux migraram para uma instalação mais recente: o anacron. Isso ocorreu porque o cron assumiu implicitamente que a máquina estava sempre em execução. No entanto, se a máquina estivesse desligada, os trabalhos agendados não seriam executados. o anacron executará os trabalhos necessários de maneira controlada e escalonada quando o sistema estiver instalado e funcionando.
+
+O arquivo de configuração principal é /etc/anacrontab:
+
+Observe que o anacron ainda faz uso da infraestrutura cron para enviar trabalhos diariamente, semanalmente e mensalmente, mas adia sua execução até momentos oportunos, quando o sistema estiver realmente ativo.
+
+Às vezes, um comando ou trabalho deve ser adiado ou suspenso. Suponha, por exemplo, que um aplicativo tenha lido e processado o conteúdo de um arquivo de dados e, em seguida, precise salvar um relatório em um sistema de backup. Se o sistema de backup estiver ocupado ou indisponível, o aplicativo poderá ser colocado em suspensão (esperar) até que possa concluir seu trabalho. Esse atraso pode ser para montar o dispositivo de backup e prepará-lo para gravação. Um caso ainda mais simples e frequente é aquele em que um processo do sistema precisa ser executado periodicamente para cuidar de qualquer trabalho que tenha sido enfileirado para ser tratado e depois precisa ficar escondido em segundo plano até que seja necessário novamente.
+
+sleep suspende a execução por pelo menos o período de tempo especificado, que pode ser fornecido como o número de segundos (o padrão), minutos, horas ou dias. Após esse tempo ter passado (ou um sinal de interrupção ter sido recebido), a execução será retomada.
+
+A sintaxe é:
+
+dormir NÚMERO[SUFIXO]...
+
+onde SUFIXO pode ser:
+
+s para segundos (o padrão)
+m por minutos
+h por horas
+d por dias.
+sleep e at são bem diferentes; sleep atrasa a execução por um período específico, enquanto at inicia a execução em um horário específico designado posteriormente.
+
+Agende uma tarefa muito simples para ser executada em um momento futuro a partir de agora. Isso pode ser tão simples quanto executar ls ou date e salvar a saída. Você pode usar um tempo tão curto quanto um minuto no futuro.
+
+Observe que o comando será executado no diretório no qual você o agendou com at.
+
+Fazem isto:
+
+De um pequeno script bash.
+Interativamente.
+
+Confira a solução fornecida na próxima página.
+
+Crie o arquivo testat.sh contendo:
+
+#!/bin/bash
+data > /tmp/datastamp
+
+e, em seguida, torne-o executável e coloque-o na fila em:
+
+$ chmod +x testat.sh
+$ agora + 1 minuto -f testat.sh
+
+Você pode ver se o trabalho está na fila para ser executado com atq:
+
+$atq
+17 Quarta, 22 de abril 08:55:00 2015 um estudante
+
+Certifique-se de que o trabalho realmente foi executado:
+
+$ gato /tmp/datastamp
+Quarta, 22 de abril 08:55:00 CDT 2015
+
+O que acontece se você retirar /tmp/datestamp do comando? Dica: digite mail se não for solicitado!
+
+Interativamente, é basicamente o mesmo procedimento. Basta colocar o trabalho na fila com:
+
+$ agora + 1 minuto
+em> data > /tmp/datestamp
+CTRL-D
+$atq
+
+Configure um cron job para realizar alguma tarefa simples todos os dias às 10h.
+
+Confira a solução fornecida na próxima página.
+
+Configure um cron job para realizar uma tarefa simples todos os dias às 10h. Crie um arquivo chamado mycrontab com o seguinte conteúdo:
+
+0 10 * * * /tmp/meutrabalho.sh
+
+e então crie /tmp/myjob.sh contendo:
+
+#!/bin/bash
+echo Olá, estou executando $ 0 em $ (data)
+
+e torne-o executável:
+
+$ chmod +x /tmp/meutrabalho.sh
+
+Coloque-o no sistema crontab com:
+
+$ crontab mycrontab
+
+e verifique se ele foi carregado com:
+
+$ crontab-l
+
+0 10 * * * /tmp/meutrabalho.sh
+$ sudo ls -l /var/spool/cron/aluno
+-rw------- 1 aluno aluno 25 de abril 22 09:59 /var/spool/cron/student
+$ sudo gato /var/spool/cron/aluno
+0 10 * * * /tmp/meutrabalho.sh
+
+NOTA: Se você realmente não deseja que isso seja executado todos os dias, imprima mensagens como:
+
+Olá, estou executando /tmp/myjob.sh em quarta-feira, 22 de abril, 10:03:48 CDT de 2015
+
+e enviá-los para você, você pode removê-lo com:
+
+$crontab-r
+
+Se a máquina não estiver ativa às 10h de um determinado dia, o anacron executará o trabalho em um horário adequado.
+
+
+resumo
+
+Você concluiu o Capítulo 9. Vamos resumir os principais conceitos abordados:
+
+Os processos são usados para executar diversas tarefas no sistema.
+Os processos podem ser de thread único ou multithread.
+Os processos podem ser de diferentes tipos, como interativos e não interativos.
+Cada processo possui um identificador exclusivo (PID) para permitir que o sistema operacional o rastreie.
+O valor agradável, ou gentileza, pode ser usado para definir prioridade.
+ps fornece informações sobre os processos em execução no momento.
+Você pode usar top para obter atualizações constantes em tempo real sobre o desempenho geral do sistema, bem como informações sobre os processos em execução no sistema.
+A média de carga indica a quantidade de utilização sob a qual o sistema está em determinados momentos.
+O Linux oferece suporte ao processamento em segundo plano e em primeiro plano para um trabalho.
+at executa qualquer comando não interativo em um horário especificado.
+cron é usado para agendar tarefas que precisam ser executadas em intervalos regulares.
+

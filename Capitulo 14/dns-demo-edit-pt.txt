@@ -1,0 +1,63 @@
+Vamos ter uma ideia de como o nameserver de domínio
+funciona em um sistema Ubuntu atual.
+Primeiro precisamos fazer o login.
+E, quando fizermos o login, vamos abrir um terminal
+porque faremos todas as operações
+a partir da linha de comando.
+Fiz isso clicando com o botão direito no desktop,
+agora vou aumentar a fonte.
+Posso usar a tela cheia também.
+Há alguns arquivos importantes no seu sistema,
+um deles se chama "/etc/resolv.conf".
+Em sistemas Linux mais antigos,
+não havia todas essas informações no topo.
+Acabamos de ver a coisa importante aqui,
+nameserver 127.0.0.53.
+É mais provável que você descubra que
+seu nameserver não é um 127.1, e que todos os endereços 127
+estão na máquina, mas 192.1.6.8.1, por exemplo,
+seria comum.
+Ele pode apontar seu modem sem fio, que está conectado
+ao seu provedor de internet, por exemplo.
+Sistemas recentes usam um systemd chamado
+"systemd-resolved", que funciona de um jeito
+mais complicado.
+Ele cria um servidor DNS na máquina local que armazena em
+cache os resultados de pesquisas anteriores.
+Não entraremos em detalhes nisso,
+mas esse é um desenvolvimento recente que
+você vai encontrar em máquinas mais novas.
+Outro arquivo importante é "/etc/hosts".
+Este arquivo é consultado antes que
+o nameserver de domínio seja consultado.
+Então você vai ver, por exemplo, aqui na parte inferior,
+temos duas máquinas na rede local.
+Damos os IPs e um nome que podemos usar
+para chegar até eles.
+E você vai notar que pode ter mais de um nome
+vinculado a um endereço de IP.
+Então, por exemplo, eu poderia digitar "ping theordore"
+e isso me levaria à 200, ou eu poderia digitar "ping beaver"
+e isso me levaria à mesma máquina.
+Agora, se quisermos ver algo que não está especificado
+nesse arquivo, posso digitar o "host theordore",
+e ele vai verificar o arquivo.
+Mas se eu quiser colocar algo na Internet,
+posso digitar "host linuxfoundation.org",
+e vou obter os endereços IPv4 e IPv6
+aqui da Linux Foundation.
+E também informações sobre os serviços de email
+fornecidos pela Linux Foundation.
+Posso fazer outro utilitário para informações semelhantes,
+com "nslookup".
+Então vou fazer isso, "nslookup linuxfoundation.org".
+Veja, temos a mesma informação básica,
+um pouco mais compacta.
+Aqui está o endereço IPv4 e os dois endereços IPv6.
+Outro utilitário que posso usar é "dig".
+Então vamos digitar "dig linuxfoundation.org".
+E, veja, mais uma vez obtive as informações sobre o IP
+e muito mais informações sobre a pesquisa
+para encontrar esse servidor.
+Então isso é apenas um pouco do que você pode fazer
+com o DNS e alguns dos arquivos associados a ele.

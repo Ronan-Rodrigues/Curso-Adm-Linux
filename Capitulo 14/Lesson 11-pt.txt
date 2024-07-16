@@ -1,0 +1,586 @@
+Olá, como vão?
+Neste mundo altamente conectado,
+os computadores raramente estão sozinhos.
+Para fazer isso, nós os conectamos em rede.
+Nesta lição, falaremos de endereçamento IP,
+resolução de nomes, arquivos de configuração,
+comandos remotos e solução de problemas.
+Pois, sem dúvida,
+você terá problemas para solucionar essas redes.
+Vamos começar então!
+
+Ao final deste capítulo, você deverá ser capaz de:
+
+Explicar conceitos básicos de rede, incluindo tipos de redes e solução de problemas.
+Configure interfaces de rede e use utilitários básicos de rede, como ifconfig, ip, ping, route e traceroute.
+Use navegadores gráficos e não gráficos, como Lynx, w3m, Firefox, Chrome e Epiphany.
+Transfira arquivos de e para clientes e servidores usando aplicativos em modo gráfico e de texto, como scp, ftp, sftp, curl e wget.
+
+Uma rede é um grupo de computadores e dispositivos de computação conectados por meio de canais de comunicação, como cabos ou mídia sem fio. Os computadores conectados em uma rede podem estar localizados na mesma área geográfica ou espalhados pelo mundo. Os dispositivos conectados são frequentemente chamados de nós.
+
+Uma rede é usada para:
+
+Permita que os dispositivos conectados se comuniquem entre si.
+Permita que vários usuários compartilhem dispositivos pela rede, como servidores de música e vídeo, impressoras e scanners.
+Compartilhe e gerencie facilmente informações como bancos de dados e sistemas de arquivos entre computadores.
+A maioria das organizações possui uma rede interna e uma conexão à Internet para que os usuários se comuniquem com máquinas e pessoas de fora da organização. A Internet é a maior rede do mundo e pode ser chamada de “rede das redes”.
+
+Os dispositivos conectados a uma rede devem ter pelo menos um identificador de endereço de rede exclusivo conhecido como endereço IP (Protocolo de Internet). Este endereço é essencial para rotear pacotes de informações pela rede.
+
+A troca de informações pela rede requer o uso de fluxos de pequenos pacotes, cada um contendo uma parte da informação que vai de uma máquina para outra. Esses pacotes contêm buffers de dados, juntamente com cabeçalhos que contêm informações sobre para onde o pacote está indo e vindo e onde ele se encaixa na sequência de pacotes que constituem o fluxo. Os protocolos e software de rede são bastante complicados devido à diversidade de máquinas e sistemas operacionais com os quais devem lidar, bem como ao fato de que mesmo padrões muito antigos devem ser suportados.
+
+Existem dois tipos diferentes de endereços IP disponíveis: IPv4 (versão 4) e IPv6 (versão 6). O IPv4 é mais antigo e de longe o mais utilizado, enquanto o IPv6 é mais recente e foi projetado para superar as limitações inerentes ao padrão mais antigo e fornecer muito mais endereços possíveis.
+
+IPv4 usa 32 bits para endereços; existem apenas 4,3 bilhões de endereços exclusivos disponíveis. Além disso, muitos endereços são atribuídos e reservados, mas não são realmente utilizados. O IPv4 é considerado inadequado para atender às necessidades futuras porque o número de dispositivos disponíveis na rede global aumentou enormemente nos últimos anos.
+
+IPv6 usa 128 bits para endereços; isso permite 3,4 x 1.038 endereços exclusivos. Se você tiver uma rede maior de computadores e quiser adicionar mais, talvez queira migrar para o IPv6, pois ele fornece endereços mais exclusivos. Contudo, pode ser complexo migrar para IPv6; os dois protocolos nem sempre interagem bem. Assim, a mudança de equipamentos e endereços para IPv6 exige um esforço significativo e não tem sido tão rápida como se pretendia originalmente. Discutiremos mais o IPv4 do que o IPv6, pois é mais provável que você lide com ele.
+
+Uma razão pela qual o IPv4 não desapareceu é que existem maneiras amplamente utilizadas de disponibilizar efetivamente muito mais endereços por meio de métodos como NAT (Network Address Translation). O NAT permite o compartilhamento de um endereço IP entre vários computadores conectados localmente, cada um dos quais possui um endereço exclusivo visto apenas na rede local. Embora seja usado em ambientes organizacionais, também é usado em redes domésticas simples. Por exemplo, se você tiver um roteador conectado ao seu provedor de Internet (como um sistema a cabo), ele fornecerá um endereço visível externamente, mas emitirá para cada dispositivo em sua casa um endereço local individual, que é invisível para o mundo exterior.
+
+Um endereço IPv4 de 32 bits é dividido em quatro seções de 8 bits chamadas octetos.
+
+Exemplo:
+Endereço IP → 172 . 16. 31. 46
+Formato de bits → 10101100.00010000.00011111.00101110
+
+NOTA: Octeto é apenas outra palavra para byte.
+
+Os endereços de rede são divididos em cinco classes: A, B, C, D e E. As classes A, B e C são classificadas em duas partes: Endereços de rede (Net ID) e Endereço de host (Host ID). O Net ID é usado para identificar a rede, enquanto o Host ID é usado para identificar um host na rede. A Classe D é usada para aplicações multicast especiais (as informações são transmitidas para vários computadores simultaneamente) e a Classe E é reservada para uso futuro. Nesta seção você aprenderá sobre as classes A, B e C.
+
+Os endereços de classe A usam o primeiro octeto de um endereço IP como ID de rede e os outros três octetos como ID de host. O primeiro bit do primeiro octeto é sempre definido como zero. Portanto, você pode usar apenas 7 bits para números de rede exclusivos. Como resultado, existem no máximo 126 redes Classe A disponíveis (os endereços 0000000 e 1111111 são reservados). Não é de surpreender que isso só fosse viável quando havia muito poucas redes exclusivas com grande número de hosts. À medida que o uso da Internet se expandiu, as Classes B e C foram adicionadas para acomodar a crescente demanda por redes independentes.
+
+Cada rede Classe A pode ter até 16,7 milhões de hosts únicos em sua rede. O intervalo de endereços de host é de 1.0.0.0 a 127.255.255.255.
+
+NOTA: O valor de um octeto, ou 8 bits, pode variar de 0 a 255.
+
+Um exemplo de endereço Classe A é:
+
+Os endereços de classe B usam os dois primeiros octetos do endereço IP como Net ID e os dois últimos octetos como Host ID. Os primeiros dois bits do primeiro octeto são sempre definidos como binário 10, portanto há um máximo de 16.384 (14 bits) redes Classe B. O primeiro octeto de um endereço de Classe B tem valores de 128 a 191. A introdução de redes de Classe B expandiu o número de redes, mas logo ficou claro que seria necessário um nível adicional.
+
+Cada rede Classe B pode suportar no máximo 65.536 hosts exclusivos em sua rede. O intervalo de endereços de host é de 128.0.0.0 a 191.255.255.255.
+
+Um exemplo de endereço de Classe B é:
+
+Os endereços de classe C usam os três primeiros octetos do endereço IP como Net ID e o último octeto como Host ID. Os primeiros três bits do primeiro octeto são definidos para o binário 110, portanto, quase 2,1 milhões (21 bits) de redes Classe C estão disponíveis. O primeiro octeto de um endereço Classe C tem valores de 192 a 223. Estes são mais comuns para redes menores que não possuem muitos hosts exclusivos.
+
+Cada rede Classe C pode suportar até 256 hosts exclusivos (8 bits). O intervalo de endereços de host é de 192.0.0.0 a 223.255.255.255.
+
+Um exemplo de endereço de classe C é:
+
+Normalmente, um intervalo de endereços IP é solicitado ao seu provedor de serviços de Internet (ISP) pelo administrador de rede da sua organização. Freqüentemente, a escolha da classe de endereço IP que você receberá depende do tamanho da sua rede e das necessidades de crescimento esperadas. Se o NAT estiver em operação, como em uma rede doméstica, você obterá apenas um endereço visível externamente!
+
+Você pode atribuir endereços IP a computadores em uma rede manual ou dinamicamente. A atribuição manual adiciona endereços estáticos (nunca alterados) à rede. Os endereços atribuídos dinamicamente podem mudar sempre que você reinicia ou com mais frequência; o Dynamic Host Configuration Protocol (DHCP) é usado para atribuir endereços IP.
+
+A resolução de nomes é usada para converter valores numéricos de endereços IP em um formato legível conhecido como nome de host. Por exemplo, 3.13.31.214 é o endereço IP numérico que se refere ao nome do host linuxfoundation.org. Os nomes de host são muito mais fáceis de lembrar!
+
+Dado um endereço IP, você pode obter o nome do host correspondente. O acesso à máquina pela rede fica mais fácil quando você digita o nome do host em vez do endereço IP.
+
+Você pode visualizar o nome do host do seu sistema simplesmente digitando hostname sem argumentos.
+
+NOTA: Se você fornecer um argumento, o sistema tentará alterar seu nome de host para corresponder a ele, no entanto, apenas usuários root poderão fazer isso.
+
+O nome de host especial localhost está associado ao endereço IP 127.0.0.1 e descreve a máquina em que você está atualmente (que normalmente possui endereços IP adicionais relacionados à rede).
+
+Dê uma olhada no seguinte exercício: Experimente você mesmo: Usando o sistema de nomes de domínio (DNS) e ferramentas de resolução de nomes.
+
+Os arquivos de configuração de rede são essenciais para garantir que as interfaces funcionem corretamente. Eles estão localizados na árvore de diretórios /etc. No entanto, os arquivos exatos usados têm sido historicamente dependentes da distribuição e versão específicas do Linux usadas.
+
+Para configurações da família Debian, os arquivos básicos de configuração de rede podem ser encontrados em /etc/network/, enquanto para sistemas da família Red Hat e SUSE é necessário inspecionar /etc/sysconfig/network.
+
+Os sistemas modernos enfatizam o uso do Network Manager, que discutimos brevemente quando consideramos a administração gráfica do sistema, em vez de tentar acompanhar os caprichos dos arquivos em /etc. Embora as versões gráficas do Network Manager pareçam um pouco diferentes em diferentes distribuições, o utilitário nmtui (mostrado na captura de tela) quase não varia, assim como o utilitário ainda mais esparso nmcli (interface de linha de comando). Se você é proficiente no uso de GUIs, use-as. Se você estiver trabalhando em vários sistemas, os utilitários de nível inferior poderão facilitar sua vida.
+
+As distribuições recentes do Ubuntu incluem o netplan, que é ativado por padrão e substitui o Network Manager. Como nenhuma outra distribuição demonstrou interesse e pode ser facilmente desativada se incomodar, iremos ignorá-la.
+
+As interfaces de rede são um canal de conexão entre um dispositivo e uma rede. Fisicamente, as interfaces de rede podem prosseguir através de uma placa de interface de rede (NIC) ou podem ser implementadas de forma mais abstrata como software. Você pode ter várias interfaces de rede operando ao mesmo tempo. Interfaces específicas podem ser ativadas (ativadas) ou desativadas (desativadas) a qualquer momento.
+
+Informações sobre uma interface de rede específica ou todas as interfaces de rede podem ser relatadas pelos utilitários ip e ifconfig, que você pode ter que executar como superusuário, ou pelo menos fornecer o caminho completo, ou seja, /sbin/ifconfig, em algumas distribuições. ip é mais recente que ifconfig e tem muito mais recursos, mas sua saída é mais feia ao olho humano. Algumas novas distribuições do Linux não instalam o pacote net-tools mais antigo ao qual ifconfig pertence e, portanto, você teria que instalá-lo se quiser usá-lo.
+
+Para visualizar o endereço IP:
+
+$ /sbin/endereço IP mostrar
+
+Para visualizar as informações de roteamento:
+
+$ /sbin/ip exibição de rota
+
+ip é um programa muito poderoso que pode fazer muitas coisas. Utilitários mais antigos (e mais específicos), como ifconfig e route, são frequentemente usados para realizar tarefas semelhantes. Uma olhada nas páginas de manual relevantes pode lhe dizer muito mais sobre esses utilitários.
+
+ping é usado para verificar se uma máquina conectada à rede pode ou não receber e enviar dados; ou seja, confirma que o host remoto está online e respondendo.
+
+Para verificar o status do host remoto, no prompt de comando, digite ping <hostname>.
+
+o ping é frequentemente usado para teste e gerenciamento de rede; no entanto, seu uso pode aumentar a carga da rede de forma inaceitável. Portanto, você pode abortar a execução do ping digitando CTRL-C ou usando a opção -c, que limita o número de pacotes que o ping enviará antes de encerrar. Quando a execução é interrompida, um resumo é exibido. Alguns hosts se recusam a responder solicitações de ping.
+
+Uma rede requer a conexão de muitos nós. Os dados se movem da origem ao destino, passando por uma série de roteadores e, potencialmente, por várias redes. Os servidores mantêm tabelas de roteamento contendo os endereços de cada nó da rede. Os protocolos de roteamento IP permitem que os roteadores construam uma tabela de encaminhamento que correlaciona os destinos finais com os endereços do próximo salto.
+
+Pode-se usar o utilitário route (ou o comando ip route mais recente) para visualizar ou alterar a tabela de roteamento IP para adicionar, excluir ou modificar rotas específicas (estáticas) para hosts ou redes específicas. A tabela explica alguns comandos que podem ser usados para gerenciar o roteamento IP:
+
+ 
+
+Tabela: Tarefas e Comandos
+Comando de Tarefa
+Mostrar tabela de roteamento atual $ route –n ou ip route
+Adicionar rota estática $ route add -net address ou ip route add
+Excluir rota estática $ route del -net address ou ip route del
+
+traceroute é usado para inspecionar a rota que o pacote de dados segue para chegar ao host de destino, o que o torna bastante útil para solucionar atrasos e erros de rede. Ao usar o traceroute, você pode isolar problemas de conectividade entre saltos, o que ajuda a resolvê-los mais rapidamente.
+
+Para imprimir a rota percorrida pelo pacote para chegar ao host da rede, no prompt de comando, digite traceroute <address>.
+
+Por favor, dê uma olhada no seguinte exercício Experimente você mesmo: Usando ping, route e traceroute.
+
+Agora, vamos aprender sobre algumas ferramentas de rede adicionais. As ferramentas de rede são muito úteis para monitorar e depurar problemas de rede, como conectividade e tráfego de rede.
+
+ 
+
+Tabela: Ferramentas de rede e suas descrições
+Descrição das ferramentas de rede
+ethtool 		Consulta interfaces de rede e também pode definir vários parâmetros, como a velocidade
+netstat 		Exibe todas as conexões ativas e tabelas de roteamento; útil para monitorar o desempenho e solucionar problemas
+nmap 			Verifica portas abertas em uma rede; importante para análise de segurança
+tcpdump 		Descarrega o tráfego de rede para análise
+iptraf 			Monitora o tráfego de rede em modo texto
+mtr 			Combina funcionalidade de ping e traceroute e fornece uma exibição continuamente atualizada
+dig 			Testa o funcionamento do DNS; um bom substituto para host e nslookup
+
+Por favor, dê uma olhada no seguinte exercício Experimente você mesmo: Usando ferramentas de rede.
+
+Os navegadores são usados para recuperar, transmitir e explorar recursos de informação, geralmente na World Wide Web. Os usuários do Linux geralmente usam aplicativos de navegador gráficos e não gráficos.
+
+Os navegadores gráficos comuns usados no Linux são:
+
+Raposa de fogo
+Google Chrome
+Cromo
+Konqueror
+Ópera
+Às vezes, você não tem um ambiente gráfico para trabalhar (ou tem motivos para não usá-lo), mas ainda precisa acessar recursos da web. Nesse caso, você pode usar navegadores não gráficos, como os seguintes:
+
+ 
+
+Tabela: Navegadores não gráficos e suas descrições
+Descrição de navegadores não gráficos
+lynx 			Navegador web configurável baseado em texto; o navegador mais antigo e ainda em uso
+elinks 			baseados em Lynx; pode exibir tabelas e quadros
+w3m 			Outro navegador baseado em texto com muitos recursos
+
+Às vezes, você precisa baixar arquivos e informações, mas um navegador não é a melhor escolha, seja porque você deseja baixar vários arquivos e/ou diretórios, ou deseja executar a ação a partir de uma linha de comando ou script. wget é um utilitário de linha de comando que pode lidar com os seguintes tipos de downloads:
+
+Downloads de arquivos grandes
+Downloads recursivos, onde uma página da web se refere a outras páginas da web e todas são baixadas de uma vez
+Downloads exigidos por senha
+Vários downloads de arquivos.
+Para baixar uma página da web, você pode simplesmente digitar wget <url> e então ler a página baixada como um arquivo local usando um navegador gráfico ou não gráfico.
+
+Além do download, você pode querer obter informações sobre uma URL, como o código-fonte que está sendo usado. curl pode ser usado na linha de comando ou em um script para ler essas informações. curl também permite salvar o conteúdo de uma página da web em um arquivo, assim como o wget.
+
+Você pode ler um URL usando curl <URL>. Por exemplo, se você quiser ler http://www.linuxfoundation.org, digite curl http://www.linuxfoundation.org.
+
+Para obter o conteúdo de uma página da web e armazená-lo em um arquivo, digite curl -o save.html http://www.mysite.com. O conteúdo do arquivo de índice principal do site será salvo em save.html.
+
+Por favor, dê uma olhada no seguinte exercício Experimente você mesmo: Usando wget e curl.
+
+Quando você está conectado a uma rede, pode ser necessário transferir arquivos de uma máquina para outra. O File Transfer Protocol (FTP) é um método bem conhecido e popular para transferir arquivos entre computadores usando a Internet. Este método é baseado em um modelo cliente-servidor. O FTP pode ser usado em um navegador ou com programas clientes independentes.
+
+FTP é um dos métodos mais antigos de transferência de dados em rede, que remonta ao início da década de 1970. Como tal, é considerado inadequado para as necessidades modernas, além de ser intrinsecamente inseguro. No entanto, ainda está em uso e quando a segurança não é uma preocupação (como no chamado FTP anônimo), pode fazer sentido. No entanto, muitos sites, como o kernel.org, abandonaram seu uso.
+
+Os clientes FTP permitem transferir arquivos com computadores remotos usando o protocolo FTP. Esses clientes podem ser ferramentas gráficas ou de linha de comando. O Filezilla, por exemplo, permite o uso da abordagem arrastar e soltar para transferir arquivos entre hosts. Todos os navegadores da web suportam FTP; tudo o que você precisa fazer é fornecer uma URL como ftp://ftp.kernel.org, onde o http:// normal se torna ftp://.
+
+Alguns clientes FTP de linha de comando são:
+
+FTP
+sftp
+ncftp
+yafc (mais um cliente FTP).
+
+FTP é um dos métodos mais antigos de transferência de dados em rede, que remonta ao início da década de 1970. Como tal, é considerado inadequado para as necessidades modernas, além de ser intrinsecamente inseguro. No entanto, ainda está em uso, infelizmente. A maioria dos sites modernos (como kernel.org) abandonou seu uso.
+
+A razão pela qual o FTP caiu em desgraça nos sistemas modernos é que ele é intrinsecamente inseguro; senhas são credenciais de usuário que podem ser transmitidas sem criptografia e, portanto, sujeitas a interceptação. Assim, ele foi removido em favor do uso de rsync e acesso https do navegador da web, por exemplo. Como alternativa, o sftp é um modo de conexão muito seguro, que utiliza o protocolo Secure Shell (ssh), que discutiremos em breve. O sftp criptografa seus dados e, assim, informações confidenciais são transmitidas com mais segurança. No entanto, não funciona com o chamado FTP anônimo (credenciais de usuário convidado).
+
+Secure Shell (SSH) é um protocolo de rede criptográfico usado para comunicação segura de dados. Também é usado para serviços remotos e outros serviços seguros entre dispositivos na rede e é muito útil para administrar sistemas que não estão facilmente disponíveis para trabalhar fisicamente, mas aos quais você tem acesso remoto.
+
+Secure Shell (SSH) é um protocolo de rede criptográfico usado para comunicação segura de dados. Também é usado para serviços remotos e outros serviços seguros entre dispositivos na rede e é muito útil para administrar sistemas que não estão facilmente disponíveis para trabalhar fisicamente, mas aos quais você tem acesso remoto.
+
+Para fazer login em um sistema remoto usando seu mesmo nome de usuário, basta digitar ssh some_system e pressionar Enter. ssh então solicita a senha remota. Você também pode configurar o ssh para permitir acesso remoto com segurança, sem digitar uma senha todas as vezes.
+
+Se quiser executar como outro usuário, você pode fazer ssh -l Someone some_system ou ssh Someone@some_system. Para executar um comando em um sistema remoto via SSH, no prompt de comando, você pode digitar ssh some_system my_command.
+
+Também podemos mover arquivos com segurança usando Secure Copy (scp) entre dois hosts em rede. scp usa o protocolo SSH para transferência de dados.
+
+Para copiar um arquivo local para um sistema remoto, no prompt de comando, digite scp <localfile> <user@remotesystem>:/home/user/ e pressione Enter.
+
+Você receberá uma solicitação para a senha remota. Você também pode configurar o scp para que ele não solicite uma senha para cada transferência.
+
+A solução de problemas de rede é algo que você encontrará com frequência, caso ainda não o tenha feito. Praticaremos algumas das ferramentas discutidas anteriormente que podem ajudá-lo a isolar, solucionar e corrigir problemas em sua rede.
+
+O arquivo de solução contém um procedimento passo a passo para exercitar muitas das ferramentas que estudamos. Repita as etapas, substituindo os nomes reais da interface de rede, endereços de rede alternativos e sites, etc.
+
+Confira a solução fornecida na próxima página.
+
+A solução de problemas de rede é algo que você encontrará com frequência, caso ainda não o tenha feito. Praticaremos algumas das ferramentas discutidas anteriormente que podem ajudá-lo a isolar, solucionar e corrigir problemas em sua rede.
+
+Suponha que você precise realizar uma pesquisa na Internet, mas seu navegador não consegue encontrar google.com, dizendo que o host é desconhecido. Vamos prosseguir passo a passo para corrigir isso.
+
+1. Primeiro, certifique-se de que sua rede esteja configurada corretamente. Se o seu dispositivo Ethernet estiver instalado e funcionando, a execução do ifconfig deverá exibir algo como:
+
+aluno:/tmp> /sbin/ifconfig
+
+eno167777 Encap. de link:Ethernet HWaddr 00:0C:29:BB:92:C2
+           endereço inet:192.168.1.14 Bcast:192.168.1.255
+Máscara:255.255.255.0
+           endereço inet6: fe80::20c:29ff:febb:92c2/64 Escopo:Link
+           UP TRANSMISSÃO EM EXECUÇÃO MULTICAST MTU:1500 Métrica:1
+           Pacotes RX:3244 erros:0 descartados:0 ultrapassagens:0 quadro:0
+           Pacotes TX: erros de 2006: 0 descartados: 0 excedentes: 0 operadora: 0
+           colisões:0 txqueuelen:1000
+           Bytes RX: 4343606 (4,1 Mb) Bytes TX: 169082 (165,1 Kb)
+
+lo Link encap:Loopback local
+           endereço inet:127.0.0.1 Máscara:255.0.0.0
+           endereço inet6: ::1/128 Escopo:Host
+           UP LOOPBACK EM EXECUÇÃO MTU:65536 Métrica:1
+           Pacotes RX:0 erros:0 descartados:0 excessos:0 quadro:0
+           Pacotes TX:0 erros:0 descartados:0 sobrecargas:0 operadora:0
+           colisões:0 txqueuelen:0
+           Bytes RX: 0 (0,0 b) Bytes TX: 0 (0,0 b)
+
+Em sistemas mais antigos, você provavelmente verá um nome menos enigmático do que eno167777, como eth0, ou para uma conexão sem fio, poderá ver algo como wlan0 ou wlp3s0. Você também pode mostrar seu endereço IP com:
+
+aluno:/tmp> exibição de endereço IP
+
+1: lo: mtu 65536 qdisc noqueue state UNKNOWN grupo padrão
+     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+     host de escopo inet 127.0.0.1/8 lo
+        valid_lft para sempre preferido_lft para sempre
+     inet6 ::host de escopo 1/128
+        valid_lft para sempre preferido_lft para sempre
+2: eno16777736: estado mtu 1500 qdisc pfifo_fast \
+     Grupo UP padrão qlen 1000
+     link/éter 00:0c:29:bb:92:c2 brd ff:ff:ff:ff:ff:ff
+p inet 192.168.1.14/24 brd 192.168.1.255 escopo dinâmico global
+eno16777736
+        valid_lft 84941seg preferido_lft 84941seg
+     inet 192.168.1.15/24 brd 192.168.1.255 escopo secundário global
+dinâmico eno16777736
+        valid_lft 85909sec preferencial_lft 85909sec
+     inet6 fe80::20c:29ff:febb:92c2/64 link de escopo
+        valid_lft para sempre preferido_lft para sempre
+
+O endereço IP parece válido? Dependendo de onde você está usando, provavelmente é um endereço IP de Classe C; no exemplo acima, é 192.168.1.14.
+
+Se não mostrar um dispositivo com endereço IP, pode ser necessário iniciar ou reiniciar a rede e/ou o NetworkManager. Exatamente como você faz isso depende do seu sistema. Para a maioria das distribuições, um dos seguintes comandos fará isso:
+
+aluno:/tmp> sudo systemctl reiniciar NetworkManager
+aluno:/tmp> sudo systemctl reiniciar rede
+aluno:/tmp> sudo serviço NetworkManager reiniciar
+aluno:/tmp> sudo reinicialização da rede de serviço
+
+Se o seu dispositivo estava funcionando, mas não tinha endereço IP, o procedimento acima deveria ter ajudado a corrigi-lo, mas você pode tentar obter um novo endereço com:
+
+aluno:/tmp> sudo dhclient eth0
+
+substituindo o nome correto para o dispositivo Ethernet.
+
+A solução de problemas de rede é algo que você encontrará com frequência, caso ainda não o tenha feito. Praticaremos algumas das ferramentas discutidas anteriormente que podem ajudá-lo a isolar, solucionar e corrigir problemas em sua rede.
+
+Suponha que você precise realizar uma pesquisa na Internet, mas seu navegador não consegue encontrar google.com, dizendo que o host é desconhecido. Vamos prosseguir passo a passo para corrigir isso.
+
+1. Primeiro, certifique-se de que sua rede esteja configurada corretamente. Se o seu dispositivo Ethernet estiver instalado e funcionando, a execução do ifconfig deverá exibir algo como:
+
+aluno:/tmp> /sbin/ifconfig
+
+eno167777 Encap. de link:Ethernet HWaddr 00:0C:29:BB:92:C2
+           endereço inet:192.168.1.14 Bcast:192.168.1.255
+Máscara:255.255.255.0
+           endereço inet6: fe80::20c:29ff:febb:92c2/64 Escopo:Link
+           UP TRANSMISSÃO EM EXECUÇÃO MULTICAST MTU:1500 Métrica:1
+           Pacotes RX:3244 erros:0 descartados:0 ultrapassagens:0 quadro:0
+           Pacotes TX: erros de 2006: 0 descartados: 0 excedentes: 0 operadora: 0
+           colisões:0 txqueuelen:1000
+           Bytes RX: 4343606 (4,1 Mb) Bytes TX: 169082 (165,1 Kb)
+
+lo Link encap:Loopback local
+           endereço inet:127.0.0.1 Máscara:255.0.0.0
+           endereço inet6: ::1/128 Escopo:Host
+           UP LOOPBACK EM EXECUÇÃO MTU:65536 Métrica:1
+           Pacotes RX:0 erros:0 descartados:0 excessos:0 quadro:0
+           Pacotes TX:0 erros:0 descartados:0 sobrecargas:0 operadora:0
+           colisões:0 txqueuelen:0
+           Bytes RX: 0 (0,0 b) Bytes TX: 0 (0,0 b)
+
+Em sistemas mais antigos, você provavelmente verá um nome menos enigmático do que eno167777, como eth0, ou para uma conexão sem fio, poderá ver algo como wlan0 ou wlp3s0. Você também pode mostrar seu endereço IP com:
+
+aluno:/tmp> exibição de endereço IP
+
+1: lo: mtu 65536 qdisc noqueue state UNKNOWN grupo padrão
+     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+     host de escopo inet 127.0.0.1/8 lo
+        valid_lft para sempre preferido_lft para sempre
+     inet6 ::host de escopo 1/128
+        valid_lft para sempre preferido_lft para sempre
+2: eno16777736: estado mtu 1500 qdisc pfifo_fast \
+     Grupo UP padrão qlen 1000
+     link/éter 00:0c:29:bb:92:c2 brd ff:ff:ff:ff:ff:ff
+p inet 192.168.1.14/24 brd 192.168.1.255 escopo dinâmico global
+eno16777736
+        valid_lft 84941seg preferido_lft 84941seg
+     inet 192.168.1.15/24 brd 192.168.1.255 escopo secundário global
+dinâmico eno16777736
+        valid_lft 85909sec preferencial_lft 85909sec
+     inet6 fe80::20c:29ff:febb:92c2/64 link de escopo
+        valid_lft para sempre preferido_lft para sempre
+
+O endereço IP parece válido? Dependendo de onde você está usando, provavelmente é um endereço IP de Classe C; no exemplo acima, é 192.168.1.14.
+
+Se não mostrar um dispositivo com endereço IP, pode ser necessário iniciar ou reiniciar a rede e/ou o NetworkManager. Exatamente como você faz isso depende do seu sistema. Para a maioria das distribuições, um dos seguintes comandos fará isso:
+
+aluno:/tmp> sudo systemctl reiniciar NetworkManager
+aluno:/tmp> sudo systemctl reiniciar rede
+aluno:/tmp> sudo serviço NetworkManager reiniciar
+aluno:/tmp> sudo reinicialização da rede de serviço
+
+Se o seu dispositivo estava funcionando, mas não tinha endereço IP, o procedimento acima deveria ter ajudado a corrigi-lo, mas você pode tentar obter um novo endereço com:
+
+aluno:/tmp> sudo dhclient eth0
+
+substituindo o nome correto para o dispositivo Ethernet.
+
+Se sua interface estiver instalada e funcionando com um endereço IP atribuído e você ainda não conseguir acessar google.com, devemos garantir que você tenha um nome de host válido atribuído à sua máquina, com hostname:
+
+aluno:/tmp> nome do host
+
+openSUSE
+
+É raro que você tenha problemas aqui, pois provavelmente sempre há pelo menos um nome de host padrão, como localhost.
+
+3. Quando você digita o nome de um site como google.com, esse nome precisa estar conectado a um endereço IP conhecido. Isso geralmente é feito empregando o servidor DNS (Domain Name System)
+
+Primeiro, veja se o site está ativo e acessível com ping:
+
+aluno:/tmp> sudo ping -c 3 google.com
+
+PING google.com (216.58.216.238) 56(84) bytes de dados.
+64 bytes de ord31s22-in-f14.1e100.net (216.58.216.238): icmp_seq=1 ttl=51 tempo=21,7 ms
+64 bytes de ord31s22-in-f14.1e100.net (216.58.216.238): icmp_seq=2 ttl=51 tempo=23,8 ms
+64 bytes de ord31s22-in-f14.1e100.net (216.58.216.238): icmp_seq=3 ttl=51 tempo=21,3 ms
+
+--- estatísticas de ping do google.com —
+3 pacotes transmitidos, 3 recebidos, 0% de perda de pacotes, tempo 2.002 ms
+rtt min/média/máx/mdev = 21,388/22,331/23,813/1,074 ms
+
+Observação:
+
+Usamos sudo para ping; algumas distribuições recentes do Linux exigiram isso para evitar que usuários mal-intencionados ou mal-intencionados inundassem os sistemas com tais consultas.
+Usamos -c 3 para limitar a 3 pacotes; caso contrário, o ping seria executado para sempre até ser encerrado à força, digamos com CTRL-C .
+Se o resultado foi:
+
+ping: host desconhecido google.com
+
+É provável que algo esteja errado com a configuração do seu DNS. Observe que em alguns sistemas você nunca verá a mensagem de host desconhecido, mas obterá um resultado suspeito como:
+
+aluno:/tmp> sudo ping l89xl28vkjs.com
+
+PING l89xl28vkjs.com.site (127.0.53.53) 56(84) bytes de dados.
+64 bytes de 127.0.53.53: icmp_seq=1 ttl=64 tempo=0,016 ms
+...
+
+onde o endereço 127.0.x.x é um loop que retorna à máquina host em que você está. Você pode eliminar isso como um endereço válido fazendo:
+
+aluno:/tmp> host l89xl28vkjs.com
+
+Host l89xl28vkjs.com não encontrado: 3 (NXDOMAIN)
+
+enquanto um resultado correto seria semelhante a:
+
+aluno:/tmp> host google.com
+
+google.com tem endereço 216.58.216.206
+google.com tem endereço IPv6 2607:f8b0:4009:80b::200e
+O e-mail google.com é gerenciado por 20 alt1.aspmx.l.google.com.
+O e-mail google.com é gerenciado por 10 aspmx.l.google.com.
+O e-mail google.com é gerenciado por 30 alt2.aspmx.l.google.com.
+O e-mail google.com é gerenciado por 40 alt3.aspmx.l.google.com.
+O e-mail google.com é gerenciado por 50 alt4.aspmx.l.google.com.
+
+O comando acima utiliza o servidor DNS configurado em /etc/resolv.conf em sua máquina. Se você quisesse substituir isso, você poderia fazer:
+
+anfitrião 8.8.8.8
+
+8.8.8.8.in-addr.arpa ponteiro de nome de domínio google-public-dns-a.google.com.
+estudante@linux:~> host google.com 8.8.8.8
+Usando servidor de domínio:
+Nome: 8.8.8.8
+Endereço: 8.8.8.8#53
+Apelido:
+
+google.com tem endereço 216.58.216.110
+google.com tem endereço IPv6 2607:f8b0:4009:804::1002
+...\
+
+onde usamos o servidor DNS disponível publicamente fornecido pelo próprio Google. Usar este ou outro servidor público pode ser um bom truque às vezes se sua rede estiver ativa, mas o DNS estiver ruim; nesse caso você também pode inseri-lo em resolv.conf.
+
+Observe que existe outro arquivo, /etc/hosts, onde você pode associar nomes a endereços IP, que é usado antes da consulta do servidor DNS. Isto é mais útil para especificar nós na sua rede local.
+
+Você também pode usar o utilitário dig se preferir:
+
+aluno:/tmp> cavar google.com
+
+; <<>> DiG 9.9.5-rpz2+rl.14038.05-P1 <<>> google.com
+;; opções globais: +cmd
+;; Obtive resposta:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 29613
+;; bandeiras: qr rd ra; CONSULTA: 1, RESPOSTA: 11, AUTORIDADE: 0, ADICIONAL: 1
+;; OPTAR PSEUDOSECÇÃO:
+; EDNS: versão: 0, sinalizadores:; MBZ: 1c20, udp: 1280
+;; SEÇÃO DE PERGUNTAS:
+;google.com. EM UM
+;; SEÇÃO DE RESPOSTA:
+google. com. 244 EM A 173.194.46.67
+google. com. 244 EM UM 173.194.46.65
+google. com. 244 EM A 173.194.46.71
+google. com. 244 EM A 173.194.46.73
+google. com. 244 EM UM 173.194.46.69
+google. com. 244 EM A 173.194.46.68
+google. com. 244 EM UM 173.194.46.64
+google. com. 244 EM A 173.194.46.72
+google. com. 244 EM A 173.194.46.70
+google. com. 244 EM A 173.194.46.66
+google. com. 244 EM A 173.194.46.78
+
+;; Tempo de consulta: 22 ms
+;; SERVIDOR: 192.168.1.1#53(192.168.1.1)
+;; QUANDO: segunda-feira, 20 de abril, 08:58:58 CDT 2015
+;; Tamanho do MSG obtido: 215
+
+4. Suponha que host ou dig não consiga conectar o nome a um endereço IP. Há muitos motivos pelos quais o DNS pode falhar, alguns dos quais são:
+
+O servidor DNS está inativo. Neste caso, tente fazer ping para ver se ele está ativo (você deve ter o endereço IP em /etc/resolv.conf).
+O servidor pode estar instalado e funcionando, mas o DNS pode não estar disponível na máquina.
+Sua rota para o servidor DNS pode não estar correta.
+Como podemos testar a rota? Rastreando a rota para um dos servidores de nomes públicos mencionados anteriormente:
+
+estudante@linux:~> sudo traceroute 8.8.8.8
+
+traceroute para 8.8.8.8 (8.8.8.8), 30 saltos no máximo, pacotes de 60 bytes
+  1 192.168.1.1 (192.168.1.1) 0,405ms 0,494ms 0,556ms
+  2 10.132.4.1 (10.132.4.1) 15,127ms 15,107ms 15,185ms
+  3dtr02ftbgwi-tge-0-6-0-3.ftbg.wi.charter.com (96.34.24.122)
+                                                           15,243ms 15,327ms 17,878ms
+  4 crr02ftbgwi-bue-3.ftbg.wi.charter.com (96.34.18.116) 17,667 ms 17,734 ms 20,016 ms
+  5 crr01ftbgwi-bue-4.ftbg.wi.charter.com (96.34.18.108) 22,017 ms
+22,359ms 22,052ms
+  6 crr01euclwi-bue-1.eucl.wi.charter.com (96.34.16.77) 29,430 ms 22,705 ms 22,076 ms
+  7 bbr01euclwi-bue-4.eucl.wi.charter.com (96.34.2.4) 17,795 ms
+25,542ms 25,600ms
+  8 bbr02euclwi-bue-5.eucl.wi.charter.com (96.34.0.7) 28,227 ms 28,270 ms 28,303 ms
+  9 bbr01chcgil-bue-1.chcg.il.charter.com (96.34.0.9) 33,114 ms
+33,072ms 33,175ms
+10 prr01chcgil-bue-2.chcg.il.charter.com (96.34.3.9) 36,882 ms
+36,794ms 36,895ms
+11 96-34-152-30.static.unas.mo.charter.com (96.34.152.30) 42,585 ms
+42,326ms 42,401ms
+12 216.239.43.111 (216.239.43.111) 28,737ms 216.239.43.113
+(216.239.43.113)
+                                                            24,558ms 23,941ms
+13 209.85.243.115 (209.85.243.115) 24,269ms 209.85.247.17
+(209.85.247.17)
+    25,758ms 216.239.50.123 (216.239.50.123) 25,433ms
+14 google-public-dns-a.google.com (8.8.8.8) 25,239 ms 24,003 ms 23,795 ms
+
+Novamente, isso provavelmente deve funcionar para você, mas e se você obtivesse apenas a primeira linha na saída do traceroute?
+
+Se isso acontecer, provavelmente sua rota padrão está errada. Tentar:
+
+aluno:/tmp> ip route show
+
+padrão via 192.168.1.1 dev eno16777736 proto métrica estática 1024
+192.168.1.0/24 dev eno16777736 link de escopo do proto kernel src 192.168.1.14
+
+Provavelmente, isso está definido para sua interface de rede e o endereço IP do seu roteador, DSL ou modem a cabo. Digamos que esteja em branco ou simplesmente aponte para sua própria máquina. Aqui está o seu problema! Neste ponto, você precisaria adicionar uma rota padrão adequada e executar alguns dos mesmos testes que acabamos de fazer.
+
+Observe que uma versão aprimorada do traceroute é fornecida pelo mtr, que é executado continuamente (como top). Executando-o com a opção --report-cycles para limitar quanto tempo ele será executado:
+
+aluno:/tmp> sudo mtr --report-cycles 3 8.8.8.8
+
+                              Meu traceroute [v0.85]
+c7 (0.0.0.0) segunda-feira, 20 de abril 09:30:41 2015
+Não é possível alocar o soquete IPv6 para comunicação do servidor de nomes: família de endereços não suportada
+               por protocolo Pacotes Pings
+% de perda de host Snt Última Média Melhor Wrst StDev
+                                      0,0%. 3 0,3 0,3 0,2 0,3 0,0
+2. 10.132.4.1 0,0% 3 6,3 7,1 6,3 8,4 0,7
+3.dtr02ftbgwi-tge-0-6-0-3.ftbg.wi. 0,0% 3 6,2 7,5 6,2 10,0 2,1
+4.dtr01ftbgwi-bue-1.ftbg.wi.charte 0,0% 3 8,9 8,5 6,2 10,4 2,0
+5. crr01ftbgwi-bue-4.ftbg.wi.charte 0,0% 3 8,9 9,7 8,9 10,4 0,0
+6. crr01euclwi-bue-1.eucl.wi.charte 0,0% 3 16,5 17,4 14,2 21,5 3,7
+7. bbr01euclwi-bue-4.eucl.wi.charte 0,0% 3 23,5 22,0 18,2 24,2 3,2
+8. bbr02euclwi-bue-5.eucl.wi.charte 0,0% 3 18,9 22,7 18,1 31,1 7,2
+9. bbr01chcgil-bue-1.chcg.il.charte 0,0% 3 22,9 23,0 22,9 23,1 0,0
+10. prr01chcgil-bue-2.chcg.il.charte 0,0% 3 21,4 24,1 20,8 30,2 5,2
+11. 96-34-152-30.static.unas.mo.char 0,0% 3 22,6 21,9 20,0 23,3 1,6
+12. 216.239.43.111 0,0% 3 21,2 21,7 21,2 22,0 0,0
+13. 72.14.237,35 0,0% 3 21,2 21,0 19,8 21,9 1,0
+14.google-public-dns-a.google.com 0,0% 3 26,7 23,0 21,0 26,7 3,2
+
+Esperançosamente, executar alguns desses comandos ajudou. Na verdade, ajuda ver como é a saída correta para o seu sistema. Pratique o uso desses comandos; é muito provável que você precise deles algum dia.
+
+Há momentos em que um navegador gráfico não está disponível, mas você precisa procurar ou baixar um recurso. Neste exercício, vamos experimentar o uso de navegadores web não gráficos.
+
+O arquivo de solução contém um procedimento passo a passo para exercitar as ferramentas discutidas. Por favor repita os passos, substituindo sites, etc.
+
+Confira a solução fornecida na próxima página.
+
+Discutimos navegadores não gráficos:
+
+lince
+links e elinks
+w3m
+Há momentos em que você não terá uma interface gráfica de janela em execução em sua máquina Linux e precisará procurar algo na web ou baixar um driver (como um driver gráfico para abrir uma interface gráfica de janela). Portanto, é uma boa ideia praticar o uso de um navegador não gráfico para realizar algum trabalho.
+
+Com links, você pode usar o mouse para clicar na linha superior da tela para obter um menu. Neste caso, queremos ir para google.com (ou seu mecanismo de busca favorito), então você pode simplesmente digitar g para ir para um URL digitado.
+
+Pressionar a tecla TAB moverá o cursor para o botão “OK”. Você pode então pressionar a tecla ENTER.
+
+Agora você deve estar em google.com (ou em seu mecanismo de pesquisa favorito). Use a tecla de seta para baixo para percorrer as opções até chegar à linha em branco usada para inserir sua consulta de pesquisa. Agora digite drivers gráficos Intel Linux na caixa de pesquisa. Use a tecla de seta para baixo para ir até o botão "Pesquisa Google". Com isso destacado, pressione a tecla ENTER.
+
+Use a tecla de seta para baixo para ir até a entrada: Intel(R) Graphics Drivers for Linux - Download Center. Você pode encontrar opções um pouco diferentes, pois as coisas mudam com o tempo. Portanto, escolha algo equivalente, se necessário. Pode ser necessário pressionar várias vezes a tecla de seta para baixo. Você pode pressionar a barra de espaço para descer a página ou a tecla B para voltar para cima, se necessário. Assim que esta linha estiver destacada, pressione a tecla ENTER. Agora você irá para a página do driver de gráficos Intel para Linux. Se quiser, você pode ler a página. Lembre-se de que a barra de espaço o moverá para baixo na página, enquanto a tecla B o moverá de volta para cima. As teclas Page Down e Page Up farão a mesma coisa, se você preferir. Encontre o URL abaixo da linha:
+
+Localização da URL:
+
+Posicione o cursor nesta linha usando a tecla de seta para cima ou para baixo. Pressione a tecla ENTER para ir para este local.
+
+Desça esta página até ver a linha:
+
+Últimos lançamentos
+
+Se você mover o cursor com as teclas de seta, encontre a versão mais recente (com a data de lançamento mais recente) nesta seção. Se estiver usando as teclas de seta, você deve destacar Notas de versão. Pressione a tecla ENTER.
+
+Possui instaladores para versões do Ubuntu e Fedora, junto com o código-fonte. Você precisará descer uma ou duas páginas, dependendo do tamanho da tela.
+
+Selecione um dos instaladores, talvez para a versão do Linux que você está executando, ou apenas um aleatório, e pressione a tecla ENTER.
+
+Você deverá ver uma caixa de diálogo de texto com opções sobre o que fazer. Salve o pacote onde quiser.
+
+Agora você pode sair do seu navegador não gráfico. Se você usou links, clique na linha superior da tela, selecione o item do menu suspenso Arquivo e clique em "Sair". Confirme que você realmente deseja sair do Links. Agora você deve ver o prompt do shell.
+
+resumo
+
+Você concluiu o Capítulo 14. Vamos resumir os principais conceitos abordados:
+
+O endereço IP (Protocolo de Internet) é um endereço de rede lógica exclusivo atribuído a um dispositivo em uma rede.
+O IPv4 usa 32 bits para endereços e o IPv6 usa 128 bits para endereços.
+Cada endereço IP contém um campo de endereço de rede e de host.
+Existem cinco classes de endereços de rede disponíveis: A, B, C, D e E.
+DNS (Domain Name System) é usado para converter nomes de domínio e host da Internet em endereços IP.
+O programa ifconfig é usado para exibir as interfaces de rede ativas atuais.
+Os comandos ip addr show e ip route show podem ser usados para visualizar endereços IP e informações de roteamento.
+Você pode usar o ping para verificar se o host remoto está ativo e respondendo.
+Você pode usar o programa utilitário de rota para gerenciar o roteamento IP.
+Você pode monitorar e depurar problemas de rede usando ferramentas de rede.
+Firefox, Google Chrome, Chromium e Epiphany são os principais navegadores gráficos usados no Linux.
+Os navegadores não gráficos ou de texto usados no Linux são Lynx, Links e w3m.
+Você pode usar o wget para baixar páginas da web.
+Você pode usar curl para obter informações sobre URLs.
+FTP (File Transfer Protocol) é usado para transferir arquivos em uma rede.
+ftp, sftp, ncftp e yafc são clientes FTP de linha de comando usados no Linux.
+Você pode usar ssh para executar comandos em sistemas remotos.

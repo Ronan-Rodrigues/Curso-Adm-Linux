@@ -1,0 +1,23 @@
+Veja como trocar de usuários em máquina Ubuntu
+com vários usuários.
+Seleciono LF Student, insiro minha senha e entro.
+Aí, se eu clicar na superior direita, vejo LF Student
+e posso clicar em "Log Out" ou "Switch User".
+Se eu der "Log Out," eu saio, mas se trocar de usuário,
+eu travo a conta, e ao começar,
+preservarei todas as minhas sessões e janelas abertas etc.
+quando reiniciar.
+Em algumas distribuições, dá para ver uma lista de usuários
+nesta tela, mas não no Ubuntu.
+Aí insiro "Switch User" e volto à tela inicial.
+Vou pegar Theodore Cleaver, e logar como outro usuário.
+Aí está. Agora, aqui em cima posso fazer o mesmo.
+Então, vou clicar no nome e escolher "Switch User"
+e se eu escolher LF Student novamente,
+notem que aqui está escrito "Unlock," e não "Restart."
+Ou seja, se eu fizer login agora,
+toda a atividade anterior estará preservada.
+Vai ser a mesma coisa
+em todos os distribuidores Linux atuais.
+É muito fácil trocar de usuários
+e não perder o que se está fazendo.

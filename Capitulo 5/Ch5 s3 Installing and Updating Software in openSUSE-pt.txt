@@ -1,0 +1,53 @@
+Agora vamos demonstrar o gerenciamento
+do pacote de programas de uma interface gráfica
+usando a distribuição Linux open SUSE.
+A ferramenta que queremos usar é a YaST, y-s-t
+e existem duas formas diferentes de conseguir.
+Se eu tiver instalada a extensão GNOME shell
+mostrando o menu "Aplicativos" o que não é o padrão
+eu posso ir em "Ferramentas de Sistema",
+e ir até o YaST,
+ou eu posso sempre ir para o canto direito superior.
+Clicar no ícone da ferramenta
+e aí, aqui embaixo no sistema clicar em YaSt.
+Ele vai querer a senha raiz
+porque eu vou manipular o que está instalado no sistema.
+E aí eu vou em "Programa" e "Gerenciamento de Programa".
+Agora a primeira coisa que o YaST tem que fazer
+é estudar o sistema e obter a base de dados
+de cada pacote possível.
+Você pode procurar os pacotes do sistema
+de formas diferentes.
+Você pode ver pelo que é chamado de Grupos RPM.
+Aí estão todos os jogos, agrupados em entretenimento.
+Eu tenho Aplicativos, Desenvolvimento
+e todo tipo de subcategorias de desenvolvimento,
+Ferramentas, Documentos, etc.
+Ou Grupos RPM... esse que é o Grupos RPM. Certo.
+Ou eu posso ver os Grupos de Pacotes,
+que talvez seja um pouco mais intuitivo.
+Então eu poderia clicar em, digamos, Multimídia
+e ver todos os programas diferentes envolvidos com ela.
+Vamos supor que eu queira instalar algo
+ou definir onde algo seja instalado.
+Eu posso clicar em Procurar e digitar algo aqui.
+Eu vou digitar gnuplot
+e achar rapidamente
+todos os programas gnuplot existentes.
+O principal tem uma marca de verificação na caixa.
+Significa que já está instalado.
+Eu vou decidir instalar o gnuplot-doc,
+que é um pacote pequeno de documentação.
+E aí para fazer a instalação
+eu clico em "Aceitar" e sigo em frente.
+É um pacote bem pequeno. Não demora muito.
+Se você precisasse de outros pacotes para a função,
+ele os teria instalado na mesma hora.
+Agora eu clico em "Continuar" e, caso eu possa,
+eu quero removê-lo porque eu não preciso tanto.
+Eu vou digitar na busca de novo e aí eu clico aqui
+até aparecer um X para a remoção.
+E aí eu clico em "Aceitar" e ele vai removê-lo.
+Isso é tudo o necessário
+para fazer uma instalação e remoção do pacote básico
+pelo programa GNOME com o openSUSE. Muito simples.

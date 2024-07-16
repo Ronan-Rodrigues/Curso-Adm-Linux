@@ -1,0 +1,179 @@
+- [Jerry] Vamos começar a instalação
+de um sistema Ubuntu
+e eu farei isso através de uma estação de trabalho VMware.
+Caso eu precisasse fazer isso como uma máquina virtual,
+através de KVM ou VirtualBox, seria da mesma forma.
+Exceto por como começar a instalação,
+seria da mesma forma
+em um computador físico,
+sem um monitor da máquina virtual VMware.
+Digamos "Criar uma nova máquina virtual".
+Eu serei perguntado onde está o arquivo ISO,
+a imagem de disco é para criá-lo,
+eu já o tenho montado na minha máquina.
+Eu usarei Ubuntu 20.04, versão para desktop.
+Aqui eu direi "Próximo"
+e então ele me pedirá um estudante... um nome.
+Digamos que o nome completo é "LF Student",
+que o nome de usuário
+que ele usará para entrar será "student"
+e eu preciso informar uma senha,
+então eu farei isso.
+Claro que você não vê a senha,
+então eu preciso dar um nome.
+Digamos "Ubuntu-NEW".
+Na minha máquina,
+eu não gosto de colocá-lo no meu diretório principal.
+Eu tenho um diretório específico para máquinas virtuais,
+porque elas ocupam muito espaço,
+e eu colocarei ele em "VM/Ubuntu-NEW".
+Serei perguntado quanto espaço no disco rígido eu quero,
+vamos aumentar até 30 GB
+e então eu o colocarei em um único arquivo.
+VMware tende a alocar em múltiplos pedaços ou arquivos,
+eu acho isso inconveniente.
+É mais fácil administrar com apenas um arquivo,
+então eu farei isso.
+Em "Customizando hardware"
+eu posso mudar a quantidade de memória,
+mas 4 GB é o suficiente.
+Porém eu tenho múltiplos CPUs
+nessa máquina, então eu posso optar por 4.
+Isso provavelmente não vai alterar muito a instalação.
+Todo o resto, eu opto pelo padrão.
+Então eu posso finalizar
+e ele poderá começar a instalação.
+Alguns passos da instalação,
+como copiar todos os arquivos e configurá-los,
+pode levar algum tempo,
+porém todo o processo não deve tomar mais
+de 15, 20 minutos.
+Uma vez que apareça a engrenagem, eu pausarei a gravação
+para que você não precise assistir esses 15 minutos.
+Agora serei perguntado algumas perguntas básicas sobre como
+o sistema está montado.
+Também toca uma música.
+Eu concordo com Inglês-EUA para o meu teclado.
+Vamos a isso.
+Eu vou optar pela instalação normal.
+Eu poderia escolher a instalação mínima,
+que instala muito muito pouco.
+Eu deveria baixar as atualizações enquanto instalo.
+Caso haja pacotes que tenham sido atualizados desde
+que o disco de instalação foi criado,
+ele me dará as versões mais recentes.
+Isso fará com que a instalação dure um pouco mais,
+mas salvará muito tempo após a instalação.
+Também pode instalar alguns softwares auxiliares
+para gráficos, Wi-Fi, e formatos de mídia adicionais.
+Há alguns termos de licença
+e algumas dessas são prioritárias,
+então Ubuntu separa isso dos outros pacotes.
+Depois, ele vai por conta própria.
+Eu não entrarei em detalhes
+sobre como reconfigurar o disco rígido,
+que tipo de sistemas de arquivo usar.
+Essas são coisas que você pode querer alterar
+se clicar em outra coisa.
+Ao mesmo tempo, eu só farei a instalação.
+Eu sei que Ubuntu faz algumas escolhas sensíveis.
+De fato, você vê o que será feito.
+Ele montará algumas partições,
+uma bem grande que conterá toda a informação
+e uma que será para EFI ou para inicialização.
+Agora vai criar os sistemas de arquivos,
+como é possível ver pelas mensagens na parte de baixo.
+Ele pede que eu escolha o fuso horário,
+esse é o fuso correto para onde eu estou agora.
+Pedirá informação com nomes.
+Eu direi "LF Student" como uma máquina completa...
+digo, como nome completo,
+e para nome do computador, vamos chamá-lo de "Ubuntu".
+Mais uma vez,
+eu estou dando um estudante, um nome e uma senha.
+Você percebe que ele reprova a senha
+porque ela é fraca
+e então exige minha senha para entrar.
+De forma geral, está tudo certo.
+Você não quer que o sistema inicialize
+se você nem mesmo estiver ali.
+Você deveria ter que inserir uma senha,
+então geralmente não é boa ideia ter um login automático.
+Então ele faz a instalação.
+Está quase terminando de copiar arquivos.
+Vamos ver aonde ele chega a partir daqui.
+Provavelmente pausaremos
+quando começar a fazer o trabalho de configuração.
+Eu pausei por 1 ou 2 minutos,
+e você verá que agora está fazendo a instalação
+e está recuperando um monte de arquivos
+que foram atualizados desde que o disco foi feito.
+Caso eu clicasse nisso, eu poderia ver alguns detalhes,
+apesar de que não seria muito interessante.
+Certo, deixe-me pausar novamente,
+porque não é interessante olhar
+para isso por muito tempo.
+E apenas 1 ou 2 minutos depois,
+é possível ver que está configurando o hardware.
+Está estudando o hardware no sistema,
+descobrindo exatamente quais drivers ele precisa,
+ajustando tudo, montando o loader de inicialização,
+o que é importante para escolher entre sistemas operantes
+e para diferentes escolhas de núcleo e outras opções.
+Está removendo arquivos como
+itens de língua estrangeira que você não precisa
+durante a instalação, está fazendo outras tarefas
+de manutenção.
+Está quase pronto,
+mesmo com eu pausando a gravação por um tempo,
+todo esse processo realmente toma apenas poucos minutos.
+Ainda está instalando o sistema,
+então eu pausarei por um momento.
+Eu recomeço
+a gravação novamente por alguns segundos
+e você pode ver que está configurando vários pacotes
+que estão no sistema
+e tendo certeza de que eles estão ajustados.
+Claro que enquanto está instalando,
+ele dá algumas mensagens informativas, alguns anúncios,
+propagandas para diversas coisas,
+diferentes softwares, etc.
+Agora a instalação está completa,
+então deixe-me reiniciar.
+Eu pausei por um momento, mas não acredito
+que esse processo tomou mais de,
+certamente, menos de 10 minutos.
+Nós devemos ter um sistema totalmente funcional agora,
+está reiniciando.
+E aqui estamos,
+eu diria "estudante", "login", digito a senha,
+e lá vamos nós.
+Agora vai perguntar algumas coisas
+porque essa é a primeira vez que o sistema roda.
+Você pode trabalhar com alguma das suas contas online.
+Todas fazem isso hoje em dia, mas eu vou deixar pra depois.
+Você pode dizer para mandar informações para Canonical,
+essa é a empresa que é dona de Ubuntu,
+sobre as informações do seu sistema, eles acharão útil.
+Caso não queira isso, caso queira ser mais privado
+e não ajudá-los, você pode dizer não.
+Da mesma forma, você tem a opção
+de ativar e desativar os serviços de localização.
+Nós diremos não.
+Estamos prontos para partir, tudo feito, certo?
+Está informando como instalar outros softwares
+e, se eu clicar com o botão direito no plano de fundo aqui,
+eu posso abrir um terminal,
+e se eu digitar o comando "df", para disco livre,
+você verá que a instalação foi colocada numa árvore SDA,
+essa partição, e usa 9.5 GB.
+Certo, então você sabe que isso é tudo
+que você precisa fazer para uma instalação.
+Você pode então adicionar todo tipo de software,
+reconfigurar coisas.
+Originalmente, distribuições perguntavam
+muito mais informação durante a instalação.
+Agora tentam fazer tudo da forma mais eficiente possível
+e você pode especificar informação adicional
+uma vez que esteja instalado.
+E isso é tudo o que você precisa fazer para instalar Ubuntu.

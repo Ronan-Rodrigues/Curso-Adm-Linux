@@ -1,0 +1,70 @@
+Vamos demonstrar algumas das operações
+que você pode fazer com o Emacs em seu trabalho diário.
+Vamos pegar um arquivo para editar.
+Estamos no diretório /tmp,
+vamos pegar uma cópia de /etc/passwd
+e levar pra cá.
+E então, para trabalhar nisso,
+só digito emacs passwd & e o nome do arquivo.
+Agora, a fonte padrão aqui é um pouco pequena.
+Vou pressionar ctrl + botão do meio do mouse
+para controlar o tamanho da fonte,
+e então eu vou deixar a janela um pouco maior.
+Então, feito.
+Agora, suponha que eu queira procurar uma certa string,
+digamos ftp, eu pressiono Ctrl + s
+e digito na linha inferior ftp.
+Você pode ver aqui embaixo.
+Então verá que me levou para o ftp.
+Voltarei ao início da linha pressionando Ctrl + a ,
+e então, digamos que eu queira mudar todas as ocorrências
+da string ftp para outra coisa,
+pressiono Escape + %
+e então digito ftp novamente na linha inferior.
+E então, vamos fazer de trás para frente em maiúsculas, PTF.
+Apertei espaço, você tem o primeiro, espaço,
+tem o segundo, espaço, temos terceiro.
+Se eu tivesse apertado exclamação,
+teria feito em todos em todo o arquivo.
+Suponha que eu queira remover uma linha.
+Aperto Ctrl+K e pronto. Ctrl+K desapareceu novamente.
+Suponha que eu queira remover um intervalo de linhas.
+Eu pressiono Ctrl+espaço
+e depois desço algumas linhas
+com a tecla de seta ou Ctrl+N, pressiono Ctrl+W
+e eles desaparecem.
+Se eu quiser movê-los mais adiante no arquivo,
+desço algumas linhas e pressiono Ctrl+Y
+para puxar e eles estão de volta.
+Uma coisa legal que posso fazer com o Emacs
+é abrir várias janelas ao mesmo tempo.
+Então, deixe-me pressionar Ctrl+X+2
+e agora tenho duas janelas e posso alternar para a inferior
+pressionando Ctrl+X+O, significa outras.
+Apertei Ctrl+X+F, posso colocar um outro arquivo aqui.
+Então, digamos que eu o coloque em /etc/group.
+De novo, vou aumentar a fonte
+pressionando Ctrl e o botão do meio do mouse.
+Veja que a linha inferior está protegida,
+então não posso excluir nada porque pertence ao root.
+Se eu tentar,
+não me deixará fazer isso. O buffer é somente leitura.
+No geral, se tivesse dois arquivos com as mesmas permissões,
+eu poderia recortar e colar e passar de um para o outro.
+Para voltar a apenas uma, posso apertar Ctrl+X+1,
+e tenho apenas isso.
+Mas se eu quisesse a outra janela,
+eu poderia pressionar Ctrl+X+B e voltaria ao arquivo passwd.
+Se eu quiser reescrever, posso pressionar Ctrl+X+W...
+Ctrl+X, Ctrl+W e me deixaria escrever com um nome diferente.
+Vou digitar passwdrevised,
+e está lá.
+Se eu quiser encerrar o programa, eu digo Ctrl+X+S.
+Veja se tudo foi salvo, Ctrl+X+C e pronto.
+Veja que usamos bastante a tecla Ctrl no emacs.
+A posição da maioria dos teclados hoje não é natural,
+fica totalmente na parte inferior esquerda ou direita.
+Os usuários veteranos do Emacs tendem a remapear o teclado
+para que a tecla caps lock também funcione como Ctrl.
+Essas são algumas das operações básicas
+que você faria no uso diário do Emacs.

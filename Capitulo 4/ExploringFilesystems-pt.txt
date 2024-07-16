@@ -1,0 +1,61 @@
+- [Jerry Cooperstein] Vamos ganhar experiência
+com algumas tarefas básicas
+que envolvem localizar e executar aplicativos,
+explorar sistemas de arquivos,
+criar e editar um novo arquivo.
+Eu posso acessar o menu de aplicativos,
+por exemplo, no canto superior esquerdo,
+e você verá que começo nos favoritos
+e posso encontrar o Firefox lá,
+ou eu posso rolar para baixo e também achar o Firefox.
+Aqui eu criei o aplicativo Firefox no navegador
+e se eu quiser,
+posso simplesmente matá-lo clicando no X do canto.
+Outra forma de ver os favoritos, aliás,
+é clicando em Activities no canto superior esquerdo.
+Vemos os favoritos listados na parte inferior.
+E aqui está o Firefox de novo.
+Se eu quiser abrir o navegador de arquivos,
+posso fazer isso daqui,
+ele parece um armário de arquivo,
+ou posso voltar a Applications e ver os arquivos lá.
+E agora criei um navegador,
+um navegador de arquivos, que me mostra meu sistema.
+Posso procurar no meu diretório Home, por exemplo.
+Por padrão, ele me mostra uma visualização de ícones,
+mas se eu clicar aqui na visualização de lista,
+posso ver os arquivos, quando eles foram criados,
+e dependendo de outras configurações,
+quem os possui, etc.
+Aqui, não há arquivos não ocultos no diretório,
+mas posso mudar isso clicando nestas configurações
+no canto superior direito.
+Vemos que ele diz Show Hidden Files
+e então verei coisas como meu arquivo Dash RC
+e outros arquivos que começam com um ponto.
+Se eu quiser criar um novo arquivo,
+uma maneira de fazer isso é voltando a Applications
+e em Accessories,
+posso encontrar o editor de texto,
+que é apenas um nome para o Gedit.
+Agora o chamam de editor de texto, mas é Gedit.
+Vou tentar criar um arquivo e direi
+"aqui está um novo arquivo
+sendo criado com o Gedit".
+E se eu quiser salvá-lo,
+eu clico aqui em cima,
+Save.
+Vou usar Save As porque ele ainda não tem nome
+e vou aceitar o nome que estão sugerindo,
+o novo arquivo "sendo texto", que é um nome bobo.
+Então, posso fechar o editor
+e depois eu vejo o arquivo aqui.
+Se eu quiser removê-lo, posso usar Move to Trash.
+Dependendo da configuração do seu sistema na distribuição,
+pode haver um botão Delete Permanently,
+mas neste sistema Fedora, isso não acontece.
+Posso usar Move to Trash,
+ir para a lixeira e, se eu clicar com o botão direito nela,
+posso usar Delete From Trash e o arquivo some.
+Esta é só uma breve explicação
+de algumas coisas que você pode fazer.

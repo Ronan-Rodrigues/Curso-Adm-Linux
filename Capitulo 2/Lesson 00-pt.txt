@@ -1,0 +1,7 @@
+A melhor maneira de aprender Linux é praticando.
+Esse curso é bem prático.
+Por isso, você precisará ter um sistema Linux rodando,
+seja um sistema nativo no seu hardware,
+seja um sistema rodando em um pen drive ou CD,
+ou uma máquina virtual rodando em um hypervisor.
+Mostraremos todos esses métodos. Vamos começar.

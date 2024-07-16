@@ -1,0 +1,48 @@
+Demonstraremos como controlar conexões de rede com fio
+e sem fio em um sistema Red Hat.
+Se eu clicar no canto superior direito, por exemplo,
+e quiser ver a conexão com fio, posso rolar para baixo
+até "conexão com fio",
+e "configurações com fio", e me pedirá a minha senha.
+A senha root, porque precisa de um superusuário
+para controlar conexões de rede.
+Veja que tenho uma conexão de 1.000 megabits.
+Clicando na engrenagem, posso controlar as configurações.
+Em "Detalhes", na primeira tela, diz que se conecta
+automaticamente quando o sistema inicia
+e todos os usuários podem usar.
+Em "Identidade", dou um nome com base na aparência
+da interface, não o nome do sistema.
+Em sistemas antigos, teria sido eth0, eth1, etc,
+mas como iremos discutir adiante,
+sistemas mais novos têm nomes mais complexos.
+Sob IPv4, controlamos as configurações
+de protocolos de internet básicas.
+Na maioria das vezes, deixamos no automático ,
+protocolo de configuração dinâmico de hosts,
+e o sistema é que encontra o seu endereço no servidor, etc.
+Se você entende a importância de configurações manuais,
+pode especificar um endereço, um netmask, um gateway,
+pode selecionar um servidor DNS específico,
+e pode especificar rotas para certos endereços.
+Se você entende esses conceitos,
+é aqui que você controla tudo isso.
+Não mudaremos nada, então só apertarei em "cancelar".
+Se eu quiser controlar as configurações de Wi-Fi,
+posso voltar para o canto superior direito
+ou clicar nas configurações de Wi-Fi aqui,
+e novamente, está me pedindo a senha de superusuário.
+Essas são as redes disponíveis no momento.
+Todas têm um cadeado do lado, porque necessitam senha.
+Essa é a que eu estou, coopj, a primeira.
+Se eu clicar em configurações,
+novamente pedirá
+a minha senha de superusuário,
+e verei, essencialmente, as mesmas configurações de antes:
+o início automático, como outras pessoas usam,
+a identidade, se eu quero usar DHCP
+ou se quero configurar manualmente.
+Isso é tudo que tem na interface gráfica
+para controlar conexões de rede básicas.
+É bem simples e igual em todas as distribuições
+recentes do Linux.

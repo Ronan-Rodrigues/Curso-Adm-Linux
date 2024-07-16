@@ -1,0 +1,80 @@
+- [Jerry Cooperstein] Vamos experimentar
+usar a Secure Shell, SSH,
+para fazer login em máquinas remotas
+e para fazer cópias entre máquinas remotas.
+Por isso, criamos aqui duas máquinas virtuais,
+uma para o Ubuntu e outra para o CentOS,
+e queremos que elas falem entre si.
+Primeiro, teremos que saber seus endereços IP.
+Poderíamos fazer isso, por exemplo, na máquina Ubuntu
+dizendo ifconfig.
+E esta é a interface relevante:
+ens33,
+192.168.72.130 é o endereço.
+Ou usando seu utilitário IP mais moderno, podemos dizer:
+ip --brief
+add, para endereço
+show
+E assim temos uma listagem simples do endereço.
+Eu vou até a máquina CentOS,
+e farei a mesma coisa.
+ip --brief add show
+E assim vemos que seus endereços são ambos 192.168.72,
+mas o último octeto é diferente.
+130 na máquina Ubuntu,
+133 na máquina CentOS.
+Então, vamos fazer Secure Shell da máquina CentOS
+para a máquina Ubuntu. Vou fazer:
+ssh student@192.168.72.130
+E porque esta é a primeira vez que eu faço isto,
+está verificando para ter certeza de que está tudo bem.
+Vou dizer que sim.
+E agora eu tenho que digitar a senha,
+que não é mostrada na tela.
+E aqui estamos nós.
+Estamos agora na máquina Ubuntu,
+mas nós viemos da máquina CentOS.
+Você vai perceber, se eu sair e fizer isso novamente,
+eu não tenho que dizer student
+porque a conta é student em ambas as máquinas.
+Eu posso apenas dar o endereço IP
+e entrar perfeitamente dessa forma.
+Sem problemas.
+Bem, e quanto a uma cópia com Secure Shell?
+Eu posso fazer isso.
+Vamos fazer isso da máquina Ubuntu
+para a máquina CentOS.
+E mais uma vez, vou pegar meu endereço aqui.
+Eu faço isso com:
+ip --brief add show.
+E eu direi,
+vamos direto para o home aqui.
+E eu direi:
+scp -r para recursivo.
+O diretório student
+para 192.168.72.133.
+E vou colocá-lo no diretório temporário.
+Você tem que fazer
+:/tmp.
+Mais uma vez, ele vai me pedir a senha.
+Eu direi que sim.
+Vou colocar a senha.
+Vejam que copiou todo o diretório student
+o que posso verificar ao ir até a máquina CentOS.
+Vou fazer "ls student" no diretório tmp.
+E verão que tudo está lá.
+Agora, uma coisa você vai notar
+se eu for para qualquer uma das máquinas,
+Vou para o diretório .ssh que existe,
+e você verá que há um arquivo lá agora
+chamado known_host.
+E se eu ver ele, só vai me mostrar
+quem entrou no sistema recentemente.
+E esta é a chave pública da outra máquina.
+Neste caso, a máquina CentOS.
+Para que na próxima vez que eu tentar entrar no sistema,
+não me perguntará
+se realmente tenho certeza do que estou fazendo, etc.
+Vou apenas fazer o login diretamente.
+Então isso é tudo que você tem que fazer
+para ter uma idéia básica de como o SSH no SCP funciona.

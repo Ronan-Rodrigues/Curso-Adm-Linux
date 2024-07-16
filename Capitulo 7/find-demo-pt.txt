@@ -1,0 +1,53 @@
+Vamos estudar o poderoso comando Find em um sistema Ubuntu.
+Vamos estudar o poderoso comando Find em um sistema Ubuntu.
+Vou trabalhar no diretório "/var/log".
+Digamos que eu queira ver todos os arquivos sob nosso log.
+Digamos que eu queira ver todos os arquivos sob nosso log.
+Farei isso como SUDO, senão teremos mensagens de erro
+sobre não ter permissão para ver alguns arquivos.
+Eu ponho "sudo find ."
+e obtenho uma lista bem longa de arquivos e diretórios.
+Para restringir a diretórios, eu escreveria "-type d".
+Você verá que só aparecem os diretórios e subdiretórios,
+porque alguns, como o "libvirt", têm diversos diretórios.
+Se eu adicionar outro parâmetro,
+"-maxdepth 1",
+os subdiretórios são suprimidos, agora só vemos o "libvirt".
+Só adicionei o nível um de profundidade,
+poderia ser dois, três, o que fosse preciso,
+embora aqui nem seja tão profundo.
+Sempre é possível adicionar comandos a qualquer Find.
+Sempre é possível adicionar comandos a qualquer Find.
+Posso escrever "find . -type f"
+Posso escrever "find . -type f"
+e depois "exec grep -H log".
+e depois "exec grep -H log".
+Coloco "{}",
+depois " \; ".
+Também poderia ser " -;- ".
+A busca verificou todos os arquivos com a palavra "log"
+e apresentou as diversas coisas que estavam neles.
+Para simplificar, eu poderia ter usado "-exec ls -l".
+Para simplificar, eu poderia ter usado "-exec ls -l".
+Isso me daria uma lista de todos esses arquivos.
+Na verdade, há uma opção "-ls" integrada ao Find,
+eu não precisava ter feito isso.
+Isso me apresentará esse tipo de informação.
+Há outras coisas que posso fazer, como "find . -size 0".
+Está buscando todos os arquivos,
+eu deveria ter usado o SUDO
+com todos os arquivos que têm tamanho zero.
+Para verificar isso, basta adicionar a opção "-ls".
+Veja, estes são todos os arquivos com tamanho zero.
+Também é possível encontrar tudo que seja mais novo
+do que este arquivo, "/btmp".
+Poderia ser algo como "sudo find . -newer btmp".
+Poderia ser algo como "sudo find . -newer btmp".
+E eu teria tudo que foi feito desde então.
+Hã um milhão de opções para o Find,
+que podem ser usadas de várias formas complicadas.
+Você pode negar qualquer parâmetro que desejar dizendo "não"
+e pode adicionar outro critério de busca.
+Eu recomendo fortemente que você estude o Find
+se for usá-lo, porque é difícil descrever em poucos minutos
+os milhões de coisas que você pode fazer com ele.

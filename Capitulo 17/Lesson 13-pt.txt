@@ -1,0 +1,364 @@
+Enquanto a maior parte do tempo gasto no Linux
+envolve um monitor,
+você pode acabar querendo imprimir os documentos
+que está criando para compartilhá-los com outras pessoas.
+Nesta lição,
+abordaremos o básico a respeito no Linux,
+inclusive como configurar o Linux para imprimir,
+manusear a impressora na fila de impressão com comandos
+e manusear o post-script e os PDFs.
+Vamos começar!
+
+
+Ao final deste capítulo, você deverá saber como:
+
+Configure uma impressora em uma máquina Linux.
+Imprimir documentos.
+Manipule arquivos postscript e PDF usando utilitários de linha de comando.
+
+Para gerenciar impressoras e imprimir diretamente de um computador local ou em um ambiente de rede, você precisa saber como configurar e instalar uma impressora. A impressão em si requer um software que converta as informações do aplicativo que você está usando em uma linguagem que sua impressora possa entender. O padrão Linux para software de impressão é o Common UNIX Printing System (CUPS).
+
+Os modernos sistemas de desktop Linux tornam a instalação e administração de impressoras simples e intuitivas. No entanto, é instrutivo compreender os fundamentos de como isso é feito no Linux.
+
+CUPS é o software subjacente que os sistemas Linux usam para imprimir a partir de aplicativos, incluindo qualquer navegador da web, como Thunderbird ou google-chrome, pacote de escritório como o LibreOffice ou visualizador de documentos PDF, como o evince. Ele interpreta as descrições das páginas produzidas pela sua aplicação (coloque um parágrafo aqui, desenhe uma linha ali e assim por diante) e depois envia as informações para a impressora. Ele atua como um servidor de impressão para impressoras locais e de rede.
+
+Impressoras fabricadas por diferentes empresas podem usar suas próprias linguagens e formatos de impressão específicos. O CUPS utiliza um sistema de impressão modular que acomoda uma ampla variedade de impressoras e também processa vários formatos de dados. Isto torna o processo de impressão mais simples; você pode se concentrar mais na impressão e menos em como imprimir.
+
+Geralmente, o único momento em que você precisará configurar sua impressora é quando você a usa pela primeira vez. Na verdade, o CUPS muitas vezes descobre as coisas sozinho, detectando e configurando quaisquer impressoras que localiza.
+
+O CUPS realiza o processo de impressão com a ajuda de seus diversos componentes:
+
+Arquivos de configuração
+Agendador
+Arquivos de trabalho
+Arquivos de registro
+Filtro
+Drivers de impressora
+Processo interno.
+Você aprenderá sobre alguns desses componentes nas próximas páginas.
+
+O CUPS foi projetado em torno de um agendador de impressão que gerencia trabalhos de impressão, lida com comandos administrativos, permite aos usuários consultar o status da impressora e gerencia o fluxo de dados por meio de todos os componentes do CUPS.
+
+Veremos a interface baseada em navegador que pode ser usada com o CUPS, que permite visualizar e manipular a ordem e o status dos trabalhos de impressão pendentes.
+
+O agendador de impressão lê as configurações do servidor de vários arquivos de configuração, sendo os dois mais importantes cupsd.conf e Printers.conf. Esses e todos os outros arquivos de configuração relacionados ao CUPS são armazenados no diretório /etc/cups/.
+
+cupsd.conf é onde a maioria das configurações do sistema estão localizadas; ele não contém detalhes específicos da impressora. A maioria das configurações disponíveis neste arquivo está relacionada à segurança da rede, ou seja, quais sistemas podem acessar os recursos de rede do CUPS, como as impressoras são anunciadas na rede local, quais recursos de gerenciamento são oferecidos e assim por diante.
+
+Printers.conf é onde você encontrará as configurações específicas da impressora. Para cada impressora conectada ao sistema, uma seção correspondente descreve o status e os recursos da impressora. Este arquivo é gerado ou modificado somente após a adição de uma impressora ao sistema e não deve ser modificado manualmente.
+
+Você pode ver a lista completa de arquivos de configuração digitando ls -lF /etc/cups.
+
+O CUPS armazena solicitações de impressão como arquivos no diretório /var/spool/cups (eles podem ser acessados antes que um documento seja enviado para uma impressora). Os arquivos de dados são prefixados com a letra d, enquanto os arquivos de controle são prefixados com a letra c.
+
+Depois que uma impressora executa um trabalho com êxito, os arquivos de dados são removidos automaticamente. Esses arquivos de dados pertencem ao que é comumente conhecido como fila de impressão.
+
+Os arquivos de log são colocados em /var/log/cups e são usados pelo agendador para registrar atividades que ocorreram. Esses arquivos incluem registros de acesso, erro e página.
+
+Para visualizar quais arquivos de log existem, digite:
+
+$ sudo ls -l /var/log/cups
+
+Nota em algumas distribuições as permissões são definidas de forma que você não precisa usar o sudo. Você pode visualizar os arquivos de log com as ferramentas usuais.
+
+O CUPS usa filtros para converter formatos de arquivo de trabalho em formatos imprimíveis. Os drivers de impressora contêm descrições das impressoras atualmente conectadas e configuradas e geralmente são armazenados em /etc/cups/ppd/. Os dados de impressão são então enviados para a impressora por meio de um filtro e de um backend que ajuda a localizar os dispositivos conectados ao sistema.
+
+Resumindo, ao executar um comando de impressão, o agendador valida o comando e processa o trabalho de impressão, criando arquivos de trabalho de acordo com as configurações especificadas nos arquivos de configuração. Simultaneamente, o agendador registra atividades nos arquivos de log. Os arquivos de trabalho são processados com a ajuda do filtro, driver de impressora e back-end e, em seguida, enviados para a impressora.
+
+Supondo que o CUPS tenha sido instalado, você precisará iniciar e gerenciar o daemon do CUPS para que o CUPS esteja pronto para configurar uma impressora. Gerenciar o daemon CUPS é simples; todos os recursos de gerenciamento podem ser feitos com o utilitário systemctl:
+
+$ copos de status systemctl
+
+$ sudo systemctl [habilitar|desabilitar] copos
+
+$ sudo systemctl [iniciar | parar | reiniciar] copos
+
+NOTA: A próxima tela demonstra isso no Ubuntu, mas é a mesma para todas as principais distribuições Linux atuais.
+
+Cada distribuição Linux possui um aplicativo de configuração gráfica que permite adicionar, remover e configurar impressoras locais ou remotas. Se você tiver certeza de que o dispositivo está ligado e conectado ao sistema; nesse caso, ele deverá aparecer no menu de seleção da impressora. Se a impressora não estiver visível, você pode solucionar o problema usando ferramentas que determinarão se a impressora está conectada. Para impressoras USB comuns, por exemplo, o utilitário lsusb mostrará uma linha para a impressora. Alguns fabricantes de impressoras também exigem a instalação de algum software extra para tornar a impressora visível para o CUPS; no entanto, devido à padronização atual, isso raramente é necessário.
+
+Muitos usuários não sabem que o CUPS vem com seu próprio servidor web, que disponibiliza uma interface de configuração por meio de um conjunto de scripts CGI.
+
+Esta interface web permite que você:
+
+Adicionar e remover impressoras locais/remotas
+Configurar impressoras:
+Impressoras locais/remotas
+Compartilhe uma impressora como um servidor CUPS
+Controlar trabalhos de impressão:
+Monitorar trabalhos
+Mostrar trabalhos concluídos ou pendentes
+Cancelar ou mover trabalhos
+A interface web do CUPS está disponível no seu navegador em: localhost:631.
+
+Algumas páginas exigem um nome de usuário e uma senha para realizar determinadas ações, por exemplo, para adicionar uma impressora. Para a maioria das distribuições Linux, você deve usar a senha root para adicionar, modificar ou excluir impressoras ou classes.
+
+Muitos aplicativos gráficos permitem que os usuários acessem recursos de impressão usando o atalho CTRL-P. Para imprimir um arquivo, primeiro você precisa especificar a impressora (ou um nome e local de arquivo, se estiver imprimindo em um arquivo) que deseja usar; e selecione as opções de configuração, qualidade e cor da página. Após selecionar as opções desejadas, você poderá enviar o documento para impressão. O documento é então enviado ao CUPS. Você pode usar seu navegador para acessar a interface web do CUPS em http://localhost:631/ para monitorar o status do trabalho de impressão. Agora que configurou a impressora, você pode imprimir usando a interface gráfica ou de linha de comando.
+
+A captura de tela mostra a interface GUI do CTRL-P para CentOS, outras distribuições Linux parecem virtualmente idênticas.
+
+O CUPS fornece duas interfaces de linha de comando, descendentes dos sabores System V e BSD do UNIX. Isso significa que você pode usar lp (System V) ou lpr (BSD) para imprimir. Você pode usar esses comandos para imprimir arquivos de texto, PostScript, PDF e imagem.
+
+Esses comandos são úteis nos casos em que as operações de impressão devem ser automatizadas (a partir de scripts shell, por exemplo, que contêm vários comandos em um arquivo).
+
+lp é apenas um front-end de linha de comando para o utilitário lpr que passa a entrada para o lpr. Assim, discutiremos apenas LP em detalhes. No exemplo mostrado aqui, a tarefa é imprimir $HOME/.emacs.
+
+lp e lpr aceitam opções de linha de comando que ajudam a executar todas as operações que a GUI pode realizar. lp normalmente é usado com um nome de arquivo como argumento.
+
+Alguns comandos lp e outros utilitários de impressão que você pode usar estão listados na tabela:
+
+ 
+
+Tabela: Comandos e Exemplos de Uso
+Uso de comando
+lp <nome do arquivo> Para imprimir o arquivo na impressora padrão
+lp -d impressora <nome do arquivo> Para imprimir em uma impressora específica (útil se várias impressoras estiverem disponíveis)
+programa | lp
+string de eco | lp Para imprimir a saída de um programa
+lp -n número <nome do arquivo> Para imprimir múltiplas cópias
+lpoptions -d impressora Para definir a impressora padrão
+lpq -a Para mostrar o status da fila
+lpadmin Para configurar filas de impressora
+ 
+
+lpoptions pode ser usado para definir opções e padrões da impressora. Cada impressora possui um conjunto de tags associadas a ela, como o número padrão de cópias e requisitos de autenticação. Você pode digitar lpoptions help para obter uma lista de opções suportadas. lpoptions também pode ser usado para definir valores para todo o sistema, como a impressora padrão.
+
+Por favor, dê uma olhada no seguinte exercício Experimente você mesmo: Imprimindo com lp.
+
+Você envia um arquivo para a impressora compartilhada. Mas quando você vai até lá para coletar a impressão, descobre que outro usuário acabou de iniciar um trabalho de 200 páginas que não é urgente. Seu arquivo não poderá ser impresso até que o trabalho de impressão seja concluído. O que você faz agora?
+
+No Linux, os comandos de gerenciamento de trabalhos de impressão de linha de comando permitem monitorar o estado do trabalho, bem como gerenciar a listagem de todas as impressoras e verificar seu status, além de cancelar ou mover trabalhos de impressão para outra impressora.
+
+Alguns desses comandos estão listados na tabela.
+
+ 
+
+Tabela: Comandos e Exemplos de Uso
+Uso de comando
+lpstat -p -d 				Para obter uma lista de impressoras disponíveis, juntamente com seu status
+lpstat -a 				Para verificar o status de todas as impressoras conectadas, incluindo números de trabalhos
+cancelar ID do trabalho
+ou
+lprm job-id 				Para cancelar um trabalho de impressão
+lpmove job-id newprinter 		Para mover um trabalho de impressão para uma nova impressora
+
+Dê uma olhada no seguinte exercício Experimente você mesmo: Gerenciando trabalhos de impressão.
+
+PostScript é uma linguagem padrão de descrição de páginas. Ele gerencia com eficácia o dimensionamento de fontes e gráficos vetoriais para fornecer impressões de qualidade. É puramente um formato de texto que contém os dados alimentados em um interpretador PostScript. O formato em si é uma linguagem que a Adobe desenvolveu no início dos anos 1980 para permitir a transferência de dados para impressoras.
+
+Os recursos do PostScript são:
+
+Ele pode ser usado em qualquer impressora compatível com PostScript, ou seja, qualquer impressora moderna.
+Qualquer programa que entenda a especificação PostScript pode imprimir nele.
+Informações sobre a aparência da página, etc., estão incorporadas na página.
+O Postscript foi, em sua maior parte, substituído pelo formato PDF (Portable Document Format), que produz arquivos muito menores em um formato compactado para o qual o suporte foi integrado em muitos aplicativos. Contudo, ainda é preciso lidar com documentos pós-escritos, muitas vezes como um formato intermediário, no caminho para a produção de documentos finais.
+
+enscript é uma ferramenta usada para converter um arquivo de texto em PostScript e outros formatos. Ele também suporta Rich Text Format (RTF) e HyperText Markup Language (HTML). Por exemplo, você pode converter um arquivo de texto em duas colunas (-2) formatadas em PostScript usando o comando:
+
+$ enscript -2 -r -p psfile.ps textfile.txt
+
+Este comando também irá girar (-r) a saída para impressão de forma que a largura do papel seja maior que a altura (também conhecido como modo paisagem), reduzindo assim o número de páginas necessárias para impressão.
+
+Os comandos que podem ser usados com enscript estão listados na tabela abaixo (para um arquivo chamado textfile.txt).
+
+ 
+
+Tabela: Comandos e Exemplos de Uso
+Uso de comando
+enscript -p psfile.ps textfile.txt Converte um arquivo de texto em PostScript (salvo em psfile.ps)
+enscript -n -p psfile.ps textfile.txt Converte um arquivo de texto em n colunas onde n=1-9 (salvo em psfile.ps)
+enscript textfile.txt Imprima um arquivo de texto diretamente na impressora padrão
+
+A maioria dos usuários hoje está muito mais acostumada a trabalhar com arquivos em formato PDF, visualizando-os facilmente na Internet através do navegador ou localmente em sua máquina. O formato PostScript ainda é importante por vários motivos técnicos com os quais o usuário geral raramente terá que lidar.
+
+De vez em quando, pode ser necessário converter arquivos de um formato para outro, e existem utilitários muito simples para realizar essa tarefa. ps2pdf e pdf2ps fazem parte do pacote ghostscript instalado ou disponível em todas as distribuições Linux. Como alternativa, existem pstopdf e pdftops que geralmente fazem parte do pacote poppler, que pode precisar ser adicionado através do seu gerenciador de pacotes. A menos que você esteja fazendo muitas conversões ou precise de algumas opções mais sofisticadas (sobre as quais você pode ler nas páginas de manual desses utilitários), realmente não importa quais você usa.
+
+Outra possibilidade é usar o poderoso programa de conversão, que faz parte do pacote ImageMagick. Algumas distribuições mais recentes substituíram isso pelo Graphics Magick, e o comando a ser usado é gm convert.
+
+Alguns exemplos de uso:
+
+Tabela: Comandos e Exemplos de Uso
+Uso de comando
+pdf2ps arquivo.pdf 		Converte arquivo.pdf em arquivo.ps
+ps2pdf arquivo.ps 		Converte arquivo.ps em arquivo.pdf
+pstopdf input.ps output.pdf 	Converte input.ps em output.pdf
+pdftops input.pdf output.ps 	Converte input.pdf em output.ps
+convert input.ps output.pdf 	Converte input.ps em output.pdf
+convert input.pdf output.ps 	Converte input.pdf em output.ps
+
+O Linux possui muitos programas padrão que podem ler arquivos PDF, bem como muitos aplicativos que podem criá-los facilmente, incluindo todos os pacotes de escritório disponíveis, como o LibreOffice.
+
+Os leitores de PDF Linux mais comuns são:
+
+evince está disponível em praticamente todas as distribuições e é o programa mais utilizado.
+okular é baseado no antigo kpdf e está disponível em qualquer distribuição que forneça o ambiente KDE.
+Esses leitores de PDF de código aberto suportam e podem ler arquivos seguindo o padrão PostScript. O Adobe Acrobat Reader proprietário, que já foi amplamente utilizado em sistemas Linux, felizmente não está mais disponível, pois apresentava renderização defeituosa e era instável e mal conservado. Mesmo se você estiver usando o Windows, ele está muito quebrado, por isso aconselhamos não usá-lo.
+
+Às vezes, você pode querer mesclar, dividir ou girar arquivos PDF; nem todas essas operações podem ser realizadas ao usar um visualizador de PDF. Algumas dessas operações incluem:
+
+Mesclar/dividir/girar documentos PDF
+Reparando páginas PDF corrompidas
+Extraindo páginas únicas de um arquivo
+Criptografando e descriptografando arquivos PDF
+Adicionar, atualizar e exportar metadados de um PDF
+Exportando favoritos para um arquivo de texto
+Preenchimento de formulários PDF.
+Para realizar estas tarefas, existem vários programas disponíveis:
+
+qpdf
+pdftk
+script fantasma.
+qpdf está amplamente disponível em distribuições Linux e é repleto de recursos. O pdftk já foi muito popular, mas dependia de um pacote obsoleto e não mantido (libgcj), e várias distribuições o abandonaram. No entanto, agora foi reimplementado em Java e está disponível novamente na maioria das distribuições sob o nome pdftk-java. Ghostscript (frequentemente invocado usando gs) está amplamente disponível e é bem mantido. Porém, seu uso é um pouco complexo.
+
+Você pode realizar uma ampla variedade de tarefas usando qpdf, incluindo:
+
+ 
+
+Tabela: Comandos e Exemplos de Uso
+Uso de comando
+qpdf --empty --pages 1.pdf 2.pdf -- 12.pdf 				Mesclar os dois documentos 1.pdf e 2.pdf. A saída será salva em 12.pdf.
+qpdf --empty --pages 1.pdf 1-2 -- new.pdf 				Escreva apenas as páginas 1 e 2 de 1.pdf. A saída será salva em new.pdf.
+qpdf --rotate=+90:1 1.pdf 1r.pdf					Gire a página 1 de 1.pdf 90 graus no sentido horário e salve em 1r.pdf.
+
+qpdf --rotate=+90:1-z 1.pdf 1r-all.pdf					Gire todas as páginas de 1.pdf 90 graus no sentido horário e salve em 1r-all.pdf
+								
+qpdf --encrypt mypw mypw 128 -- public.pdf private.pdf 			Criptografe com 128 bits public.pdf usando como passwd mypw com saída como private.pdf.
+qpdf --decrypt --password=mypw private.pdf file-decrypted.pdf 		Descriptografe private.pdf com saída como file-decrypted.pdf.
+
+
+Conforme mencionado anteriormente, Marc Vinyals desenvolveu e manteve uma porta para Java para pdftk que pode ser encontrada no GitLab, juntamente com instruções de instalação. Algumas distribuições, como o Ubuntu, podem instalar apenas esta versão.
+
+Você pode realizar uma ampla variedade de tarefas usando o pdftk.
+
+ 
+
+Tabela: Comandos e Exemplos de Uso
+Uso de comando
+pdftk 1.pdf 2.pdf cat output 12.pdf 			Mescle os dois documentos 1.pdf e 2.pdf. A saída será salva em 12.pdf.
+pdftk A=1.pdf cat A1-2 saída new.pdf 			Escreva apenas as páginas 1 e 2 de 1.pdf. A saída será salva em new.pdf.
+pdftk A=1.pdf cat A1-endright output new.pdf 		Gire todas as páginas de 1.pdf 90 graus no sentido horário e salve o resultado em new.pdf.
+
+
+Se você estiver trabalhando com arquivos PDF que contêm informações confidenciais e quiser garantir que apenas determinadas pessoas possam visualizar o arquivo PDF, você pode aplicar uma senha a ele usando a opção user_pw. Pode-se fazer isso emitindo um comando como:
+
+$ pdftk public.pdf saída private.pdf user_pw PROMPT
+
+Ao executar este comando, você receberá uma solicitação para definir a senha necessária, que pode ter no máximo 32 caracteres. Um novo arquivo, private.pdf, será criado com conteúdo idêntico ao public.pdf, mas qualquer pessoa precisará digitar a senha para poder visualizá-lo.
+
+Ghostscript está amplamente disponível como intérprete para as linguagens Postscript e PDF. O programa executável associado a ele é abreviado como gs.
+
+Este utilitário pode realizar a maioria das operações que qpdf e pdftk podem, assim como muitas outras; veja man gs para detalhes. O uso é um tanto complicado pela natureza bastante longa das opções. Por exemplo:
+
+Combine três arquivos PDF em um:
+$ gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=all.pdf arquivo1.pdf arquivo2.pdf arquivo3.pdf
+
+Divida as páginas 10 a 20 de um arquivo PDF:
+$ gs -sDEVICE=pdfwrite -dNOPAUSE -dBATCH -dDOPDFMARKS=false -dFirstPage=10 -dLastPage=20\
+-sOutputFile=arquivo dividido.pdf.pdf
+
+Você pode usar outras ferramentas para trabalhar com arquivos PDF, como:
+
+pdfinfo
+Ele pode extrair informações sobre arquivos PDF, principalmente quando os arquivos são muito grandes ou quando uma interface gráfica não está disponível.
+falhado
+Pode adicionar dados a um documento PostScript. Esta ferramenta é especificamente útil para preencher formulários ou adicionar comentários curtos ao documento.
+pdfmod
+É um aplicativo simples que oferece uma interface gráfica para modificação de documentos PDF. Usando esta ferramenta, você pode reordenar, girar e remover páginas; exportar imagens de um documento; edite o título, assunto e autor; adicione palavras-chave; e combine documentos usando a ação de arrastar e soltar.
+Por exemplo, para coletar os detalhes de um documento, você pode usar o seguinte comando:
+
+$ pdfinfo /usr/share/doc/readme.pdf
+
+Verifique se o pacote enscript foi instalado em seu sistema e, caso contrário, instale-o.
+Usando enscript, converta o arquivo de texto /var/dmesg para o formato PostScript e nomeie o resultado como /tmp/dmesg.ps. Como alternativa, você pode usar qualquer arquivo de texto grande em seu sistema. Certifique-se de ler o arquivo PostScript (por exemplo, com evince) e compará-lo com o arquivo original. NOTA: Em alguns sistemas, o evince pode ter problemas com o arquivo PostScript, mas o arquivo PDF produzido a partir dele poderá ser visualizado.
+Converta o documento PostScript para o formato PDF usando ps2pdf. Certifique-se de ler o arquivo PDF resultante. Parece idêntico à versão PostScript?
+Existe uma maneira de ir direto para o arquivo PDF sem produzir um arquivo PostScript no disco ao longo do caminho?
+Usando o pdfinfo, determine qual é a versão do PDF usada para codificar o arquivo, o número de páginas, o tamanho da página e outros metadados sobre o arquivo. Se você não possui o pdfinfo, provavelmente precisará instalar o pacote poppler-utils.
+
+Confira a solução fornecida na próxima página.
+
+Tentar:
+qual script
+/usr/bin/enscript
+Se você não obtiver um resultado positivo, instale com o comando apropriado para sua distribuição Linux:
+script de instalação do apt-get
+yum instalar script
+script de instalação do zypper
+script -p /tmp/dmesg.ps /var/log/dmesg
+evidenciar /tmp/dmesg.ps
+ps2pdf /tmp/dmesg.ps
+ls -lh /var/log/dmesg /tmp/dmesg.ps /tmp/dmesg.pdf
+-rw-rw-r-- 1 coop coop 28K 22 de abril 13:00 /tmp/dmesg.pdf
+-rw-rw-r-- 1 coop coop 80K 22 de abril 12:59 /tmp/dmesg.ps
+-rw-r--r-- 1 raiz raiz 53K 22 de abril 11:48 /var/log/dmesg
+evidenciar /tmp/dmesg.ps /tmp/dmesg.pdf
+Observe a diferença nos tamanhos. Os arquivos PostScript tendem a ser grandes, enquanto o PDF é um formato compactado.
+Você pode querer verificar as páginas de manual em busca de enscript e ps2pdf para descobrir como usar entrada ou saída padrão em vez de arquivos.
+aluno:/tmp> enscript -p - /var/log/dmesg | ps2pdf - dmesg_direct.pdf
+[15 páginas * 1 cópia] restantes em -
+85 linhas foram quebradas
+aluno:/tmp> ls -l dmesg*pdf
+-rw-rw-r-- 1 coop coop 28177 22 de abril 13:20 dmesg_direct.pdf
+-rw-rw-r-- 1 coop coop 28177 22 de abril 13:00 dmesg.pdf
+aluno:/tmp> pdfinfo dmesg.pdf
+Título: Saída do Enscript
+Autor: Theodore Cleaver
+Criador: GNU Enscript 1.6.6
+Produtor: GPL Ghostscript 9.07
+Data de criação: quarta-feira, 22 de abril, 13:00:26 de 2015
+Data da modificação: quarta-feira, 22 de abril, 13:00:26 de 2015
+Marcado: não
+Formulário: nenhum
+Páginas: 15
+Criptografado: não
+Tamanho da página: 612 x 792 pts (carta)
+Podridão da página: 0
+Tamanho do arquivo: 28177 bytes
+
+Você pode converter dois arquivos de texto (você pode criá-los ou usar aqueles que já existem, pois não é destrutivo) em PDFs, ou você pode usar dois pré-existentes. Combine-os em um PDF e veja o resultado. Faça isso usando três métodos diferentes:
+
+qpdf
+qdftk
+gs
+Se o pdftk não estiver instalado, você pode tentar instalar. Entretanto, se você estiver em um sistema para o qual ele não está mais disponível, você terá que usar qpdf ou gs.
+
+Confira a solução fornecida na próxima página.
+
+Primeiro, podemos criar dois PDFs para brincar, usando enscript e depois ps2pdf:
+
+cd /var/log
+script -p dmesg.ps /var/log/dmesg
+enscript -p boot.ps /var/log/boot.log
+ps2dpf dmesg.ps
+inicialização ps2dpf.ps
+
+Claro, você pode usar dois arquivos PDF pré-existentes e substituir seus nomes abaixo.
+
+Método 1: usando qpdf:
+qpdf --empty --pages dmesg.pdf boot.pdf -- método1.pdf
+Método 2: usando pdftk:
+pdftk dmesg.pdf boot.pdf método de saída cat2.pdf
+Método 3: usando gs:
+gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=method3.pdf dmesg.pdf boot.pdf
+Agora veja-os:
+
+ls -l método1.pdf método2.pdf
+evidenciar método1.pdf método2.pdf
+
+Como os arquivos se comparam?
+
+resumo
+
+Você concluiu o Capítulo 17. Vamos resumir os principais conceitos abordados:
+
+O CUPS fornece duas interfaces de linha de comando: o System V e o BSD.
+A interface CUPS está disponível em localhost:631.
+lp e lpr são usados para enviar um documento ao CUPS diretamente da linha de comando.
+lpoptions pode ser usado para definir opções e padrões da impressora.
+PostScript gerencia efetivamente o dimensionamento de fontes e gráficos vetoriais para fornecer impressões de qualidade.
+enscript é usado para converter um arquivo de texto em PostScript e outros formatos.
+Portable Document Format (PDF) é o formato padrão usado para trocar documentos, garantindo ao mesmo tempo um certo nível de consistência na forma como os documentos são visualizados.
+pdftk junta e divide PDFs; extrai páginas únicas de um arquivo; criptografa e descriptografa arquivos PDF; adiciona, atualiza e exporta metadados de um PDF; exporta marcadores para um arquivo de texto; adiciona ou remove anexos de um PDF; corrige um PDF danificado; e preenche formulários PDF.
+pdfinfo pode extrair informações sobre documentos PDF.
+flpsed pode adicionar dados a um documento PostScript.
+pdfmod é um aplicativo simples com interface gráfica que você pode usar para modificar documentos PDF.
+

@@ -1,0 +1,51 @@
+As distribuições recentes do Linux,
+que usam o desktop GNOME, se parecem muito
+no que tange iniciar e desligar.
+Usando o hypervisor VMware
+em um host Red Hat para o Linux Enterprise,
+demonstraremos três distribuições recentes
+e como elas iniciam.
+Já as posicionamos.
+Aqui, iniciaremos o CentOS-8-Stream.
+Aqui, iniciaremos o Ubuntu-20-04.
+E aqui iniciaremos o openSUSE-Leap-15-3.
+Vejam que as são mensagens um pouquinho diferentes
+quando iniciam de acordo com a configuração do GRUB
+e quais são as escolhas possíveis de kernel.
+Levará um pouco mais para iniciar
+do que se fosse um por vez,
+simplesmente porque a máquina host
+está um pouco sobrecarregada
+rodando três máquinas virtuais.
+Ela não tem muita memória.
+Neste caso, eu dediquei 3 gb de memória
+para cada um de um total de 16 gb na máquina.
+Então, a memória está um pouco estressada.
+Vamos esperar iniciarem e chegarem na tela de boas-vindas.
+Já aconteceu no Ubuntu,
+já aconteceu no openSUSE Leap,
+mas está levando mais tempo no CentOS 8 Stream.
+Vamos fazer login enquanto esperamos o CentOS Stream.
+Vou colocar a senha "Student"
+na máquina Ubuntu.
+Farei o mesmo na máquina openSUSE.
+Só estamos esperando pela máquina CentOS.
+Finalmente está pronta e farei login.
+Percebam que as telas de fundo são diferentes,
+porque selecionamos imagens diferentes
+com o passar do tempo.
+Mas todos chegam com a mesma aparência
+com atividades e o menu de aplicações.
+O Ubuntu ainda gosta de ter essa barra lateral na esquerda
+com aplicações mais importantes.
+Posso facilmente trazer isso para os outros.
+Por exemplo, se eu digitar "Atividades" aqui,
+atividades no openSUSE, verei a mesma coisa lá.
+E o processo de desligar é muito similar.
+Tudo que preciso fazer é clicar na canto direito superior
+e achar o botão de energia.
+E eu mando desligar.
+Farei o mesmo com o Ubuntu.
+Desligarei apertando em "Desligar" e "Desligar" novamente.
+E farei o mesmo com o openSUSE, desligar e desligar.
+É impressionante como é igual em distribuições diferentes.

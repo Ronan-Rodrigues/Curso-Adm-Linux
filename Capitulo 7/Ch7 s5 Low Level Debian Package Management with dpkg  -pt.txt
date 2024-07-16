@@ -1,0 +1,36 @@
+Vamos praticar um pouco com o comando básico de baixo nível
+para o sistema de empacotamento Debian, dpkg ou d-package.
+Para obter uma lista de todos os pacotes no sistema,
+posso simplesmente digitar "dpkg --list".
+e vou usar "less", porque é uma longa lista.
+Certo. Na verdade, se eu não usar "less", por algum motivo,
+fica mais compacto.
+Certo. Então, há muitos pacotes diferentes no sistema.
+Se eu quiser ver informações sobre um pacote específico,
+posso usar grep e, digamos, bzip2, para ver o que se passa
+com bzip2.
+E essa é a informação sobre bzip2. Isso nos diz o número
+da versão, a arquitetura, que é amd64, e sua descrição
+como um utilitário de compressão de arquivos divididos
+por blocos de alta qualidade.
+É um programa mais avançado com compressão melhor que gzip
+ou o ultrapassado programa zip.
+Se eu quiser ver o que de fato está nesse pacote,
+posso fazer "dpkg --listfiles"
+e depois o nome [bzip2]
+e então irei mais devagar colocando em "less".
+E você verá que há executáveis no diretório /bin
+e o que está sob /usr são basicamente documentações,
+sob /usr/share/doc, usr/share/man etc.
+Se eu tentar remover o pacote, vejamos o que acontece.
+Faço "sudo dpkg". Claro que preciso ter permissões de root
+para remover o pacote.
+Estou removendo bzip2, "dpkg --remove bzip2",
+e ele me diz que não posso fazê-lo
+porque preciso do pacote desenvolvedor dpkg-dev.
+Seriam cabeçalhos e coisas para programas
+que usam isso numa versão de biblioteca.
+E o file-roller, que é um extrator de arquivos comum
+em sistemas Linux. Então teria de remover os três.
+Veremos mais tarde quando usarmos ferramentas como apt-get
+que é mais fácil de lidar com essas dependências.

@@ -1,0 +1,50 @@
+[Jerry Cooperstein] Vamos ter alguma experiência básica
+na exploração do sistema de arquivos.
+Em especial, como lidar com caminhos relativos
+e caminhos absolutos.
+Suponha que eu queira ir para o diretório /usr/bin,
+onde está a maioria dos executáveis
+que usuários normais usam para as atividades do dia-a-dia.
+Eu poderia apenas fazer "cd /usr/bin", e lá estou eu.
+Este é um diretório com muitos, muitos programas,
+que eu posso ver digitando "ls".
+Se eu quiser ir para o diretório /usr/lib,
+há duas maneiras de fazer isso.
+Eu poderia fazer "cd /usr/lib",
+mas também poderia usar apenas o caminho absoluto,
+eu poderia fazer "cd ../lib".
+Veja, isso me coloca em /usr/lib.
+É claro, eu poderia ter usado o caminho absoluto.
+Neste caso, isso teria sido fácil.
+Vou fazer "ctrl+l" para limpar um pouco minha tela.
+Suponha que eu queira puxar uma árvore gráfica
+de todos os arquivos aqui;
+eu posso simplesmente digitar "tree".
+Vejam que há muita coisa.
+Há quase 3.000 diretórios e 21.000 arquivos.
+Se eu quisesse só ver os diretórios,
+eu poderia digitar "tree -d".
+Veja, isso só me mostra os 3.000 diretórios.
+Eu posso navegar em qualquer lugar que eu queira
+pelo sistema de arquivos.
+Uma maneira de dar uma boa olhada com um comando
+que vamos usar mais tarde
+é o comando df.
+Se eu fizer um "df", e eu digo "-h",
+o que significa dar os tamanhos em termos humanos.
+Vejam, há muitos sistemas de arquivo aqui.
+O principal, que é...
+montado em barra ,
+a cabeça do sistema de arquivo,
+tem 886 gigabytes de memória.
+E depois há estes outros que estão sendo usados
+para diversos fins.
+Por exemplo, eu tenho um diretório de backup aqui,
+ou eu poderia ir para "cd /BACKUP",
+e você verá que eu tenho só algumas coisas diferentes aqui.
+Mas é aqui que eu faço backup de muitos dos arquivos
+em meu sistema,
+apenas para manter uma cópia extra
+no caso de eu cometer um erro.
+Enfim, só uma rápida exploração de alguns aspectos
+do sistema de arquivos.

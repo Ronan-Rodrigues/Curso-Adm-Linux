@@ -1,0 +1,372 @@
+Claro que os computadores editam,
+JEFF LICQUIA FUNDAÇÃO LINUX
+manipulam e gerenciam dados.
+Nos sistemas Linux,
+esses dados geralmente vêm na forma de arquivos de texto.
+Às vezes esses arquivos de texto
+são criados sem outros aplicativos,
+mas às vezes você precisa editá-los diretamente
+e você faz isso no Linux
+usando algo chamado editor de texto.
+Nesta aula, vamos abordar uns editores de texto populares
+como o nano, o emacs e o gedit.
+Também vamos ver o passo a passo do uso e a configuração
+do editor de texto VIM.
+Ao finalizar essa aula, você deve estar seguro
+editando os seus arquivos de texto
+no seu editor de textos preferido.
+Vamos começar!
+
+
+Ao final deste capítulo, você deverá estar familiarizado com:
+
+Como criar e editar arquivos usando os editores de texto Linux disponíveis.
+nano, um editor simples baseado em texto.
+gedit, um editor gráfico simples.
+vi e emacs, dois editores avançados com interfaces gráficas e baseadas em texto.
+
+Em algum momento, você precisará editar manualmente os arquivos de texto. Você pode estar redigindo um e-mail offline, escrevendo um script para ser usado no bash ou outros interpretadores de comandos, alterando um arquivo de configuração de sistema ou aplicativo ou desenvolvendo código-fonte para uma linguagem de programação como C, Python ou Java.
+
+Usuários e administradores do Linux podem evitar o uso de um editor de texto e, em vez disso, empregar utilitários gráficos para criar e modificar arquivos de configuração do sistema. No entanto, isso pode ser mais trabalhoso do que usar diretamente um editor de texto e ter capacidade mais limitada. Na verdade, os aplicativos de processamento de texto (incluindo aqueles que fazem parte de conjuntos comuns de aplicativos de escritório) não são editores de texto realmente básicos; eles adicionam muitas informações de formatação extras (geralmente invisíveis) que provavelmente tornarão os arquivos de configuração de administração do sistema inutilizáveis para a finalidade pretendida. Portanto, saber como usar com segurança um ou mais editores de texto é realmente uma habilidade essencial para se ter no Linux.
+
+Até agora, você certamente já percebeu que o Linux está repleto de opções; quando se trata de editores de texto, há muitas opções, que vão desde bastante simples até muito complexas, incluindo:
+
+nano
+gedit
+vi
+emacs
+Nesta seção, aprendemos primeiro sobre os editores nano e gedit, que são relativamente simples e fáceis de aprender, e depois sobre as opções mais complicadas, vi e emacs.
+
+Outro produto que ganhou uso e popularidade é o Visual Studio Code da Microsoft, geralmente abreviado como código quando usado no Linux. Na verdade, este é um ambiente de desenvolvimento integrado completo e longe de ser leve, mas muitos novos usuários do Linux já estão acostumados a trabalhar em outros sistemas operacionais. Os detalhes de instalação variam de uma distribuição para outra e geralmente envolvem a incorporação de repositórios de pacotes adicionais; não entraremos em como fazer isso aqui.
+
+Às vezes, você pode querer criar um arquivo curto e não querer se preocupar em invocar um editor de texto completo. Além disso, fazer isso pode ser bastante útil quando usado em scripts, mesmo ao criar arquivos mais longos. Você sem dúvida usará esse método quando começar os capítulos posteriores que cobrem scripts de shell!
+
+Se você deseja criar um arquivo sem usar um editor, existem duas maneiras padrão de criar um a partir da linha de comando e preenchê-lo com conteúdo.
+
+A primeira é usar echo repetidamente:
+
+$ echo linha um > meuarquivo
+$ echo linha dois >> meuarquivo
+$ echo linha três >> meuarquivo
+
+Observe que, embora um único sinal de maior que (>) envie a saída de um comando para um arquivo (e destrua qualquer versão já existente desse arquivo!), dois deles (>>) anexarão a nova saída a um arquivo existente. arquivo.
+
+A segunda maneira é usar cat combinado com redirecionamento:
+
+$ cat << EOF > meuarquivo
+>linha um
+> linha dois
+> linha três
+> EOF
+$
+
+Neste exemplo, a string usada para mostrar o início e o fim do processo não precisa ser EOF; poderia ser STOP ou qualquer outra string não usada no próprio conteúdo. Ambas as técnicas produzem um arquivo com as seguintes linhas:
+
+linha um
+linha dois
+linha três
+
+e são extremamente úteis quando empregados por scripts.
+
+Existem alguns editores de texto que são bastante óbvios; eles não exigem nenhuma experiência específica para aprender e são, na verdade, bastante capazes e até robustos. Um editor particularmente fácil de usar é o editor nano baseado em terminal de texto. Basta invocar o nano fornecendo um nome de arquivo como argumento. Toda a ajuda necessária é exibida na parte inferior da tela e você poderá prosseguir sem problemas.
+
+Como editor gráfico, o gedit faz parte do sistema de desktop GNOME (o kwrite está associado ao KDE). Os editores gedit e kwrite são muito fáceis de usar e extremamente capazes. Eles também são muito configuráveis. Eles se parecem muito com o Bloco de Notas do Windows. Outras variantes, como o kate, também são suportadas pelo KDE.
+
+nano é fácil de usar e requer muito pouco esforço para aprender. Para abrir um arquivo, digite nano <nome do arquivo> e pressione Enter. Se o arquivo não existir, ele será criado.
+
+nano fornece uma barra de atalho de duas linhas na parte inferior da tela que lista os comandos disponíveis. Alguns desses comandos são:
+
+CTRL-G
+Exiba a tela de ajuda.
+CTRL-O
+Escreva em um arquivo.
+CTRL-X
+Saia de um arquivo.
+CTRL-R
+Insere o conteúdo de outro arquivo no buffer atual.
+CTRL-C
+Mostrar posição do cursor.
+
+gedit (pronuncia-se 'g-edit') é um editor gráfico simples de usar que só pode ser executado em um ambiente de área de trabalho gráfica. É visualmente bastante semelhante ao editor de texto do Bloco de Notas do Windows, mas na verdade é muito mais capaz e muito configurável e possui uma variedade de plug-ins disponíveis para ampliar ainda mais seus recursos.
+
+Para abrir um novo arquivo, encontre o programa no sistema de menus da sua área de trabalho ou na linha de comando digite gedit <nome do arquivo>. Se o arquivo não existir, ele será criado.
+
+Usar o gedit é bastante simples e não requer muito treinamento. Sua interface é composta por elementos bastante familiares.
+
+Visual Studio Code (código) é outro editor gráfico simples de usar. Possui muitas funcionalidades além de ser utilizado como editor de texto. Aqui está uma captura de tela funcionando no mesmo arquivo que já mostramos com os outros editores.
+
+Usando o nano, vamos criar um arquivo chamado meunome.txt e incluir seu nome na primeira linha e a data atual na última linha. Para fazer isso:
+
+Inicie o nano digitando nano myfile.txt.
+Adicione seu nome na primeira linha do arquivo.
+Adicione a data na última linha do arquivo.
+Feche o arquivo.
+
+Usando o gedit, vamos criar ou reutilizar um arquivo chamado meunome.txt e incluir seu endereço na segunda linha e o nome da sua cidade na última linha:
+
+Inicie o gedit digitando gedit myfile.txt.
+Adicione seu endereço na segunda linha do arquivo.
+Adicione o nome da sua cidade na última linha do arquivo.
+Feche o arquivo.
+
+Desenvolvedores e administradores com experiência em sistemas do tipo UNIX quase sempre usam uma das duas veneráveis opções de edição: vi e emacs. Ambos estão presentes ou facilmente disponíveis em todas as distribuições e são totalmente compatíveis com as versões disponíveis em outros sistemas operacionais.
+
+Tanto o vi quanto o emacs possuem um formato básico, puramente baseado em texto, que pode ser executado em um ambiente não gráfico. Eles também possuem um ou mais formulários de interface gráfica com capacidades estendidas; estes podem ser mais amigáveis para um usuário menos experiente. Embora o vi e o emacs possam ter curvas de aprendizado significativamente acentuadas para novos usuários, eles são extremamente eficientes quando se aprende como usá-los.
+
+Você precisa estar ciente de que as brigas entre usuários experientes sobre qual editor é melhor podem ser bastante intensas e muitas vezes são descritas como uma guerra santa. Está claro, entretanto, que há muito mais usuários do vi do que do emacs. Ambos os programas de edição vieram para ficar, não importa o que aconteça.
+
+Normalmente, o programa real instalado em seu sistema é o vim, que significa Vi IMproved e tem o alias do nome vi. O nome é pronunciado como “vee-eye”.
+
+Mesmo que você não queira usar o vi, é bom se familiarizar com ele: é uma ferramenta padrão instalada em praticamente todas as distribuições Linux. Na verdade, pode haver momentos em que não haja outro editor disponível no sistema.
+
+O GNOME estende o vi com uma interface muito gráfica conhecida como gvim e o KDE oferece o kvim. Qualquer um deles pode ser mais fácil de usar no início.
+
+Ao usar o vi, todos os comandos são inseridos através do teclado. Você não precisa ficar movendo as mãos para usar um dispositivo apontador, como mouse ou touchpad, a menos que queira fazer isso ao usar uma das versões gráficas do editor.
+
+Digitar vimtutor lança um tutorial curto, mas muito abrangente para quem deseja aprender os primeiros comandos do vi. Embora forneça apenas uma introdução e apenas sete lições, ele contém material suficiente para torná-lo um usuário de vi muito proficiente, pois abrange um grande número de comandos. Depois de aprender esses princípios básicos, você pode procurar novos truques para incorporar à sua lista de comandos do vi, porque sempre há maneiras mais otimizadas de fazer as coisas no vi com menos digitação.
+
+vi fornece três modos, conforme descrito na tabela abaixo. É vital não perder o controle do modo em que você está. Muitas teclas e comandos se comportam de maneira bastante diferente em modos diferentes.
+
+Tabela: Modos e Recursos
+Recurso de modo
+Comando
+Por padrão, o vi inicia no modo Comando.
+Cada chave é um comando do editor.
+Os toques do teclado são interpretados como comandos que podem modificar o conteúdo do arquivo.
+Inserir
+Digite i para alternar para o modo Inserir do modo Comando.
+O modo de inserção é usado para inserir (inserir) texto em um arquivo.
+O modo de inserção é indicado por um “? INSERIR?” indicador na parte inferior da tela.
+Pressione Esc para sair do modo Inserir e retornar ao modo Comando.
+Linha
+Digite: para alternar para o modo Linha do modo Comando. Cada chave é um comando externo, incluindo operações como gravar o conteúdo do arquivo no disco ou sair.
+Usa comandos de edição de linha herdados de editores de linha mais antigos. A maioria desses comandos não é mais usada. Alguns comandos de edição de linha são muito poderosos.
+Pressione Esc para sair do modo Linha e retornar ao modo Comando.
+
+A tabela descreve os comandos mais importantes usados para iniciar, sair, ler e gravar arquivos no vi. A tecla ENTER precisa ser pressionada após todos esses comandos.
+
+ 
+
+Tabela: Iniciar, Sair, Ler e Gravar Arquivos no vi
+Uso de comando
+vi meuarquivo 		Inicie o editor e edite meuarquivo
+vi -r myfile 		Inicie e edite myfile no modo de recuperação após uma falha no sistema
+:r arquivo2 		Lê o arquivo2 e insere na posição atual
+:w 			Escreva no arquivo
+:w meuarquivo 		Escreva em meuarquivo
+:c! arquivo2 		Substituir arquivo2
+:x ou :wq 		Sai e escreve o arquivo modificado
+:q 			Sair
+:q! 			Sair mesmo que as modificações não tenham sido salvas
+
+A tabela descreve as teclas mais importantes usadas ao alterar a posição do cursor no vi. Os comandos do modo de linha (os seguintes dois pontos:) exigem que a tecla ENTER seja pressionada após o comando ser digitado.
+
+Tabela: Chaves e Exemplos de Uso
+Uso de chave
+teclas de seta Para mover para cima, para baixo, para a esquerda e para a direita
+j ou <ret> 		Para mover uma linha para baixo
+k 			Para mover uma linha para cima
+h ou Backspace 		Para mover um caractere para a esquerda
+l ou Espaço 		Para mover um caractere para a direita
+0 			Para ir para o início da linha
+$ 			Para ir para o fim da linha
+w 			Para ir para o início da próxima palavra
+:0 ou 1G 		Para ir para o início do arquivo
+:n ou nG 		Para passar para a linha n
+:$ ou G 		Para ir para a última linha do arquivo
+CTRL-F ou 		Page Down Para avançar uma página
+CTRL-B ou 		Page Up Para retroceder uma página
+^l 			Para atualizar e centralizar a tela
+
+A tabela descreve os comandos mais importantes usados ao pesquisar texto no vi. A tecla ENTER deve ser pressionada após digitar o padrão de pesquisa.
+
+ 
+
+Tabela: Comandos usados para pesquisar texto no vi
+Uso de comando
+/pattern 		Pesquisa adiante por padrão
+?padrão 		Pesquisa padrão para trás
+ 
+
+A tabela descreve as teclas mais importantes usadas ao pesquisar texto no vi.
+
+ 
+
+Tabela: teclas usadas para pesquisar texto no vi
+Uso de chave
+n 			Mover para a próxima ocorrência do padrão de pesquisa
+N 			Mover para a ocorrência anterior do padrão de pesquisa
+
+A tabela descreve as teclas mais importantes usadas ao alterar, adicionar e excluir texto no vi.
+
+ 
+
+Tabela: Alterando, Adicionando, Excluindo Texto no vi
+Uso de chave
+a 		Anexar texto após o cursor; pare na tecla Escape
+A 		Anexar texto no final da linha atual; pare na tecla Escape
+i 		Inserir texto antes do cursor; pare na tecla Escape
+I 		Inserir texto no início da linha atual; pare na tecla Escape
+o 		Inicie uma nova linha abaixo da linha atual, insira o texto ali; pare na tecla Escape
+O 		Inicie uma nova linha acima da linha atual, insira o texto ali; pare na tecla Escape
+r 		Substitua o caractere na posição atual
+R 		Substituir texto começando pela posição atual; pare na tecla Escape
+x 		Excluir caractere na posição atual
+Nx 		Exclui N caracteres, começando na posição atual
+dw 		Exclua a palavra na posição atual
+D 		Exclua o resto da linha atual
+dd 		Exclua a linha atual
+Ndd ou dNd 	Excluir N linhas
+u 		Desfaça a operação anterior
+yy 		Arranque (copie) a linha atual e coloque-a no buffer
+Nyy ou yNy 	Yank (copiar) N linhas e colocá-las no buffer
+p 		Cole na posição atual a linha ou linhas arrancadas do buffer
+
+Digitar o comando sh abre um shell de comando externo. Ao sair do shell, você retomará sua sessão de edição.
+
+Digitando ! executa um comando de dentro do vi. O comando segue o ponto de exclamação. Esta técnica é mais adequada para comandos não interativos, como: ! Banheiro %. Digitar isso executará o comando wc (contagem de palavras) no arquivo; o caractere % representa o arquivo que está sendo editado no momento.
+
+O editor emacs é um concorrente popular do vi. Ao contrário do vi, ele não funciona com modos. O emacs é altamente personalizável e inclui um grande número de recursos. Ele foi inicialmente projetado para uso em um console, mas logo foi adaptado para funcionar também com uma GUI. O emacs possui muitos outros recursos além da simples edição de texto. Por exemplo, pode ser usado para email, depuração, etc.
+
+Em vez de ter modos diferentes de comando e inserção, como o vi, o emacs usa as teclas CTRL e Meta (Alt ou Esc) para comandos especiais.
+
+A tabela lista algumas das combinações de teclas mais importantes usadas ao iniciar, sair, ler e gravar arquivos no emacs.
+
+ 
+
+Tabela: Iniciando, Saindo, Lendo e Gravando Arquivos no Emacs
+Uso de chave
+emacs meuarquivo Inicie o emacs e edite meuarquivo
+CTRL-x i 		Inserir arquivo solicitado na posição atual
+CTRL-xs 		Salva todos os arquivos
+CTRL-x CTRL-w 		Grava no arquivo dando um novo nome quando solicitado
+CTRL-x CTRL-s 		Salva o arquivo atual
+CTRL-x CTRL-c 		Sair após ser solicitado a salvar quaisquer arquivos modificados
+ 
+
+O tutorial do emacs é um bom lugar para começar a aprender comandos básicos. Ele está disponível a qualquer momento no emacs simplesmente digitando CTRL-h (para ajuda) e depois a letra t para tutorial.
+
+A tabela lista algumas das teclas e combinações de teclas usadas para alterar as posições do cursor no emacs.
+
+ 
+
+Tabela: Chaves e Exemplos de Uso
+Uso de chave
+teclas de seta Use as teclas de seta para cima, baixo, esquerda e direita
+CTRL-n 			Uma linha abaixo
+CTRL-p 			Uma linha
+CTRL-f 			Um caractere para frente/direita
+CTRL-b 			Um caractere para trás/esquerda
+CTRL-a 			Move para o início da linha
+CTRL-e 			Mover para o fim da linha
+Meta-f 			Move para o início da próxima palavra
+Meta-b 			Voltar ao início da palavra anterior
+Meta-< 			Mover para o início do arquivo
+Meta-g-g-n 		Move para a linha n (também pode usar 'Esc-x Goto-line n')
+Meta-> 			Mover para o final do arquivo
+CTRL-v ou Page Down 	Avançar uma página
+Meta-v ou Page Up 	Voltar uma página
+CTRL-l 			Atualizar e centralizar a tela
+
+A tabela lista as combinações de teclas usadas para pesquisar texto no emacs.
+
+ 
+
+Tabela: combinações de teclas usadas para pesquisar texto no emacs
+Uso de chave
+CTRL-s 			Procura adiante o padrão solicitado ou o próximo padrão
+CTRL-r 			Pesquisa para trás o padrão solicitado ou o próximo padrão
+
+A tabela lista algumas das combinações de teclas usadas para alterar, adicionar e excluir texto no emacs.
+
+ 
+
+Tabela: Alteração, adição e exclusão de texto no emacs
+Uso de chave
+CTRL-o 				Inserir uma linha em branco
+CTRL-d 				Excluir caractere na posição atual
+CTRL-k 				Exclui o restante da linha atual
+CTRL-_ 				Desfaz a operação anterior
+CTRL- (espaço ou CTRL-@) 	Marca o início da região selecionada (o final estará na posição do cursor)
+CTRL-w 				Exclui o texto marcado atualmente e grava-o no buffer
+CTRL-y 				Insere na localização atual do cursor o que foi excluído mais recentemente
+
+Não faltam tutoriais online sobre o uso dos editores básicos disponíveis. Um dos exemplos inclui um tutorial interativo do vi.
+
+Para o emacs, é tão simples quanto iniciar o programa (você nem precisa fornecer um nome de arquivo) e digitar Ctrl-H e depois t. Isso iniciará o tutorial integrado do emacs.
+
+Você deve reservar algum tempo para se familiarizar com esses tutoriais.
+
+Você precisará se sentir confortável com um dos editores amplamente disponíveis em sistemas Linux. Nos laboratórios a seguir, nos concentraremos no vi, que está presente em todos os sistemas Linux e para o qual todo desenvolvedor administrador de sistema desenvolve pelo menos alguma habilidade de uso.
+
+Deveríamos fazer exercícios semelhantes para o emacs, que também possui uma ampla base de usuários e muitos fãs dedicados. No entanto, dado o tempo limitado, recomendamos que você faça esses laboratórios como lição de casa de qualquer maneira, e se você ainda não for proficiente com vi ou emacs, basta usar nano ou gedit para o curso, já que esses editores simples praticamente não têm curva de aprendizado. Ou se você já está familiarizado com um produto externo, assim como o Visual Studio Code (código), você pode usá-lo.
+
+Tenha em mente que as preferências são fortes entre usuários e administradores individuais do Linux. Por exemplo, seu autor acha o vi muito confuso por causa de seus diferentes modos e nunca o utiliza, a menos que seja forçado. Talvez a razão pela qual não temos laboratórios tão longos para o emacs aqui seja porque seu autor acha muito mais fácil e intuitivo de usar!
+
+Confira as soluções fornecidas nas próximas páginas.
+
+Supondo que meuarquivo não exista, crie-o e abra-o digitando:
+aluno:/tmp> vi meuarquivo
+Agora você tem uma tela quase em branco com o cursor na linha superior. Você está inicialmente no modo de comando.
+Digite a para anexar e colocá-lo no modo de inserção.
+Digite a frase:
+A ligeira raposa marrom saltou sobre o cão preguiçoso.
+Se você cometer um erro de digitação, lembre-se de que você pode retroceder para corrigi-lo.
+Aperte a tecla ESC. Seu cursor deve estar no ponto final da frase. Você está de volta ao modo de comando neste momento.
+Digite a novamente e pressione Enter. Você deve estar em uma nova linha abaixo daquela que acabou de digitar.
+Digite a frase:
+Ninguém espera a inquisição espanhola!
+Pressione a tecla Enter depois de digitar ! personagem.
+No início da terceira linha, digite a frase:
+Esta é a terceira linha.
+Aperte a tecla ESC. Agora você está de volta ao modo de comando.
+Agora vamos apenas navegar neste arquivo. Seu cursor deve ser posicionado sobre o ponto final no final da terceira linha que você acabou de digitar. Aperte a tecla h três vezes. Aperte a tecla k uma vez. Em qual letra está o cursor? Em qual palavra você está?
+Seu cursor deve estar sobre o S da palavra espanhol.
+Acerte h quatro vezes e depois aperte j. Agora, qual letra está sob seu cursor? Em qual palavra você está?
+Seu cursor deve estar sobre o r na palavra terceiro.
+Acerte k duas vezes e depois l três vezes. Em qual letra está o cursor? Em qual palavra?
+Seu cursor deve estar sobre o x na palavra raposa.
+Agora bata w oito vezes. O que você percebe? Em qual letra está o cursor? Em qual palavra está o cursor?
+Você deve notar que agora está pulando palavras. Na verdade, oito toques em w levarão você da primeira para a segunda linha! Seu cursor agora deve estar sobre o e na palavra espera na segunda linha.
+Pressione k, seguido pela tecla $. Agora aperte b duas vezes. Sobre qual letra está o cursor e em qual palavra?
+Seu cursor deve estar sobre l na palavra preguiçoso.
+Você deve sentir como se movimentar caractere por caractere, linha por linha e palavra por palavra, tanto para frente quanto para trás.
+Agora pressione a tecla 0 (zero) seguida por duas teclas w e três teclas l. Em qual letra está o cursor e em qual palavra você está?
+Seu cursor deve estar sobre o w na palavra marrom.
+Agora aperte e três vezes. Sobre qual letra está o cursor e em qual palavra?
+Você deveria ter ultrapassado o d na palavra saltado.
+Salve o arquivo usando o comando :w. Você usará esse arquivo no próximo exercício. Finalmente, saia do vi digitando o comando :q. Você também pode combinar esses comandos digitando :wq se preferir.
+Esperamos que esta prática o acostume a mover o cursor em um arquivo. Depois de um tempo, essas teclas de movimento se tornarão uma segunda natureza.
+
+A situação a seguir, em que você pode perder bastante trabalho antes de salvá-lo, provavelmente surgirá mais cedo ou mais tarde.
+
+Altere as permissões do arquivo que você está editando para somente leitura e abra-o para edição fazendo:
+aluno:/tmp> chmod 444 meuarquivo
+aluno:/tmp> vi meuarquivo
+Exclua a primeira linha do arquivo digitando dd. Você poderá ver uma breve mensagem de erro, mas a linha será excluída.
+Agora vamos tentar salvar o arquivo modificado. Digite: w. O que acontece?
+Você não pode salvar este arquivo, pode? É somente leitura! Você deveria ter recebido uma mensagem de erro na linha inferior da tela informando que o arquivo é somente leitura.
+Talvez você tenha feito muitas alterações neste arquivo em uma longa sessão de edição. Todo o seu trabalho duro está perdido? Não!
+Você tem algumas alternativas. A primeira é que você pode sair do seu editor para o shell, alterar as permissões do arquivo, sair do shell e retornar à sua sessão de edição para salvar seu arquivo.
+Faça isso digitando :sh. Isso deve fornecer um prompt de shell. Agora digite o comando:
+aluno:/tmp> chmod 644 meuarquivo
+e saia do shell com:
+aluno:/tmp> sair
+Você deve retornar à sua sessão de edição do vi. Normalmente você vê uma mensagem de erro informando que o arquivo foi alterado. Digite O (Shift+o) para OK.
+Agora digite :w! (observe o adicionado!). Este arquivo deve ser salvo agora!
+Outra coisa que você pode fazer é gravar o conteúdo do arquivo em um novo arquivo. O comando :w pode receber um argumento como o nome do arquivo no qual você deseja salvar o arquivo. Por exemplo, você pode digitar :w new_myfile para salvar todas as alterações no arquivo new_myfile.
+É bom conhecer essas técnicas porque isso provavelmente surgirá em algum momento enquanto você estiver trabalhando com Linux. Experimente as duas técnicas e sinta-se confortável com ambas.
+
+resumo
+
+Você concluiu o Capítulo 11. Vamos resumir os principais conceitos abordados:
+
+Editores de texto (em vez de programas de processamento de texto) são usados com bastante frequência no Linux, para tarefas como criar ou modificar arquivos de configuração do sistema, escrever scripts, desenvolver código-fonte, etc.
+nano é um editor baseado em texto fácil de usar que utiliza prompts na tela.
+gedit é um editor gráfico, muito semelhante ao Bloco de Notas do Windows.
+O editor vi está disponível em todos os sistemas Linux e é amplamente utilizado. Versões de extensão gráfica do vi também estão amplamente disponíveis.
+O emacs está disponível em todos os sistemas Linux como uma alternativa popular ao vi. O emacs pode suportar uma interface gráfica de usuário e uma interface em modo texto.
+Para acessar o tutorial do vi, digite vimtutor em uma janela de linha de comando.
+Para acessar o tutorial do emacs, digite Ctl-h e depois t no emacs.
+vi tem três modos: Comando, Inserir e Linha. O emacs possui apenas um, mas requer o uso de teclas especiais, como Control e Escape.
+Ambos os editores usam várias combinações de teclas para realizar tarefas. A curva de aprendizado para dominá-los pode ser longa, mas uma vez dominado, usar qualquer um dos editores é extremamente eficiente.

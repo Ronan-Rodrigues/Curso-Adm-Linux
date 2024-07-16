@@ -1,0 +1,23 @@
+Bem-vindo! Eu sou Linus Torvalds e criei o Linux em 1991.
+Boas-vindas ao curso "Introdução ao Linux" e espero que
+você aproveite tanto quanto eu aproveitei ao longo dos anos.
+Uma das coisas mais interessantes do Linux é como ele
+está nos lugares mais inesperados.
+Quando comecei o Linux, precisava de um sistema operacional
+pessoal, e hoje você encontra o Linux em todo lugar...
+em pequenos dispositivos embarcados, supercomputadores,
+e isso é bem interessante,
+como essa tecnologia pode ser usada
+em muitos nichos diferentes.
+O que torna o Linux interessante para mim é
+toda a tecnologia, mas também as pessoas envolvidas,
+e trabalhar em projetos de código aberto,
+com centenas, potencialmente milhares de pessoas diferentes,
+torna toda a tecnologia ainda mais interessante.
+Espero que isso se transforme em uma oportunidade para você
+encontrar algo que ache interessante para fazer,
+e uma das coisas boas do Linux e do código aberto em geral é
+que há muitas coisas diferentes,
+e todos têm algo que podem dar ao projeto.
+Obrigado por considerar este curso e divirta-se!
+Introdução ao Linux

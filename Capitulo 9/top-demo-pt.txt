@@ -1,0 +1,71 @@
+O utilitário "top" é usado para monitorar interativamente
+quais processos e tarefas são feitas no seu sistema.
+Para iniciar, é só você digitar "top".
+E ele vai se atualizar em um intervalo de...
+eu acho que, por padrão, dois ou três segundos.
+Dá para trocar facilmente.
+Ele mostra as informações padrão de cada processo,
+parecido com o que você recebe com o comando "ps",
+como no processamento de ID, o usuário,
+as prioridades e coisas boas dele,
+algumas informações quanto ao uso da memória pelo processo
+o estado, se está dormindo, por exemplo
+e por padrão, está ordenado pela hora da CPU.
+E também tem a memória,
+o tempo total e qual é o comando verdadeiro.
+As linhas no topo
+foram criadas durante os anos
+para transmitir bastante informação.
+Na primeira, você vê há quanto tempo o sistema está ativo,
+quantos usuários tem, a carga padrão
+ou cargas padrão de quanto tempo foi passado
+nos últimos, eu acredito, um, cinco minutos, etc.
+Atualmente existem 295 tarifas executadas no sistema,
+mas só um está funcionando. O restante está dormindo.
+E isso mostra a percentual de tempo da CPU usado
+pelos processos do usuário, pelo sistema,
+pelos conhecidos processos do nice e os inativos.
+E quantos estariam em espera, quantos são de prioridade alta
+e outros detalhes como esses.
+E aí você tem informações básicas da memória,
+tais como quanto dela é usada,
+quantos swaps estão disponíveis ou sendo usados,
+quanto tem no cache, etc.
+Se eu digitar o número "1"
+eu vejo as estatísticas para cada CPU
+ao invés do total delas.
+E isso pode ser útil.
+Vamos voltar.
+Se eu apertar o "H",
+eu vejo uma lista dos comandos possíveis
+e o que eles fazem.
+Não faria sentido me ater muito a isso,
+mas eu recomendo fortemente que você ative o "top,
+use esses comandos diferentes
+e tente entender as informações extraídas.
+Bem, o "top" é como você pode fazer da linha de comando.
+E se você apertar o "Q", vai desativar o programa.
+Você consegue informações parecidas pelos menus
+e encontrando "Monitoramento do Sistema".
+E deixe-me arrastar aqui para a tela.
+O painel de processos aqui
+é praticamente o mesmo do "top".
+Ele tem as mesmas informações.
+É mais fácil de fazer coisas como reorganizar,
+porque eu poderia clicar apenas em "Memória"
+e organizar pela quantidade de memória usada.
+Se eu clicar de novo, fica em ordem decrescente:
+prioridades, CPU, etc.
+Você também pode, de novo,
+mudar a prioridade dos processos,
+pode encerrá-los, etc.
+Dá para fazer muita coisa.
+Se quiser ver o gráfico, é só clicar em "Recursos".
+Você pode ver o que está acontecendo
+em um gráfico constantemente redesenhado
+e os arquivos de sistema.
+Você pode ver quantos arquivos de sistema
+no computador estão cheios,
+se foram montados, etc.
+Essa é uma explicação breve do "top"
+e de algumas questões relativas a ele.

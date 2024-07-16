@@ -1,0 +1,551 @@
+Em uma lição anterior, mostramos o script de shell bash.
+Mas há muito mais que se pode fazer com eles.
+Vamos discutir agora alguns tópicos avançados:
+manusear sequências, avaliar expressões booleanas
+e o queridinho de todos, isto é,
+depurar os scripts que você acabou de escrever.
+Vamos começar!
+
+
+Ao final deste capítulo, você deverá ser capaz de:
+
+Manipule strings para realizar ações como comparação e classificação.
+Use expressões booleanas ao trabalhar com vários tipos de dados, incluindo strings ou números, bem como arquivos.
+Use instruções case para lidar com opções de linha de comando.
+Use construções de loop para executar uma ou mais linhas de código repetidamente.
+Depure scripts usando set -x e set +x.
+Crie arquivos e diretórios temporários.
+Crie e use números aleatórios.
+
+Vamos nos aprofundar e descobrir como trabalhar com strings em scripts.
+
+Uma variável de string contém uma sequência de caracteres de texto. Pode incluir letras, números, símbolos e sinais de pontuação. Alguns exemplos incluem: abcde, 123, abcde 123, abcde-123, &acbde=%123.
+
+Os operadores de string incluem aqueles que fazem comparação, classificação e localização do comprimento. A tabela a seguir demonstra o uso de alguns operadores básicos de string:
+
+ 
+
+Tabela: Operador e seu significado
+Significado do Operador
+[[ string1 > string2 ]] Compara a ordem de classificação de string1 e string2
+[[ string1 == string2 ]] Compara os caracteres da string1 com os caracteres da string2
+myLen1=${#string1} Salva o comprimento da string1 na variável myLen1
+ 
+
+Lembre-se, na maioria dos casos, podemos usar colchetes simples ( [ ] ) em vez de duplos ([[ ]]) em comparações e testes lógicos, mas a forma dobrada mais moderna ajuda a evitar alguns erros, como aqueles que podem surgir ao fazer uma comparação com strings vazias e variáveis de ambiente.
+
+No primeiro exemplo, comparamos duas strings e exibimos uma mensagem apropriada usando a instrução if. Nos resultados mostrados, observe o terceiro teste onde ocorre um erro se usarmos colchetes simples e não colocarmos o nome da variável entre aspas.
+
+No segundo exemplo, passamos um nome de arquivo e verificamos se esse arquivo existe ou não.
+
+Passando um nome de arquivo e verificando se ele existe no diretório atual
+
+Às vezes, talvez você não precise comparar ou usar uma string inteira. Para extrair os primeiros n caracteres de uma string, podemos especificar: ${string:0:n}. Aqui, 0 é o deslocamento na string (ou seja, de qual caractere começar) onde a extração precisa começar e n é o número de caracteres a serem extraídos.
+
+Para extrair todos os caracteres de uma string após um ponto (.), use a seguinte expressão: ${string#*.}.
+
+Escreva um script que leia duas strings como argumentos e então:
+
+Testa para ver se a primeira string tem comprimento zero e se a outra tem comprimento diferente de zero, informando ao usuário ambos os resultados.
+Determina o comprimento de cada string e informa qual delas é mais longa ou se têm comprimento igual.
+Compara as strings para ver se elas são iguais e relata o resultado.
+
+Confira a solução fornecida na próxima página.
+
+Create a file named teststrings.sh, with the content below:
+
+#!/bin/bash
+
+# check two string arguments were given
+
+[[ $# -lt 2 ]] && \
+    echo "Usage: Give two strings as arguments" && exit 1
+str1=$1
+str2=$2
+
+#------------------------------------
+## test command
+
+echo "Is string 1 zero length? Value of 1 means FALSE"
+[ -z "$str1" ]
+echo $?
+# note if $str1 is empty, the test [ -z $str1 ] would fail
+#                              but [[ -z $str1 ]] succeeds
+#         i.e., with [[ ]] it works even without the quotes
+echo "Is string 2 nonzero length? Value of 0 means TRUE;"
+[ -n $str2 ]
+echo $?
+
+## comparing the lengths of two string
+
+len1=${#str1}
+len2=${#str2}
+echo length of string1 = $len1, length of string2 = $len2
+
+if [ $len1 -gt $len2 ]
+then
+    echo "String 1 is longer than string 2"
+else
+    if [ $len2 -gt $len1 ]
+    then
+        echo "String 2 is longer than string 1"
+    else
+        echo "String 1 is the same length as string 2"
+    fi
+fi
+
+## compare the two strings to see if they are the same
+
+if [[ $str1 == $str2 ]]
+then
+    echo "String 1 is the same as string 2"
+else
+    if [[ $str1 != $str2 ]]
+    then
+        echo "String 1 is not the same as string 2"
+    fi
+fi
+
+student:/tmp> chmod +x teststrings.sh
+student:/tmp> ./teststrings.sh str1 str2
+
+Is string 1 zero length? Value of 1 means FALSE
+1
+Is string 2 nonzero length? Value of 0 means TRUE;
+0
+length of string1 = 4, length of string2 = 4
+String 1 is the same length as string 2
+String 1 is not the same as string 2
+
+student:/tmp>./teststrings.sh str1 str2long
+
+Is string 1 zero length? Value of 1 means FALSE
+1
+Is string 2 nonzero length? Value of 0 means TRUE;
+0
+length of string1 = 4, length of string2 = 8
+String 2 is longer than string 1
+String 1 is not the same as string 2
+
+student:/tmp>
+
+*To download the lab solution, click this link.
+
+A instrução case é usada em cenários onde o valor real de uma variável pode levar a diferentes caminhos de execução. instruções case são frequentemente usadas para lidar com opções de linha de comando.
+
+Abaixo estão algumas das vantagens de usar a declaração de caso:
+
+É mais fácil de ler e escrever e é uma boa alternativa aos blocos de código if-then-else-fi aninhados e de vários níveis.
+Ele permite comparar uma variável com vários valores de uma só vez.
+Reduz a complexidade de um programa.
+
+Aqui está a estrutura básica da declaração de caso:
+
+expressão de caso em
+    padrão1) executa comandos;;
+    padrão2) executa comandos;;
+    padrão3) executa comandos;;
+    padrão4) executa comandos;;
+    * ) execute alguns comandos padrão ou nada ;;
+esac
+
+ 
+
+Observe que assim que a expressão corresponder a um padrão com êxito, o caminho de execução será encerrado; ou seja, os testes adicionais não são executados nem avaliados. Se nenhum dos testes retornar sucesso, a escolha final será executada, que pode ser não fazer nada.
+
+Aqui está um exemplo do uso de uma construção de caso. Observe que você pode ter diversas possibilidades para cada valor de caso que executam a mesma ação.
+
+Escreva um script que receba como argumento um mês em formato numérico (ou seja, entre 1 e 12), e traduza isso para o nome do mês e exiba o resultado na saída padrão (o terminal).
+
+Se nenhum argumento for fornecido ou um número incorreto for fornecido, o script deverá relatar o erro e sair.
+
+Confira a solução fornecida na próxima página.
+
+Create a file named testmonths.sh, with the content below:
+
+#!/bin/bash
+
+# Accept a number between 1 and 12 as
+# an argument to this script, then return the
+# the name of the month that corresponds to that number.
+
+# Check to see if the user passed a parameter.
+if [ $# -eq 0 ]
+then
+  echo "Error. Give as an argument a number between 1 and 12."
+  exit 1
+fi
+
+# set month equal to argument passed for use in the script
+month=$1
+
+################################################
+# The example of a case statement:
+
+case $month in
+
+  1)  echo "January" ;;
+  2)  echo "February" ;;
+  3)  echo "March" ;;
+  4)  echo "April" ;;
+  5)  echo "May" ;;
+  6)  echo "June" ;;
+  7)  echo "July" ;;
+  8)  echo "August" ;;
+  9)  echo "September" ;;
+  10) echo "October" ;;
+  11) echo "November" ;;
+  12) echo "December" ;;
+  *)
+     echo "Error. No month matches: $month"
+     echo "Please pass a number between 1 and 12."
+     exit 2
+     ;;
+esac
+exit 0
+
+Make it executable and run it:
+
+student:/tmp> chmod +x testcase.sh
+student:/tmp> ./testcase.sh 5
+
+May
+
+student:/tmp> ./testcase.sh 12
+
+December
+
+student:/tmp> ./testcase.sh 99
+
+Error. No month matches: 99
+Please pass a number between 1 and 12
+student:/tmp>
+
+*To download the lab solution, click this link.
+
+***********************************
+
+Crie um arquivo chamado testmonths.sh, com o conteúdo abaixo:
+
+#!/bin/bash
+
+# Aceita um número entre 1 e 12 como
+# um argumento para este script e então retorne o
+# o nome do mês que corresponde a esse número.
+
+# Verifica se o usuário passou algum parâmetro.
+se [ $# -eq 0 ]
+então
+   echo "Erro. Forneça como argumento um número entre 1 e 12."
+   saída 1
+fi
+
+# define o mês igual ao argumento passado para uso no script
+mês=$1
+
+###############################################
+# O exemplo de uma declaração de caso:
+
+caso $mês em
+
+   1) echo "janeiro" ;;
+   2) echo "Fevereiro" ;;
+   3) echo "março" ;;
+   4) echo "abril" ;;
+   5) echo "maio" ;;
+   6) echo "junho" ;;
+   7) echo "Julho" ;;
+   8) echo "Agosto" ;;
+   9) echo "setembro" ;;
+   10) echo "Outubro" ;;
+   11) echo "Novembro" ;;
+   12) echo "Dezembro" ;;
+   *)
+      echo "Erro. Nenhum mês corresponde: $mês"
+      echo "Por favor, passe um número entre 1 e 12."
+      saída 2
+      ;;
+esac
+saída 0
+
+Torne-o executável e execute-o:
+
+aluno:/tmp> chmod +x testcase.sh
+aluno:/tmp> ./testcase.sh 5
+
+Poderia
+
+aluno:/tmp> ./testcase.sh 12
+
+dezembro
+
+aluno:/tmp> ./testcase.sh 99
+
+Erro. Nenhum mês corresponde: 99
+Por favor passe um número entre 1 e 12
+aluno:/tmp>
+
+*Para baixar a solução de laboratório, clique neste link.
+
+Usando construções de loop, você pode executar uma ou mais linhas de código repetidamente, geralmente em uma seleção de valores de dados, como arquivos individuais. Normalmente, você faz isso até que um teste condicional retorne verdadeiro ou falso, conforme necessário.
+
+Três tipos de loops frequentemente usados são frequentemente usados no bash e em muitas linguagens de programação:
+
+para
+enquanto
+até
+Todos esses loops são facilmente usados para executar repetidamente uma ou mais instruções até que a condição de saída seja verdadeira. Cada um tem uma forma estrutural de fácil compreensão.
+
+O loop for opera em cada elemento de uma lista de itens. A sintaxe do loop for é:
+
+para nome de variável na lista
+fazer
+     execute uma iteração para cada item da lista até que a lista termine
+feito
+
+Neste caso, nome da variável e lista são substituídos por você conforme apropriado (veja exemplos). Tal como acontece com outras construções de loop, as instruções repetidas devem ser delimitadas por do e done.
+
+A captura de tela aqui mostra um exemplo do loop for para imprimir a soma dos números de 1 a 10.
+
+O loop while repete um conjunto de instruções enquanto o comando de controle retornar verdadeiro. A sintaxe é:
+
+enquanto a condição é verdadeira
+fazer
+     Comandos para execução
+     ----
+feito
+
+O conjunto de comandos que precisam ser repetidos deve ser colocado entre do e done. Você pode usar qualquer comando ou operador como condição. Freqüentemente, ele é colocado entre colchetes ([]).
+
+A captura de tela aqui mostra um exemplo do loop while que calcula o fatorial de um número. Você sabe por que o cálculo de 21! dá um resultado ruim?
+
+
+****************************************
+The until loop repeats a set of statements as long as the control command is false. Thus, it is essentially the opposite of the while loop. The syntax is:
+
+until condition is false
+do
+    Commands for execution
+    ----
+done
+
+Similar to the while loop, the set of commands that need to be repeated should be enclosed between do and done. You can use any command or operator as the condition.
+
+The screenshot here shows an example of the until loop that once again computes factorials; it is only slightly different than the test case for the while loop.
+
+*************************************
+
+O loop Until repete um conjunto de instruções enquanto o comando de controle for falso. Portanto, é essencialmente o oposto do loop while. A sintaxe é:
+
+até que a condição seja falsa
+fazer
+     Comandos para execução
+     ----
+feito
+
+Semelhante ao loop while, o conjunto de comandos que precisam ser repetidos deve ser colocado entre do e done. Você pode usar qualquer comando ou operador como condição.
+
+A captura de tela aqui mostra um exemplo do loop até que mais uma vez calcula fatoriais; é apenas um pouco diferente do caso de teste do loop while.
+
+
+Ao trabalhar com scripts e comandos, é provável que você incorra em erros. Isso pode ser devido a um erro no script, como sintaxe incorreta, ou outros ingredientes, como arquivo ausente ou permissão insuficiente para executar uma operação. Esses erros podem ser relatados com um código de erro específico, mas geralmente geram resultados incorretos ou confusos. Então, como você identifica e corrige um erro?
+
+A depuração ajuda a solucionar esses erros e é uma das tarefas mais importantes que um administrador de sistema executa.
+
+Antes de corrigir um erro (ou bug), é vital localizar a fonte.
+
+Você pode executar um script bash no modo de depuração executando bash –x ./script_file ou colocando partes do script entre colchetes com set -x e set +x. O modo de depuração ajuda a identificar o erro porque:
+
+Ele rastreia e prefixa cada comando com o caractere +.
+Ele exibe cada comando antes de executá-lo.
+Ele pode depurar apenas partes selecionadas de um script (se desejado) com:
+set -x # ativa a depuração
+...
+set +x # desativa a depuração
+
+A captura de tela mostrada aqui demonstra um script demonstrado anteriormente que verifica a existência de um arquivo, mas agora em execução no modo de depuração.
+
+No UNIX/Linux, todos os programas executados recebem três fluxos de arquivos abertos quando são iniciados, conforme listado na tabela:
+
+ 
+
+Tabela: Fluxos de Arquivos
+Fluxo de arquivos
+Descrição Descritor de arquivo
+Entrada padrão stdin, por padrão o teclado/terminal para programas executados a partir da linha de comando 0
+stdout Saída padrão, por padrão a tela para programas executados a partir da linha de comando 1
+stderr Erro padrão, onde as mensagens de erro de saída são mostradas ou salvas; por padrão, o mesmo que stdout 2
+ 
+
+Usando o redirecionamento, podemos salvar a saída padrão e os fluxos de erro em um arquivo ou dois arquivos separados para análise posterior após a execução de um programa ou comando.
+
+A captura de tela mostra um script de shell com um bug simples, que é então executado e a saída do erro é desviada para error.log. Em seguida, usamos cat para exibir o conteúdo do log de erros. Você vê como consertar o script?
+
+**********
+In UNIX/Linux, all programs that run are given three open file streams when they are started as listed in the table: 
+
+ 
+
+Table: File Streams
+File Stream
+Description			File Descriptor
+stdin				Standard Input, by default the keyboard/terminal for programs run from the command line	0
+stdout				Standard output, by default the screen for programs run from the command line	1
+stderr				Standard error, where output error messages are shown or saved; by default, the same as stdout	2
+ 
+
+By using redirection, we can save the standard output and error streams to one file or two separate files for later analysis after a program or command is executed.
+
+The screenshot shows a shell script with a simple bug, which is then run, and the error output is diverted to error.log. We then use cat to display the contents of the error log. Do you see how to fix the script?
+
+*************
+
+Considere uma situação em que você deseja recuperar 100 linhas de um arquivo com 10.000 linhas. Você precisará de um local para armazenar as informações extraídas, talvez em um arquivo temporário, enquanto faz o processamento adicional delas.
+
+Arquivos temporários (e diretórios) destinam-se a armazenar dados por um curto período de tempo. Normalmente, alguém organiza isso para que esses arquivos desapareçam quando o programa que os utiliza termina. Embora você também possa usar o toque para criar um arquivo temporário, em algumas circunstâncias, isso pode facilitar o acesso de hackers aos seus dados. Isto é particularmente verdadeiro se o nome e a localização do arquivo temporário forem previsíveis.
+
+A prática recomendada é criar nomes de arquivos aleatórios e imprevisíveis para armazenamento temporário. Uma maneira de fazer isso é com o utilitário mktemp, como nos exemplos a seguir.
+
+O XXXXXXXX é substituído por mktemp com caracteres aleatórios para garantir que o nome do arquivo temporário não possa ser facilmente previsto e seja conhecido apenas no seu programa. Você deve ter pelo menos 3 Xs no modelo fornecido, e o número de caracteres aleatórios será igual ao número de Xs fornecidos.
+
+ 
+
+Tabela: Comandos e Exemplos de Uso
+Uso de comando
+TEMP=$(mktemp /tmp/tempfile.XXXXXXXXX) Para criar um arquivo temporário
+TEMPDIR=$(mktemp -d /tmp/tempdir.XXXXXXXX) Para criar um diretório temporário
+
+A negligência na criação de arquivos temporários pode causar danos reais, seja por acidente ou se houver um agente mal-intencionado. Por exemplo, se alguém criasse um link simbólico de um arquivo temporário conhecido usado pelo root para o arquivo /etc/passwd, assim:
+
+$ ln -s /etc/passwd /tmp/tempfile
+
+Pode haver um grande problema se um script executado pelo root contiver uma linha como esta:
+
+echo $VAR > /tmp/tempfile
+
+O arquivo de senha será substituído pelo conteúdo do arquivo temporário.
+
+Para evitar tal situação, certifique-se de randomizar os nomes dos arquivos temporários, substituindo a linha acima pelas seguintes linhas:
+
+TEMP=$(mktemp /tmp/tempfile.XXXXXXXXX)
+echo $VAR > $TEMP
+
+A captura de tela exibida mostra arquivos temporários com nomes semelhantes em um sistema Ubuntu, que possui caracteres gerados aleatoriamente anexados ao seu nome.
+
+Certos comandos (como find) são capazes de gerar quantidades volumosas e esmagadoras de resultados. Para evitar isso, podemos redirecionar a saída grande para um arquivo especial (um nó de dispositivo) chamado /dev/null. Esse pseudoarquivo também é chamado de balde de bits ou buraco negro.
+
+Todos os dados gravados em /dev/null são descartados. Além disso, as operações de gravação nunca retornam condições de falha. Usando os operadores de redirecionamento adequados, ele pode fazer com que a saída desinteressante desapareça dos comandos que normalmente gerariam saída para stdout e/ou stderr:
+
+$ ls -lR /tmp > /dev/null
+
+No comando acima, todo o fluxo de saída padrão é ignorado, mas quaisquer erros ainda aparecerão no console. No entanto, se alguém fizer isso:
+
+$ ls -lR /tmp >& /dev/null
+
+Tanto stdout quanto stderr serão despejados em/dev/null.
+
+
+
+Muitas vezes é útil gerar números aleatórios e outros dados aleatórios ao executar tarefas como:
+
+Executando tarefas relacionadas à segurança
+Reinicializando dispositivos de armazenamento
+Apagar e/ou ocultar dados existentes
+Gerando dados sem sentido para serem usados em testes
+Esses números aleatórios podem ser gerados usando a variável de ambiente $RANDOM, que é derivada do gerador de números aleatórios integrado do kernel Linux, ou pela função da biblioteca OpenSSL, que usa o algoritmo FIPS140 (Federal Information Processing Standard) para gerar números aleatórios. para criptografia
+
+Para saber mais sobre o FIPS140, leia o artigo "FIPS 140-2" da Wikipedia.
+
+O exemplo mostra como usar facilmente o método de variável ambiental para gerar números aleatórios.
+
+Alguns servidores possuem geradores de números aleatórios em hardware que recebem como entrada diferentes tipos de sinais de ruído, como ruído térmico e efeito fotoelétrico. Um transdutor converte esse ruído em um sinal elétrico, que é novamente convertido em um número digital por um conversor AD. Este número é considerado aleatório. Contudo, a maioria dos computadores comuns não contém esse hardware especializado e, em vez disso, dependem de eventos criados durante a inicialização para criar os dados brutos necessários.
+
+Independentemente de qual dessas duas fontes é usada, o sistema mantém um chamado conjunto de entropia desses números digitais/bits aleatórios. Números aleatórios são criados a partir desse conjunto de entropia.
+
+O kernel do Linux oferece os nós de dispositivo /dev/random e /dev/urandom, que utilizam o pool de entropia para fornecer números aleatórios que são extraídos do número estimado de bits de ruído no pool de entropia.
+
+/dev/random é usado onde é necessária aleatoriedade de alta qualidade, como um teclado único ou geração de chave, mas é relativamente lento para fornecer valores. /dev/urandom é mais rápido e adequado (bom o suficiente) para a maioria dos propósitos criptográficos.
+
+Além disso, quando o pool de entropia está vazio, /dev/random é bloqueado e não gera nenhum número até que ruído ambiental adicional (tráfego de rede, movimento do mouse, etc.) seja coletado, enquanto /dev/urandom reutiliza o pool interno para produzir mais bits pseudo-aleatórios.
+
+Escreva um script que:
+
+Toma uma palavra como argumento.
+Acrescenta um número aleatório a ele.
+Exibe a resposta.
+
+Confira a solução fornecida na próxima página.
+
+Create a file named testrandom.sh, with the content below:
+
+#!/bin/bash
+##
+# check to see if the user supplied in the parameter.
+
+[[ $# -eq 0 ]] && echo "Usage: $0 word" && exit 1
+
+echo "$1-$RANDOM"
+exit 0
+
+Make it executable and run it:
+
+student:/tmp> chmod +x testrandom.sh
+student:/tmp> ./testrandom.sh strA
+
+strA-29294
+
+student:/tmp>./testrandom.sh strB
+
+strB-23911
+
+student:/tmp>./testrandom.sh strC
+
+strC-27782
+student:/tmp>
+
+*To download the lab solution, click this link.
+************
+Crie um arquivo chamado testrandom.sh, com o conteúdo abaixo:
+
+#!/bin/bash
+##
+# verifica se o usuário forneceu no parâmetro.
+
+[[ $# -eq 0 ]] && echo "Uso: $0 palavra" && exit 1
+
+eco "$1-$RANDOM"
+saída 0
+
+Torne-o executável e execute-o:
+
+aluno:/tmp> chmod +x testrandom.sh
+aluno:/tmp> ./testrandom.sh strA
+
+strA-29294
+
+aluno:/tmp>./testrandom.sh strB
+
+strB-23911
+
+aluno:/tmp>./testrandom.sh strC
+
+strC-27782
+aluno:/tmp>
+
+*Para baixar a solução de laboratório, clique neste link.
+
+resumo
+
+
+Você concluiu o Capítulo 16. Vamos resumir os principais conceitos abordados:
+
+Você pode manipular strings para realizar ações como comparação, classificação e localização de comprimento.
+Você pode usar expressões booleanas ao trabalhar com vários tipos de dados, incluindo strings ou números, bem como arquivos.
+A saída de uma expressão booleana é verdadeira ou falsa.
+Os operadores usados em expressões booleanas incluem && (AND), || (Ou e ! (NÃO) operadores.
+Vimos as vantagens de usar a instrução case em cenários onde o valor de uma variável pode levar a diferentes caminhos de execução.
+Os métodos de depuração de script ajudam a solucionar problemas e erros.
+As saídas padrão e de erro de um script ou comandos shell podem ser facilmente redirecionadas para o mesmo arquivo ou para arquivos separados para ajudar na depuração e no salvamento dos resultados.
+O Linux permite criar arquivos e diretórios temporários, que armazenam dados por um curto período, economizando espaço e aumentando a segurança.
+O Linux oferece diversas maneiras diferentes de gerar números aleatórios, que são amplamente utilizadas.
+

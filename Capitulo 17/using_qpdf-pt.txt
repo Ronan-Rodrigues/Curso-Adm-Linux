@@ -1,0 +1,41 @@
+Vamos agora demonstrar algumas capacidades da utilidade
+do QPDF para manipular arquivos em PDF.
+Primeiro, vamos combinar dois arquivos em um arquivo maior.
+Fazemos isso com 'qpdf --empty --pages 1.pdf 2.pdf', onde
+eu já tenho esses dois arquivos.
+Colocarei o resultado em apenas um dois PDF ['-- 12.pdf'].
+Agora, suponhamos que quero dividir um par de páginas
+de um arquivo para um arquivo separado.
+Eu posso fazer isso com 'qpdf --empty -- pages 1.pdf' e
+depois eu pego as páginas 1 e 2 ['1-2']
+em um novo pdf [--new.pdf].
+Então, o novo arquivo só contém as duas primeiras páginas.
+Suponhamos que quero girar a primeira página
+em 90 graus e deixar as outras páginas o mesmo.
+Então, faço 'qpdf --rotate=+90:1' para indicar
+que é apenas 1 página, '1.pdf' e o resultado será '1r.pdf''.
+Se quiser rotacionar todas as páginas, eu poderia fazer
+'qpdf --rotate=+90:1-z', onde "z" significa todas páginas,
+'1.pdf' e o resultado será '1rall.pdf'.
+Então, para ver o que pareceria, poderíamos fazer
+'evince 1r.pdf', e você veria a primeira página rotacionada
+e as outras não.
+Deixaria brincar com um arquivo onde todas estão giradas.
+E então, vamos encriptar um arquivo com uma senha que damos.
+Fazemos 'qpdf --encrypt mypw'
+sendo que 'mypw' é a senha em si.
+Especificarei uma criptografia de 128 bits e
+depois '-- public.pdf, que é o nome original.
+Será encriptado em um arquivo de nome 'private.pdf',
+e o trabalho está feito.
+Logo, quando tentar abrir o arquivo, se eu
+só digitar 'evince private.pdf', está me pedindo a senha.
+Digito 'mypw'.
+Posso lê-lo, então está legal.
+Em seguida, se quiser decriptá-lo e fazer uma cópia que não
+seja criptografada, posso fazer
+'qpdf --decrypt --password=mypw private.pdf'
+e logo o resultado será 'file-decrypted.pdf'.
+Posso olhar para isso sem ter que fornecer uma senha.
+Essa é apenas uma demonstração de alguns
+dos usos simples da utilidade QPDF.

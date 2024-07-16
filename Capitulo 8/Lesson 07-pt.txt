@@ -1,0 +1,186 @@
+Poderíamos passar semanas ou meses ensinando Linux.
+Seria o mesmo que te dar o peixe para comer.
+Em vez disso, queremos te ensinar a pescar
+para você aprender a se virar.
+O Linux tem uma vasta documentação
+que descreve vários comandos
+e como as opções afetam as operações desses comandos.
+À medida que aprender novos comandos
+e suas opções neste curso,
+saiba que há muito mais a aprender com a documentação.
+Vamos começar!
+
+Ao final deste capítulo, você deverá ser capaz de:
+
+Use diferentes fontes de documentação.
+Use as páginas de manual.
+Acesse o Sistema de Informações GNU.
+Use o comando help e a opção --help.
+Use outras fontes de documentação.
+
+Quer você seja um usuário inexperiente ou um veterano, nem sempre saberá (ou se lembrará) do uso adequado de vários programas e utilitários: que comando usar, que opções deve tomar, quais resultados esperar, etc. provavelmente precisará obter ajuda para consultar a documentação de ajuda regularmente. Como os sistemas baseados em Linux são extraídos de uma grande variedade de fontes, existem numerosos reservatórios de documentação e formas de obter ajuda. Os distribuidores consolidam esse material e o apresentam de forma abrangente e fácil de usar; esta é uma função importante de qualquer distribuição Linux.
+
+Fontes importantes de documentação do Linux incluem:
+
+As páginas de manual (abreviação de páginas de manual)
+Informações GNU
+O comando help e a opção --help
+Outras fontes de documentação, por exemplo, Gentoo Handbook, Ubuntu Documentation ou Fedora Documentation.
+
+As páginas man são a fonte de documentação do Linux usada com mais frequência. Eles fornecem documentação detalhada sobre muitos programas e utilitários, bem como outros tópicos, incluindo arquivos de configuração e APIs de programação para chamadas de sistema, rotinas de biblioteca e kernel. Eles estão presentes em todas as distribuições Linux e estão sempre ao seu alcance.
+
+Digitar man com um nome de tópico como argumento recupera as informações armazenadas nas páginas man do tópico.
+
+A infraestrutura de páginas de manual foi introduzida pela primeira vez nas primeiras versões do UNIX, no início da década de 1970. O nome man é apenas uma abreviatura de manual.
+
+as páginas man são frequentemente convertidas para outros formatos, como documentos PDF e páginas da web. Para saber mais, dê uma olhada nas páginas de manual do Linux online. Muitas páginas da web possuem uma interface gráfica para itens de ajuda, que podem incluir páginas de manual.
+
+Outras fontes de documentação incluem livros publicados e muitos sites da Internet.
+
+O programa man pesquisa, formata e exibe as informações contidas no sistema de páginas man. Como muitos tópicos contêm grandes quantidades de informações relevantes, a saída é canalizada por meio de um programa de pager (como o less) para ser visualizada uma página por vez. Ao mesmo tempo, as informações são formatadas para uma boa exibição visual.
+
+Um determinado tópico pode ter múltiplas páginas associadas a ele e há uma ordem padrão que determina qual delas é exibida quando nenhuma opção ou número de seção é especificado. Para listar todas as páginas do tópico, use a opção -f. Para listar todas as páginas que discutem um tópico específico (mesmo que o assunto especificado não esteja presente no nome), use a opção –k.
+
+man –f gera o mesmo resultado que digitar whatis.
+man –k gera o mesmo resultado que digitar apropos.
+A ordem padrão é especificada em /etc/man_db.conf e é aproximadamente (mas não exatamente) em ordem numérica crescente por seção.
+
+As páginas de manual são divididas em capítulos numerados de 1 a 9. Em alguns casos, uma carta é anexada ao número do capítulo para identificar um tópico específico. Por exemplo, muitas páginas que descrevem parte da API X Window estão no capítulo 3X.
+
+O número do capítulo pode ser usado para forçar man a exibir a página de um capítulo específico. É comum ter várias páginas em vários capítulos com o mesmo nome, especialmente para nomes de funções de biblioteca ou chamadas de sistema.
+
+Com o parâmetro -a, man exibirá todas as páginas com o nome fornecido em todos os capítulos, uma após a outra, como em:
+
+$ homem -um soquete
+
+Agora, tente fazer o seguinte:
+
+Encontrando páginas de manual
+Na linha de comando, abra a página de manual do próprio man. Role para baixo até a seção EXEMPLOS.
+Encontrando páginas de manual por tópico
+Quais páginas de manual estão disponíveis para compactação de arquivos de documentos?
+Encontrando páginas de manual por seção
+Na linha de comando, abra a página de manual da função da biblioteca printf. Em qual seção da página do manual são encontradas as funções da biblioteca?
+Confira a solução fornecida na próxima página.
+
+aluno:/tmp> homem homem
+Use a tecla Page Down ou pesquise menos com a tecla '/' para a seção EXEMPLOS.
+aluno:/tmp> man -k compress
+ou
+aluno:/tmp> a propósito de compactar
+trará uma longa lista de programas e referências, incluindo gzip, bzip2 e xz, e vários utilitários de arquivo que funcionam com arquivos compactados, como zless, zgrep, bzcat e xzdiff.
+aluno:/tmp> man 3 printf
+man printf abrirá o utilitário de linha de comando (seção 1) de mesmo nome.
+
+A próxima fonte de documentação do Linux é o GNU Info System.
+
+Este é o formato de documentação padrão do projeto GNU, que ele prefere como alternativa ao man. O Sistema de Informações é basicamente de formato livre e suporta subseções vinculadas.
+
+Funcionalmente, a informação se assemelha ao homem em muitos aspectos. No entanto, os tópicos são conectados por meio de links (embora seu design seja anterior à World Wide Web). As informações podem ser visualizadas através de uma interface de linha de comando, um utilitário gráfico de ajuda, impressas ou visualizadas online.
+
+Embora a interface de informações possa parecer um tanto desatualizada em comparação com os sistemas de ajuda modernos (até mesmo os humanos), geralmente é a única fonte fácil de obter informações mais completas. Por exemplo, se você comparar a saída de qualquer comando simples, poderá encontrar muito mais detalhes na página de informações (tente man ls vs info ls e conte as linhas, por exemplo). Assim, ainda é importante aprender a usar a informação.
+
+Digitar informações sem argumentos em uma janela de terminal exibe um índice de tópicos disponíveis. Você pode navegar pela lista de tópicos usando as teclas de movimento normais: setas, Page Up e Page Down.
+
+Você pode visualizar a ajuda de um tópico específico digitando info <nome do tópico>. O sistema então procura o tópico em todos os arquivos de informações disponíveis.
+
+Algumas teclas úteis são: q para sair, h para ajuda e Enter para selecionar um item de menu.
+
+O tópico que você visualiza em uma página de informações é chamado de nó. A tabela lista as teclas básicas para movimentação entre nós.
+
+Os nós são essencialmente seções e subseções da documentação. Você pode mover-se entre nós ou visualizar cada nó sequencialmente. Cada nó pode conter menus e subtópicos ou itens vinculados.
+
+Os itens funcionam como links de navegador e são identificados por um asterisco (*) no início do nome do item. Itens nomeados (fora de um menu) são identificados com dois-pontos duplos (::) no final do nome do item. Os itens podem referir-se a outros nós dentro do arquivo ou a outros arquivos.
+
+Na linha de comando, abra a página de informações do cpio. Abra o tutorial.
+
+Confira a solução fornecida na próxima página.
+
+aluno:/tmp> info cpio
+
+Mova o cursor para baixo até o nó Tutorial e pressione Enter.
+
+Outra fonte importante de documentação do Linux é o uso da opção --help.
+
+A maioria dos comandos tem uma breve descrição disponível que pode ser visualizada usando a opção --help ou -h junto com o comando ou aplicativo. Por exemplo, para saber mais sobre o comando man, você pode digitar:
+
+$ homem --ajuda
+
+A opção --help é útil como uma referência rápida e exibe informações mais rapidamente do que as páginas man ou info.
+
+Quando executados em um shell de comando bash, alguns comandos populares (como echo e cd) na verdade executam versões bash especialmente integradas dos comandos, em vez dos binários usuais encontrados no sistema de arquivos, por exemplo, em /bin ou /usr/bin. É mais eficiente fazer isso porque a execução é mais rápida porque menos recursos são usados (discutiremos os shells de comando mais tarde). Deve-se notar que pode haver algumas diferenças (geralmente pequenas) nas duas versões do comando.
+
+Para ver uma sinopse desses comandos integrados, você pode simplesmente digitar help conforme mostrado na captura de tela.
+
+Para esses comandos integrados, help executa a mesma função básica que os argumentos -h e --help executam para programas independentes.
+
+Liste as opções disponíveis para o comando mkdir, de mais de uma maneira.
+
+Confira a solução fornecida na próxima página.
+
+student:/tmp> mkdir --help
+
+or
+
+student:/tmp>$ man mkdir
+
+Além das páginas man, do GNU Info System e do comando help, existem outras fontes de documentação do Linux, alguns exemplos das quais incluem:
+
+Sistema de ajuda da área de trabalho
+Documentação do pacote
+Recursos online
+
+Todos os sistemas desktop Linux possuem um aplicativo de ajuda gráfica. Este aplicativo geralmente é exibido como um ícone de ponto de interrogação ou uma imagem do colete salva-vidas de um navio e também pode ser encontrado sempre no sistema de menus. Esses programas geralmente contêm ajuda personalizada para a própria área de trabalho e alguns de seus aplicativos e, às vezes, também incluem informações renderizadas graficamente e páginas de manual.
+
+Se não quiser perder tempo procurando o ícone ou item de menu correto para iniciar o aplicativo de ajuda, você também pode iniciar o sistema de ajuda gráfica a partir de uma janela de terminal ou prompt de comando usando um dos seguintes programas utilitários:
+
+GNOME: gnome-help ou yelp
+KDE: khelpcenter
+
+A documentação do Linux também está disponível como parte do sistema de gerenciamento de pacotes. Normalmente, esta documentação é extraída diretamente do código-fonte original, mas também pode conter informações sobre como a distribuição empacotou e configurou o software.
+
+Essas informações são colocadas no diretório /usr/share/doc, agrupadas em subdiretórios nomeados após cada pacote.
+
+Há muitos lugares para acessar a documentação on-line do Linux, e um pouco de pesquisa fará com que você fique enterrado nela.
+
+O livro a seguir foi bem avaliado por outros usuários deste curso. É um compêndio de linha de comando gratuito para download sob uma licença Creative Commons: "The Linux Command Line" de William Shotts.
+
+Você também pode encontrar documentação muito útil para cada distribuição. Cada distribuição tem seus próprios fóruns e seções wiki gerados por usuários. Aqui estão apenas alguns links para essas fontes:
+
+Documentação do Ubuntu
+Documentação do CentOS
+Documentação do openSUSE
+Documentação Gentoo
+Documentação do Fedora.
+Além disso, você pode usar sites de pesquisa on-line para localizar recursos úteis em toda a Internet, incluindo postagens em blogs, postagens em fóruns e listas de e-mail, artigos de notícias e assim por diante.
+
+Encontre o sistema de ajuda gráfico em sua área de trabalho e tente localizar nele as páginas de manual do printf. Isso pode ser difícil, então não perca muito tempo antes de ler as sugestões abaixo.
+
+Se você não conseguiu encontrar as páginas de manual desta forma, não podemos fornecer uma solução única para isso. Isso varia de uma distribuição Linux para outra e de uma versão para outra, mas você deve ser capaz de procurar e descobrir onde ela está localizada e se familiarizar com a interface.
+
+Nas distribuições anteriores do Linux, esta era uma tarefa bastante fácil. Esses dias acabaram para alguns desktops hoje.
+
+Se estiver tendo problemas para encontrar isso em desktops GNOME recentes, você não está sozinho. Por alguma razão, clicar em Documentação > Ajuda só traz documentação sobre o próprio GNOME, usando o navegador yelp.
+
+Porém, se na linha de comando você digitar algo como:
+
+aluno:/tmp> grito cara: gato
+
+de fato, abrirá a página de manual do cat. No entanto, você não pode digitar algo como man:ls na barra de localização e fazê-lo funcionar, a menos que você pressione CTRL-l primeiro! Não está exatamente claro se isso é um bug ou um recurso, mas parece mais provável que seja um bug. Quando estiver na página, clicar nos links para obter outras páginas de manual funciona perfeitamente.
+
+O mesmo mecanismo também funciona para obter páginas de informações, como em:
+
+aluno:/tmp> yelp info:cpio
+
+resumo
+
+Você concluiu o Capítulo 8. Vamos resumir os principais conceitos abordados:
+
+As principais fontes de documentação do Linux são as páginas de manual, as informações do GNU, as opções e comandos de ajuda e uma rica variedade de fontes de documentação online.
+O utilitário man pesquisa, formata e exibe páginas de manual.
+As páginas man fornecem documentação detalhada sobre programas e outros tópicos sobre o sistema, incluindo arquivos de configuração, chamadas de sistema, rotinas de biblioteca e o kernel.
+O Sistema de Informações GNU foi criado pelo projeto GNU como sua documentação padrão. É robusto e acessível via linha de comando, web e ferramentas gráficas usando informações.
+Descrições curtas para comandos geralmente são exibidas com o argumento -h ou --help.
+Você pode digitar help na linha de comando para exibir uma sinopse dos comandos integrados.
+Existem muitos outros recursos de ajuda no seu sistema e na Internet.
+

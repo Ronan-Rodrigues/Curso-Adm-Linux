@@ -1,0 +1,43 @@
+- [Jerry] Vamos ter uma experiência simples
+com ferramentas de linha de comando
+usadas para ver sua rede
+e seus dispositivos de rede.
+Então, se eu usar ifconfig,
+posso ver que meu número de IP de rede
+é 192.168.72.133
+e posso ver que meu dispositivo é ens33.
+Primeiro, vamos obter algumas informações sobre a placa,
+a placa ethernet.
+Eu usaria sudo ethtool ens33.
+Ele está retornando propriedades básicas, velocidade, etc.,
+se é duplex,
+as propriedades básicas dessa placa de rede,
+que é apenas uma virtualizada
+rodando na VMware.
+Se eu quiser obter informações
+sobre as conexões ativas,
+eu posso usar netstat
+- r
+com sudo,
+e não há muito acontecendo.
+Só tenho um gateway padrão.
+Se eu quiser ver as portas abertas na rede,
+eu posso usar
+sudo nmap -sn, e digamos,
+192.168.72.0/24.
+Isso demora um pouco para coletar os dados
+e está me mostrando de novo
+todas as portas VMware que estão abertas.
+Posso tentar o ping.
+Posso usar ping -c 5 para fazer cinco pings
+para, digamos, google.com
+e você verá que ele vai responder
+em uma quantidade de tempo bem constante.
+E se eu quiser ver a rota para google.com,
+posso usar traceroute
+google. com.
+Veja, demorei 14 saltos para chegar lá,
+ou seja, muito rápido.
+Há muitas outras coisas que você pode fazer
+na linha de comando para ver sua rede.
+Esta é apenas uma pequena amostra.

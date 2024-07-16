@@ -1,0 +1,274 @@
+Para novos usuários em quaisquer sistemas operacionais,
+o ponto de partida é a interface gráfica de usuário.
+E, nesta sessão, falaremos sobre os fundamentos
+de logar, deslogar e desligar,
+antes de falarmos sobre as configurações de customização
+de look and feel, de acordo com suas necessidades.
+Vamos lá!
+
+Ao final deste capítulo, você deverá ser capaz de:
+
+Gerenciar sessões de interface gráfica.
+Execute operações básicas usando a interface gráfica.
+Altere a área de trabalho gráfica para atender às suas necessidades.
+
+Você pode usar uma interface de linha de comando (CLI) ou uma interface gráfica de usuário (GUI) ao usar o Linux. Para trabalhar na CLI, você deve lembrar quais programas e comandos são usados para executar tarefas e como obter mais informações sobre seu uso e opções de forma rápida e precisa. Por outro lado, usar a GUI costuma ser rápido e fácil. Ele permite que você interaja com seu sistema por meio de ícones gráficos e telas. Para tarefas repetitivas, a CLI costuma ser mais eficiente, enquanto a GUI é mais fácil de navegar se você não se lembra de todos os detalhes ou faz algo raramente.
+
+Aprenderemos como gerenciar sessões usando a GUI para as três famílias de distribuição Linux que mais abordamos neste curso: Red Hat (CentOS, Fedora), SUSE (openSUSE) e Debian (Ubuntu, Mint). Como estamos usando a variante do openSUSE baseada no GNOME em vez da variante baseada no KDE, todas são bastante semelhantes. Se você estiver usando o KDE (ou outros desktops Linux como o XFCE), sua experiência irá variar um pouco do que é mostrado, mas não de uma forma intrinsecamente difícil, já que as interfaces de usuário convergiram para certos comportamentos bem conhecidos em sistemas operacionais modernos. Nas seções subsequentes deste curso nos concentraremos detalhadamente na interface de linha de comando, que é praticamente a mesma em todas as distribuições.
+
+Carregar a área de trabalho gráfica é uma das etapas finais no processo de inicialização de uma área de trabalho Linux. Historicamente, isso era conhecido como Sistema X Windows, muitas vezes chamado apenas de X.
+
+Um serviço chamado Display Manager monitora as exibições fornecidas e carrega o servidor X (assim chamado porque fornece serviços gráficos para aplicativos, às vezes chamados de clientes X). O gerenciador de exibição também lida com logins gráficos e inicia o ambiente de área de trabalho apropriado após o login do usuário.
+
+X é um software bastante antigo; remonta a meados da década de 1980 e, como tal, apresenta certas deficiências nos sistemas modernos (por exemplo, no que diz respeito à segurança), uma vez que se estendeu bastante para longe dos seus propósitos originais. Um sistema mais novo, conhecido como Wayland, está gradualmente substituindo-o e é o sistema de exibição padrão do Fedora, RHEL e outras distribuições recentes. Na maior parte, parece X para o usuário, embora nos bastidores seja bem diferente.
+
+Um ambiente de área de trabalho consiste em um gerenciador de sessão, que inicia e mantém os componentes da sessão gráfica, e o gerenciador de janelas, que controla o posicionamento e o movimento das janelas, barras de título das janelas e controles.
+
+Embora possam ser combinados, geralmente um conjunto de utilitários, gerenciador de sessões e gerenciador de janelas são usados juntos como uma unidade e, juntos, fornecem um ambiente de área de trabalho integrado.
+
+Se o gerenciador de exibição não for iniciado por padrão no nível de execução padrão, você poderá iniciar a área de trabalho gráfica de maneira diferente, após efetuar logon em um console de modo texto, executando startx na linha de comando. Ou você pode iniciar o gerenciador de exibição (gdm, kdm, xdm, etc.) manualmente a partir da linha de comando. Isso difere da execução do startx, pois os gerenciadores de exibição projetarão uma tela de login. Nós os discutiremos a seguir.
+
+Ao instalar um ambiente de desktop, o gerenciador de exibição é iniciado no final do processo de inicialização. É responsável por iniciar o sistema gráfico, fazer login do usuário e iniciar o ambiente de trabalho do usuário. Muitas vezes você pode selecionar entre uma variedade de ambientes de desktop ao fazer login no sistema.
+
+O gerenciador de exibição padrão do GNOME é chamado gdm. Outro gerenciador de exibição popular é o kdm, associado ao KDE.
+
+GNOME é um ambiente de desktop popular com uma interface gráfica de usuário fácil de usar. Ele é fornecido como ambiente de desktop padrão para a maioria das distribuições Linux, incluindo Red Hat Enterprise Linux (RHEL), Fedora, CentOS, SUSE Linux Enterprise, Ubuntu e Debian. O GNOME possui navegação baseada em menus e às vezes é uma transição fácil de realizar para usuários do Windows. No entanto, a aparência pode ser bem diferente entre as distribuições, mesmo que todas usem o GNOME.
+
+Outro ambiente de desktop comum, muito importante na história do Linux e também amplamente utilizado, é o KDE, que tem sido frequentemente usado em conjunto com o SUSE e o openSUSE. Outras alternativas para um ambiente de desktop incluem Unity (presente no Ubuntu antigo, mas ainda baseado no GNOME), XFCE e LXDE. Como mencionado anteriormente, a maioria dos ambientes de desktop segue uma estrutura semelhante ao GNOME, e nos restringiremos principalmente a ele para manter as coisas menos complexas.
+
+Cada distribuição Linux vem com seu próprio conjunto de planos de fundo de área de trabalho. Você pode alterar o padrão escolhendo um novo papel de parede ou selecionando uma imagem personalizada para definir como plano de fundo da área de trabalho. Se não quiser usar uma imagem como plano de fundo, você pode selecionar uma cor para ser exibida na área de trabalho.
+
+Além disso, você também pode alterar o tema da área de trabalho, o que altera a aparência do sistema Linux. O tema também define a aparência das janelas do aplicativo.
+
+Aprenderemos como alterar o plano de fundo e o tema da área de trabalho.
+
+Para alterar o plano de fundo, você pode clicar com o botão direito em qualquer lugar da área de trabalho e escolher Alterar plano de fundo.
+
+Nesta seção, praticaremos a alteração do plano de fundo da área de trabalho no openSUSE. Os detalhes exatos podem variar ligeiramente para sua distribuição Linux.
+
+Por favor, dê uma olhada no seguinte exercício Experimente você mesmo: Alterando o plano de fundo da área de trabalho no openSUSE.
+
+As configurações mais comuns, tanto pessoais quanto de sistema, podem ser encontradas clicando no canto superior direito, em uma engrenagem ou outro ícone óbvio, dependendo da sua distribuição Linux.
+
+No entanto, existem muitas configurações que muitos usuários gostariam de modificar e que não são acessíveis; infelizmente, o utilitário de configurações padrão é bastante limitado nas distribuições modernas baseadas no GNOME. Infelizmente, a busca pela simplicidade tornou difícil adaptar o seu sistema aos seus gostos e necessidades.
+
+Felizmente, existe um utilitário padrão, gnome-tweaks, que expõe muito mais opções de configuração. Também permite que você instale facilmente extensões por terceiros. Nem todas as distribuições Linux instalam esta ferramenta por padrão, mas ela está sempre disponível (as distribuições mais antigas usavam o nome gnome-Tweak-tool). Pode ser necessário executá-lo pressionando Alt-F2 e digitando o nome. Você pode adicioná-lo à sua lista de Favoritos, como discutiremos.
+
+Conforme discutido no próximo capítulo, algumas distribuições recentes retiraram a maior parte da funcionalidade desta ferramenta e a colocaram em uma nova chamada gnome-extensions-app.
+
+Na captura de tela abaixo, o mapeamento do teclado está sendo ajustado para que a tecla CapsLock inútil possa ser usada como uma tecla Ctrl adicional; isso evita que os usuários que usam muito o Ctrl (como os aficionados do emacs) sejam fisicamente danificados pela tensão do dedo mindinho.
+
+A aparência visual dos aplicativos (botões, barras de rolagem, widgets e outros componentes gráficos) é controlada por um tema. O GNOME vem com um conjunto de temas diferentes que podem mudar a aparência dos seus aplicativos.
+
+O método exato para alterar o seu tema pode depender da sua distribuição. Para muitas distribuições baseadas no GNOME, você pode simplesmente executar gnome-tweaks, conforme mostrado na captura de tela do Ubuntu. No entanto, como mencionado anteriormente, se você não encontrá-lo lá, você precisará dar uma olhada no gnome-extensions-app, que agora às vezes pode configurar temas. Isso requer a instalação de ainda mais software e o acesso a sites externos, por isso é improvável que seja visto como uma melhoria por muitos usuários.
+
+Existem outras opções para obter temas adicionais além da seleção padrão. Você pode baixar e instalar temas do site Wiki do GNOME.
+
+Apesar da extensão desta seção, não faremos exercícios de laboratório passo a passo muito elaborados, devido à diversidade de distribuições e versões do Linux e porque cada uma delas personaliza seus desktops, mesmo que a base de código subjacente seja a mesma. Tentar dar instruções exatas é um exercício de futilidade; além de existirem muitas variações, elas são suscetíveis a alterações sempre que uma nova versão de uma distribuição Linux é lançada.
+
+Na maior parte, isso não é um problema. As interfaces gráficas são projetadas para serem fáceis de navegar e descobrir, e realmente não variam muito, não apenas de uma distribuição para outra, mas até mesmo entre sistemas operacionais. Portanto, a única maneira de se tornar mais hábil no trabalho eficiente em sua área de trabalho é simplesmente explorar, jogar e modificar. Os mesmos pontos serão aplicados ao próximo capítulo, sobre configuração gráfica do sistema.
+
+O Linux é tão personalizável que provavelmente poucas pessoas permanecem com a aparência padrão do desktop. Você também pode começar agora a fazer com que sua área de trabalho reflita seus gostos e personalidade.
+
+Comece alterando o plano de fundo da área de trabalho para algo que melhor se adapte ao seu gosto; talvez um dos planos de fundo fornecidos, uma cor sólida de sua escolha ou uma imagem pessoal que você possa enviar.
+A seguir, selecione um tema entre os temas disponíveis para sua distribuição que, novamente, se adapte ao seu gosto e personalidade. Divirta-se e explore com este exercício.
+Confira a solução fornecida na próxima página.
+
+A maneira mais fácil de personalizar sua área de trabalho é clicar com o botão direito na área de trabalho, o que deve abrir um menu. Neste ponto, selecione Alterar plano de fundo da área de trabalho ou Configurações padrão da área de trabalho, dependendo de qual distribuição Linux você está executando.
+
+Isso abrirá uma janela onde você pode selecionar as imagens de fundo disponíveis, um fundo de cor sólida ou usar uma imagem de sua preferência que você adiciona à pasta Imagens em seu diretório inicial.
+
+Para alterar o seu tema, você deve ter notado uma guia na janela onde alterou o plano de fundo denominado Tema. Se estiver presente, você pode clicar nesta aba e selecionar um dos temas disponíveis ou clicar em Personalizar para experimentar suas próprias criações.
+
+No entanto, para o GNOME 3, você não pode mais fazer nada dessa maneira, exceto definir o plano de fundo. Em vez disso, você deve executar gnome-tweaks (ou gnome-Tweak-tool) e rolar para baixo até Tema ou Aparência > Tema.
+
+Lembre-se, muitas outras configurações que você poderia esperar que estivessem no menu Configurações agora são configuráveis apenas através de ajustes no gnome. Isso pode causar muita frustração até você descobrir esse fato.
+
+A próxima tela mostra uma demonstração de login e logout nas principais famílias de distribuição Linux nas quais nos concentramos neste curso. Observe que a evolução nos trouxe a um estágio em que pouco importa a distribuição que você escolher, pois todas são bastante semelhantes.
+
+Muitas vezes é uma boa ideia bloquear a tela para evitar que outras pessoas acessem sua sessão enquanto você estiver longe do computador.
+
+NOTA: Isto não suspende o computador; todos os seus aplicativos e processos continuam em execução enquanto a tela está bloqueada.
+
+Existem duas maneiras de bloquear sua tela:
+
+Usando a interface gráfica
+Clicando no canto superior direito da área de trabalho e, em seguida, clicando no ícone de cadeado.
+Usando o atalho de teclado SUPER-L (ou SUPER-Escape)
+(A tecla SUPER também é conhecida como tecla do Windows).
+O atalho de teclado para bloquear a tela pode ser modificado alterando as configurações do teclado, a prescrição exata variando de acordo com a distribuição, mas não é difícil de determinar.
+
+Para entrar novamente na sessão de desktop, você só precisa fornecer sua senha novamente.
+
+A captura de tela abaixo mostra como bloquear a tela do Ubuntu. Os detalhes variam pouco nas distribuições modernas.
+
+O Linux é um verdadeiro sistema operacional multiusuário, que permite que mais de um usuário esteja logado simultaneamente. Caso mais de uma pessoa utilize o sistema, cada pessoa deverá ter sua própria conta de usuário e senha. Isso permite configurações individualizadas, diretórios iniciais e outros arquivos e protege contra corrupção acidental e maliciosa. Os usuários podem se revezar no uso da máquina, mantendo vivas as sessões de todos, ou até mesmo fazer login simultaneamente pela rede.
+
+NOTA: As próximas telas mostram uma demonstração e uma atividade Experimente você mesmo para alterar usuários em um sistema Linux.
+
+Nesta seção, praticaremos a troca de usuários no Ubuntu.
+
+NOTA: Não mostramos as outras distribuições, pois são quase exatamente iguais.
+
+Por favor, dê uma olhada no seguinte exercício Experimente você mesmo: Trocando de usuário no Ubuntu.
+
+Além da inicialização e parada diária normal do computador, uma reinicialização do sistema pode ser necessária como parte de certas atualizações importantes do sistema, geralmente apenas aquelas que envolvem a instalação de um novo kernel Linux.
+
+Iniciar o processo de desligamento a partir da área de trabalho gráfica é bastante trivial em todas as distribuições atuais do Linux, com muito pouca variação. Discutiremos mais tarde como fazer isso na linha de comando, usando o comando shutdown.
+
+Em todos os casos, você clica no ícone de configurações (engrenagem) ou de energia e segue as instruções.
+
+Além da inicialização e parada diária normal do computador, uma reinicialização do sistema pode ser necessária como parte de certas atualizações importantes do sistema, geralmente apenas aquelas que envolvem a instalação de um novo kernel Linux.
+
+Iniciar o processo de desligamento a partir da área de trabalho gráfica é bastante trivial em todas as distribuições atuais do Linux, com muito pouca variação. Discutiremos mais tarde como fazer isso na linha de comando, usando o comando shutdown.
+
+Em todos os casos, você clica no ícone de configurações (engrenagem) ou de energia e segue as instruções.
+
+Todos os computadores modernos suportam o modo de suspensão (ou suspensão) quando você deseja parar de usar o computador por um tempo. O modo suspenso salva o estado atual do sistema e permite retomar a sessão mais rapidamente enquanto permanece ligado, mas consome muito pouca energia no estado de suspensão. Ele funciona mantendo os aplicativos do sistema, a área de trabalho e assim por diante, na RAM do sistema, mas desligando todos os outros hardwares. Isto reduz o tempo para uma inicialização completa do sistema, além de conservar a energia da bateria. Deve-se notar que as distribuições modernas do Linux inicializam tão rápido que a quantidade de tempo economizada costuma ser pequena.
+
+Para suspender o sistema, o procedimento inicia da mesma forma que para desligar ou bloquear a tela.
+
+O método é bastante simples e universal nas distribuições mais recentes baseadas no GNOME. Se você clicar no ícone Power e segurar por um breve período e soltar, você verá o ícone de linha dupla exibido abaixo, no qual você clica para suspender o sistema. Algumas distribuições, incluindo o Ubuntu, ainda podem mostrar um ícone de suspensão separado em vez de usar o método acima.
+
+NOTA: Para ativar o sistema e retomar a sessão, mova o mouse ou pressione qualquer botão do teclado. O sistema irá acordar com a tela bloqueada, como se você a tivesse bloqueado manualmente; digite sua senha para continuar.
+
+Mesmo usuários experientes podem esquecer o comando preciso que inicia um aplicativo ou exatamente quais opções e argumentos ele requer. Felizmente, o Linux permite abrir aplicativos rapidamente usando a interface gráfica.
+
+Os aplicativos são encontrados em diferentes locais no Linux (e no GNOME):
+
+No menu Aplicativos no canto superior esquerdo.
+No menu Atividades no canto superior esquerdo.
+Em algumas versões do Ubuntu, no botão Dash no canto superior esquerdo.
+Para o KDE e alguns outros ambientes, os aplicativos podem ser abertos a partir do botão no canto inferior esquerdo.
+Nas páginas seguintes você aprenderá como realizar operações básicas no Linux utilizando a interface gráfica.
+
+Ao contrário de outros sistemas operacionais, a instalação inicial do Linux geralmente vem com uma ampla variedade de aplicativos e arquivos de software que contêm milhares de programas que permitem realizar uma ampla variedade de tarefas em seu computador. Para a maioria das tarefas principais, um aplicativo padrão geralmente já está instalado. No entanto, você sempre pode instalar mais aplicativos e tentar opções diferentes.
+
+Por exemplo, o Firefox é popular como navegador padrão em muitas distribuições Linux, enquanto Epiphany, Konqueror e Chromium (a base de código aberto do Google Chrome) geralmente estão disponíveis para instalação em repositórios de software. Navegadores proprietários, como Opera e Chrome, também estão disponíveis.
+
+Localizar aplicativos nos menus do GNOME e KDE é fácil, pois eles estão bem organizados em submenus funcionais.
+
+Vários aplicativos estão disponíveis para realizar várias tarefas e abrir um arquivo de um determinado tipo. Por exemplo, você pode clicar em um endereço da web enquanto lê um e-mail e iniciar um navegador como Firefox ou Chrome.
+
+Para definir os aplicativos padrão, entre no menu Configurações (em todas as distribuições Linux recentes) e clique em Aplicativos padrão ou Detalhes > Aplicativos padrão. A lista exata irá variar do que é mostrado aqui na captura de tela do Ubuntu de acordo com o que está realmente instalado e disponível em seu sistema.
+
+Cada distribuição implementa o utilitário Nautilus (Gerenciador de Arquivos), que é usado para navegar no sistema de arquivos. Ele pode localizar arquivos e, quando um arquivo é clicado, ele será executado se for um programa ou um aplicativo associado será iniciado usando o arquivo como dados. Esse comportamento é completamente familiar para quem já usou outros sistemas operacionais.
+
+Para iniciar o gerenciador de arquivos você terá que clicar em seu ícone (um arquivo) que é facilmente encontrado, geralmente em Favoritos ou Acessórios. Ele terá o nome Arquivos.
+
+Isso abrirá uma janela com seu diretório inicial exibido. O painel esquerdo da janela do Gerenciador de Arquivos contém uma lista de diretórios comumente usados, como Área de Trabalho, Documentos, Downloads e Imagens.
+
+Você pode clicar no ícone da lupa no canto superior direito para pesquisar arquivos ou diretórios (pastas).
+
+O Gerenciador de arquivos permite acessar diferentes locais em seu computador e na rede, incluindo o diretório inicial, área de trabalho, documentos, imagens e outros locais.
+
+Cada usuário com uma conta no sistema terá um diretório inicial, geralmente criado em /home, e geralmente nomeado de acordo com o usuário, como /home/student.
+
+Por padrão, os arquivos salvos pelo usuário serão colocados em uma árvore de diretórios começando aí. A criação de conta, seja durante a instalação do sistema ou posteriormente, quando um novo usuário é adicionado, também induz a criação de diretórios padrão no diretório inicial do usuário, como Documentos, Área de Trabalho e Downloads.
+
+Na captura de tela mostrada para o Ubuntu, escolhemos o formato da lista e também mostramos os arquivos ocultos (aqueles que começam com ponto final). Veja se você pode fazer o mesmo em sua distribuição.
+
+O Gerenciador de Arquivos permite visualizar arquivos e diretórios de mais de uma maneira.
+
+Você pode alternar entre os formatos de ícones e lista clicando nos ícones familiares na barra superior ou pressionando CTRL-1 ou CTRL-2 respectivamente.
+
+Além disso, você também pode organizar os arquivos e diretórios por nome, tamanho, tipo ou data de modificação para classificação posterior. Para fazer isso, clique em Exibir e selecione Organizar itens.
+
+Outra opção útil é mostrar arquivos ocultos (às vezes chamados de forma imprecisa de arquivos de sistema), que geralmente são arquivos de configuração ocultos por padrão e cujo nome começa com um ponto. Para mostrar arquivos ocultos, selecione Mostrar arquivos ocultos no menu ou pressione CTRL-H.
+
+O navegador de arquivos oferece várias maneiras de personalizar a visualização da janela para facilitar as operações de arrastar e soltar arquivos. Você também pode alterar o tamanho dos ícones selecionando Mais zoom e Menos zoom no menu Exibir.
+
+O Gerenciador de Arquivos inclui uma ótima ferramenta de pesquisa dentro da janela do navegador de arquivos.
+
+Clique em Pesquisar na barra de ferramentas (para abrir uma caixa de texto).
+Insira a palavra-chave na caixa de texto. Isso faz com que o sistema execute uma pesquisa recursiva no diretório atual por qualquer arquivo ou diretório que contenha uma parte desta palavra-chave.
+Para abrir o Gerenciador de Arquivos na linha de comando, na maioria dos sistemas basta digitar nautilus.
+
+A tecla de atalho para acessar a caixa de texto de pesquisa é CTRL-F. Você pode sair da visualização da caixa de texto de pesquisa clicando no botão Pesquisar ou CTRL-F novamente.
+
+Outra maneira rápida de acessar um diretório específico é pressionar CTRL-L, que fornecerá uma caixa de texto Local para digitar o caminho para um diretório.
+
+Você pode refinar sua pesquisa além da palavra-chave inicial, fornecendo menus suspensos para filtrar ainda mais a pesquisa.
+
+Com base no local ou no tipo de arquivo, selecione critérios adicionais no menu suspenso.
+Para regenerar a pesquisa, clique no botão Recarregar.
+Para adicionar vários critérios de pesquisa, clique no botão + e selecione Critérios de pesquisa adicionais.
+Por exemplo, se você deseja encontrar um arquivo PDF contendo a palavra Linux em seu diretório inicial, navegue até seu diretório inicial e pesquise a palavra “Linux”. Você verá que o critério de pesquisa padrão já limita a pesquisa ao seu diretório inicial. Para finalizar o trabalho, clique no botão + para adicionar outro critério de pesquisa, selecione Tipo de arquivo para o tipo de critério e selecione PDF no menu suspenso Tipo de arquivo.
+
+Editar qualquer arquivo de texto através da interface gráfica é fácil no ambiente de área de trabalho GNOME. Basta clicar duas vezes no arquivo na área de trabalho ou na janela do navegador de arquivos Nautilus para abrir o arquivo com o editor de texto padrão.
+
+O editor de texto padrão no GNOME é o gedit. É simples, mas poderoso, ideal para editar documentos, fazer anotações rápidas e programar. Embora o gedit seja projetado como um editor de texto de uso geral, ele oferece recursos adicionais para verificação ortográfica, destaque, listagens de arquivos e estatísticas.
+
+Você aprenderá muito mais sobre como usar editores de texto em um capítulo posterior.
+
+Excluir um arquivo no Nautilus moverá automaticamente os arquivos excluídos para o diretório .local/share/Trash/files/ (uma espécie de lata de lixo) no diretório inicial do usuário. Existem várias maneiras de excluir arquivos e diretórios usando o Nautilus.
+
+Selecione todos os arquivos e diretórios que deseja excluir.
+Pressione CTRL-Delete no teclado ou clique com o botão direito no arquivo.
+Selecione Mover para a lixeira.
+Observe que você pode ter uma opção Excluir permanentemente que ignora a pasta de lixo e que essa opção pode estar visível o tempo todo ou apenas no modo de lista (em vez de) no modo de ícone.
+
+Para excluir permanentemente um arquivo:
+
+No painel esquerdo de uma janela do navegador de arquivos Nautilus, clique com o botão direito no diretório Lixeira.
+Selecione Esvaziar Lixeira.
+Alternativamente, selecione o arquivo ou diretório que deseja excluir permanentemente e pressione Shift-Delete.
+
+Como precaução, você nunca deve excluir seu diretório inicial, pois isso provavelmente apagará todos os seus arquivos de configuração do GNOME e possivelmente impedirá que você faça login. Muitas configurações pessoais de sistemas e programas são armazenadas em seu diretório inicial.
+
+Encontre o arquivo modificado mais recente em /var/log.
+
+Confira a solução fornecida na próxima página.
+
+Você terá que abrir a janela do navegador de arquivos e navegar até o diretório /var/log. Isso irá variar um pouco de distribuição para distribuição. Nas distribuições mais recentes, você clicará em Outros locais > Computador.
+
+Navegue até o diretório /var/log. Defina a opção de visualização como Lista em vez de Ícone e clique na data.
+
+As operações básicas serão as mesmas aqui, quer você tenha uma área de trabalho GNOME ou KDE, embora os procedimentos e escolhas exatos possam ser ligeiramente diferentes.
+
+Crie um novo arquivo de texto na área de trabalho chamado lab.txt, usando o gerenciador de arquivos gráfico.
+Exclua o arquivo enviando-o para a Lixeira.
+Verifique se o arquivo está agora em ~/.local/share/Trash ou em um subdiretório dele. NOTA: Você precisará fazer com que seu navegador de arquivos mostre arquivos e diretórios ocultos, aqueles que começam com .).
+Recupere o arquivo e certifique-se de que esteja em seu local original.
+Confira a solução fornecida na próxima página.
+
+As operações básicas serão as mesmas aqui, quer você tenha uma área de trabalho GNOME ou KDE, embora os procedimentos e escolhas exatos possam ser ligeiramente diferentes.
+
+Crie um novo arquivo de texto na área de trabalho chamado lab.txt, usando o gerenciador de arquivos gráfico.
+Exclua o arquivo enviando-o para a Lixeira.
+Verifique se o arquivo está agora em ~/.local/share/Trash ou em um subdiretório dele. NOTA: Você precisará fazer com que seu navegador de arquivos mostre arquivos e diretórios ocultos, aqueles que começam com .).
+Recupere o arquivo e certifique-se de que esteja em seu local original.
+Confira a solução fornecida na próxima página.
+
+Abra o gerenciador de arquivos e navegue até seu diretório inicial. Depois que a configuração do usuário estiver definida, basta clicar com o botão direito no diretório e selecionar Criar novo> Arquivo de texto e dar um nome a ele (você pode ver algo diferente de Arquivo de texto).
+
+Com o gerenciador de arquivos GNOME, essa opção não existe na configuração padrão. Você deve primeiro criar um arquivo chamado new em seu diretório de modelos. A maneira mais fácil de fazer isso é digitar Alt-F2 e depois na janelinha que se abre
+
+aluno:/tmp> toque em ~/Modelos/novo
+
+Depois de fazer isso, você pode clicar com o botão direito no diretório ou em algum lugar no lado direito da barra de título para abrir uma caixa de diálogo onde haverá uma opção para criar algum tipo de novo arquivo.
+
+O motivo pelo qual esse recurso não está ativado por padrão pode ser considerado um mistério não compreendido pela ciência moderna. No entanto, a lógica é que novos arquivos geralmente não são criados no vácuo (pelo menos em GUIs); espera-se fazê-los em um aplicativo. Algumas distribuições ou versões do GNOME podem não precisar desta etapa.
+Isso deve ser bastante óbvio, arrastando e soltando na pasta Lixeira à esquerda ou clicando com o botão direito no arquivo.
+Para navegar pelo diretório .local, você deve tornar os arquivos ocultos visíveis. Em sistemas GNOME, você pode simplesmente pressionar CTRL-H ou clicar na pequena seta para baixo ao lado do ícone de engrenagem e ativar e desativar a exibição de arquivos ocultos.
+A maneira mais fácil é clicar no ícone da Lixeira e escolher Restaurar, que o trará de volta ao local original, que você pode verificar facilmente.
+Observe que o Gerenciador de arquivos GNOME não inclui uma opção Excluir ou Excluir permanentemente por padrão. Para habilitar isso você deve entrar em preferências e ativá-lo. Você pode entrar no menu de preferências iniciando o Gerenciador de Arquivos e na barra de tarefas superior da área de trabalho, clicar em seu ícone e entrar nos menus de preferências.
+
+resumo
+
+Você concluiu o Capítulo 4. Vamos resumir os principais conceitos abordados:
+
+GNOME é um ambiente de desktop popular e interface gráfica de usuário que roda no sistema operacional Linux.
+O gerenciador de exibição padrão do GNOME é chamado gdm.
+O gerenciador de exibição gdm apresenta ao usuário a tela de login, que solicita o nome de usuário e a senha de login.
+O logout através do ambiente de desktop elimina todos os processos em sua sessão X atual e retorna à tela de login do gerenciador de exibição.
+O Linux permite que os usuários alternem entre sessões conectadas.
+A suspensão coloca o computador no modo de suspensão.
+Para cada tarefa principal, geralmente há um aplicativo padrão instalado.
+Cada usuário criado no sistema terá um diretório inicial.
+O menu Locais contém entradas que permitem acessar diferentes partes do computador e da rede.
+O Nautilus oferece três formatos para visualizar arquivos.
+A maioria dos editores de texto está localizada no submenu Acessórios.
+Cada distribuição Linux vem com seu próprio conjunto de planos de fundo de área de trabalho.
+O GNOME vem com um conjunto de temas diferentes que podem mudar a aparência dos seus aplicativos.
+

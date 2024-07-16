@@ -1,0 +1,17 @@
+Vou demonstrar como alterar o papel de parede
+no sistema Red Hat 7.
+O método é o mesmo em todas as distribuições recentes Linux.
+Isso serve para todas.
+Primeiro, clique com o botão direito na área de trabalho
+e selecione "Change Background".
+Clique em "Background" de novo.
+Aqui podemos escolher algum papel de parede já disponível.
+É também possível adicionar outras imagens.
+Selecionamos esta imagem.
+Note que imagem ao fundo mudou.
+Eu poderia selecionar uma imagem salva em minha máquina
+na pasta de imagens de meu diretório "Home".
+Seleciono esta.
+Note que a imagem mudou.
+É assim que se altera o papel de parede
+em qualquer distribuição Linux recente.

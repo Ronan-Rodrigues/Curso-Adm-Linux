@@ -1,0 +1,19 @@
+Agora, vamos demonstrar como preparar
+aplicativos padrões num sistema Red Hat.
+Vamos no canto superior direito, clique na barra de cima
+e depois, deslize até o ícone de engrenagens para as
+configurações.
+Desça até embaixo para Detalhes.
+Em seguida, clique em Aplicativos Padrões.
+Para você ver sob Web ou Navegador,
+existem três escolhas no sistema.
+Tenho Google Chrome, Firefox ou Opera. Usaremos o Chrome.
+Para Vídeo, a escolha padrão é Vídeos, que é, na verdade,
+um programa chamado Totem. Vamos usar o VLC media player.
+E para visualizar de imagens, tenho o
+Visualizador de Imagem embutido ou posso trocar
+pelo GNU Image Manipulation Program,
+melhor conhecido como GIMP.
+Em todas as recentes distribuições com o desktop GNOME,
+o procedimento é idêntico e, absolutamente, o mesmo.
+É muito simples mudar seus aplicativos padrões.

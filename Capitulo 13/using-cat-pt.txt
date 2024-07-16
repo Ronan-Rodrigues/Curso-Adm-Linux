@@ -1,0 +1,35 @@
+Vamos demonstrar algumas das operações básicas
+que podemos realizar com o utilitário cat,
+onde a palavra cat significa concatenar.
+Ele é geralmente usado para copiar arquivos,
+combiná-los, etc.
+Precisamos de arquivos de texto simples para brincar.
+Vamos criar um usando um editor de texto,
+chamaremos de nano, então "nano file1.txt".
+Vou digitar apenas três linhas
+com uma linha em branco no final.
+E aperto Ctrl + X para sair.
+Clico em Yes, pois quero salvar o buffer modificado
+e manter o nome.
+Agora posso ver o arquivo criado com cat,
+assim como "cat file1.txt".
+Perfeito.
+Agora, criaremos outro interativamente usando o próprio cat,
+como falamos antes.
+Eu usarei cat << EOF >
+e vou colocá-lo em file2.txt.
+E "aqui está um segundo arquivo
+com algumas linhas".
+Então eu digito EOF em uma linha.
+E isso fecha a fase de entrada.
+E eu posso digitar cat file2.txt.
+Está aí.
+Se eu quiser ver os dois juntos,
+posso usar cat file1.txt file2.txt,
+e vê-los combinados ou posso enviá-los
+para um terceiro arquivo > file3.txt.
+Depois eu limpo a tela.
+Posso usar 'cat file3.txt'
+e ver os dois arquivos combinados em um terceiro arquivo.
+É assim que usamos cat, é uma operação comum.
+Raramente fazemos algo muito mais complicado com isso.

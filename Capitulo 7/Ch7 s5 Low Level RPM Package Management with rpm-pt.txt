@@ -1,0 +1,63 @@
+E agora vamos praticar o comando RPM de baixo nível
+para examinar um pacote e tentar removê-lo, etc.
+Então vamos digitar rpm -qa para a consulta
+e ver todos os pacotes no sistema,
+e depois usar o grep para procurar o pacote bzip2.
+E veja, na verdade há 2 pacotes de rpm com bzip2 no nome,
+o próprio programa bzip2 e depois o bzip2-libs,
+que são bibliotecas que dependem de bzip2.
+Então, vamos olhar mais informações sobre bzip2.
+Se eu usar rpm,
+se eu usar rpm -q para consulta, i para informações
+e em seguida, l para uma lista de arquivos e sinal pipe
+seguido de less
+Ops, esqueci de informar o nome do pacote, que é bzip2...
+você vê, o nome é bzip2, você vê a versão - 1.0.6,
+vemos a fonte rpm aqui, vemos quando foi lançado
+- em novembro de 2015, no centos.org,
+e, em seguida, uma descrição do que faz...
+é um compressor de dados de alta qualidade
+disponível gratuitamente e livre de patente, e, em seguida
+uma lista dos arquivos que fazem parte do bzip2.
+Se eu quiser ter uma visão mais detalhada do que está lá
+posso fazer algo mais sofisticado
+como rpm -ql bzip2
+apenas listamos os arquivos,
+e, em seguida, posso dar um comando shell e substituí-lo,
+e fazer um ls-lF.
+Isso me dará uma lista detalhada e, em seguida,
+vou canalizá-la para "less",
+e estes são os verdadeiros arquivos que estão no pacote
+com pouco mais de detalhe,
+como comprimento e tipo de arquivo.
+Você notará, por exemplo, bunzip2 e bzip2 são realmente
+o mesmo arquivo, é apenas um link simbólico,
+e o sistema sabe o que fazer ou, devo dizer,
+o aplicativo sabe o que fazer,
+seja compactar ou descompactar, dependendo do comando.
+Vamos ver o que acontece se eu tentar remover o pacote.
+Então, eu deveria fazer o root para isso.
+Então, coloque sudo e depois rpm-e para "erase"
+e, para ser mais cuidadoso, usarei o --test
+o que significa que ele não fará nada com essa opção.
+Só vai ver se consegue fazer.
+bzip2
+Então, tento removê-lo.
+E ele está me dizendo que não posso fazer isso porque
+é necessário para aqueles três pacotes,
+bem como pelo programa file-roller,
+que é um programa de arquivamento
+presente em basicamente todas as distribuições Linux.
+E posso obter um pouco mais de informações
+de uma maneira diferente com rpm-q--whatprovides bzip2
+e você verá que é o pacote bzip2.
+Se eu fizer --whatrequires
+Recebo as mesmas informações sobre os três pacotes que eu
+precisaria ter o bzip2 instalado para que eles se
+comportassem corretamente e não travassem ou algo assim.
+Um pouco mais tarde, vamos falar sobre yum e zipper,
+e também dnf, que são programas de nível superior
+que podem lidar com dependências de forma mais sólida.
+RPM é realmente projetado para pacotes individuais
+listados na linha de comando
+ou grupos de pacotes listados na linha de comando.

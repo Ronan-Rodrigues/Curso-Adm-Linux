@@ -1,0 +1,271 @@
+Não é paranoia se querem pegar você.
+Nesta lição,
+falaremos da segurança básica para seu computador,
+como ter uma senha decente,
+nunca compartilhar sua conta com ninguém,
+aplicar patches quando estiverem disponíveis,
+e ter um ambiente seguro.
+Não vire um alvo fácil.
+Vamos todos fazer a nossa parte.
+
+Ao final deste capítulo, você deverá ser capaz de:
+
+Tenha um bom conhecimento das melhores práticas e ferramentas para tornar os sistemas Linux o mais seguros possível.
+Entenda os poderes e perigos de usar a conta root (superusuário).
+Use o comando sudo para realizar operações privilegiadas enquanto restringe poderes aprimorados tanto quanto possível.
+Explique a importância do isolamento do processo e do acesso ao hardware.
+Trabalhe com senhas, inclusive como defini-las e alterá-las.
+Descrever como proteger o processo de inicialização e os recursos de hardware.
+
+O kernel Linux permite que usuários devidamente autenticados acessem arquivos e aplicativos. Embora cada usuário seja identificado por um número inteiro exclusivo (o ID do usuário ou UID), um banco de dados separado associa um nome de usuário a cada UID. Após a criação da conta, novas informações do usuário são adicionadas ao banco de dados do usuário e o diretório inicial do usuário deve ser criado e preenchido com alguns arquivos essenciais. Programas de linha de comando como useradd e userdel, bem como ferramentas GUI, são usados para criar e remover contas.
+
+Para cada usuário, os sete campos a seguir são mantidos no arquivo /etc/passwd:
+
+ 
+
+Tabela: Campos mantidos no arquivo /etc/passwd
+Observações de detalhes do nome do campo
+Nome de usuário Nome de login do usuário Deve ter entre 1 e 32 caracteres
+Senha Senha do usuário (ou o caractere x se a senha estiver armazenada no arquivo /etc/shadow) em formato criptografado Nunca é mostrada no Linux quando está sendo digitada; isso impede olhares indiscretos
+ID de usuário (UID) Cada usuário deve ter um ID de usuário (UID)
+UID 0 é reservado para usuário root
+UIDs variando de 1 a 99 são reservados para outras contas predefinidas
+UIDs variando de 100 a 999 são reservados para contas e grupos do sistema
+Usuários normais têm UIDs de 1.000 ou mais
+ID do Grupo (GID) O ID do Grupo primário (GID); O número de identificação do grupo armazenado no arquivo /etc/group é abordado em detalhes no capítulo Processos
+Informações do usuário Este campo é opcional e permite a inserção de informações extras sobre o usuário como seu nome Por exemplo: Rufus T. Firefly
+Diretório inicial O local do caminho absoluto do diretório inicial do usuário Por exemplo: /home/rtfirefly
+Shell A localização absoluta do shell padrão de um usuário. Por exemplo: /bin/bash
+
+Por padrão, o Linux distingue entre vários tipos de contas para isolar processos e cargas de trabalho. O Linux tem quatro tipos de contas:
+
+raiz
+Sistema
+Normal
+Rede
+Para um ambiente de trabalho seguro, é aconselhável conceder os privilégios mínimos possíveis e necessários às contas e remover contas inativas. O último utilitário, que mostra a última vez que cada usuário efetuou login no sistema, pode ser usado para ajudar a identificar contas potencialmente inativas que são candidatas à remoção do sistema.
+
+Lembre-se de que as práticas usadas em sistemas empresariais multiusuários são mais rigorosas do que as práticas usadas em sistemas de desktop pessoais que afetam apenas o usuário casual. Isto é especialmente verdadeiro no que diz respeito à segurança. Esperamos mostrar práticas aplicáveis a servidores corporativos que você pode usar em todos os sistemas, mas entenda que você pode optar por flexibilizar essas regras em seu próprio sistema pessoal.
+
+root é a conta mais privilegiada em um sistema Linux/UNIX. Esta conta tem a capacidade de realizar todas as facetas da administração do sistema, incluindo adicionar contas, alterar senhas de usuários, examinar arquivos de log, instalar software, etc. Não tem restrições de segurança impostas a ele.
+
+Quando você está conectado como root, o prompt do shell exibe '#' (se você estiver usando o bash e não tiver personalizado o prompt, como discutimos anteriormente). Esta convenção pretende servir como um aviso para você sobre o poder absoluto desta conta.
+
+privilégios de root são necessários para executar operações como:
+
+Criação, remoção e gerenciamento de contas de usuário
+Gerenciando pacotes de software
+Removendo ou modificando arquivos do sistema
+Reiniciando os serviços do sistema.
+Usuários regulares de contas de distribuições Linux podem ter permissão para instalar pacotes de software, atualizar algumas configurações, usar alguns dispositivos periféricos e aplicar vários tipos de alterações ao sistema. No entanto, o privilégio de root é necessário para executar tarefas administrativas, como reiniciar a maioria dos serviços, instalar pacotes manualmente e gerenciar partes do sistema de arquivos que estão fora dos diretórios normais do usuário.
+
+Um usuário de conta normal pode realizar algumas operações que requerem permissões especiais; entretanto, a configuração do sistema deve permitir que tais habilidades sejam exercidas.
+
+SUID (Definir ID de usuário do proprietário na execução - semelhante ao recurso "executar como" do Windows) é um tipo especial de permissão de arquivo concedida a um arquivo. O uso de SUID fornece permissões temporárias a um usuário para executar um programa com as permissões do proprietário do arquivo (que pode ser root) em vez das permissões mantidas pelo usuário.
+
+A tabela fornece exemplos de operações que não requerem privilégios de root:
+
+ 
+
+Tabela: Operações que não requerem privilégios de root
+Operações que não requerem privilégio de root Exemplos desta operação
+Executando um cliente de rede 								Compartilhando um arquivo pela rede
+Usando dispositivos como impressoras 							Imprimindo pela rede
+Operações em arquivos aos quais o usuário tem permissões adequadas para acessar 	Acessar arquivos aos quais você tem acesso ou compartilhar dados pela rede
+Executando aplicativos raiz SUID 							Executando programas como passwd
+
+
+No Linux você pode usar su ou sudo para conceder temporariamente acesso root a um usuário normal. No entanto, esses métodos são bastante diferentes. Listadas abaixo estão as diferenças entre os dois comandos:
+
+ 
+
+Tabela: comparação su e sudo
+
+su 													
+Ao elevar o privilégio, você precisa inserir a senha root. 
+Fornecer a senha root a um usuário normal nunca deve ser feito. 
+O comando possui recursos de registro limitados. 
+
+
+sudo
+Ao elevar o privilégio, você precisa inserir a senha do usuário e não a senha do root.
+Depois que um usuário passa para a conta root usando su, o usuário pode fazer qualquer coisa que o usuário root pode fazer pelo tempo que desejar, sem ser solicitada novamente uma senha. Oferece mais recursos e é considerado mais seguro e configurável. Exatamente o que o usuário pode fazer pode ser controlado e limitado com precisão. Por padrão, o usuário sempre terá que fornecer sua senha para realizar outras operações com o sudo ou pode evitar fazê-lo por um intervalo de tempo configurável.
+O comando possui recursos de registro detalhados.
+
+
+sudo tem a capacidade de acompanhar tentativas malsucedidas de obter acesso root. A autorização dos usuários para usar o sudo é baseada nas informações de configuração armazenadas no arquivo /etc/sudoers e no diretório /etc/sudoers.d.
+
+Uma mensagem como a seguinte apareceria em um arquivo de log do sistema (geralmente /var/log/secure) ao tentar executar sudo para pessoa má sem autenticar o usuário com sucesso:
+
+badperson: usuário NÃO em sudoers; TTY=pontos/4 ; PWD=/var/log ; USUÁRIO = raiz; COMANDO=/usr/bin/tail seguro
+
+Sempre que o sudo é invocado, um gatilho examinará /etc/sudoers e os arquivos em /etc/sudoers.d para determinar se o usuário tem o direito de usar o sudo e qual é o escopo de seu privilégio. Solicitações de usuários desconhecidos e solicitações para realizar operações não permitidas ao usuário, mesmo com sudo, são relatadas. A estrutura básica das entradas nesses arquivos é:
+
+quem onde = (como_quem) o que
+
+/etc/sudoers contém muita documentação sobre como personalizar. A maioria das distribuições Linux agora prefere que você adicione um arquivo no diretório /etc/sudoers.d com um nome igual ao do usuário. Este arquivo contém a configuração sudo do usuário individual e deve-se deixar o arquivo de configuração principal intacto, exceto para alterações que afetem todos os usuários.
+
+Você deve editar qualquer um desses arquivos de configuração usando visudo, o que garante que apenas uma pessoa esteja editando o arquivo por vez, tenha as permissões adequadas e se recuse a gravar o arquivo e sair se houver erros de sintaxe nas alterações feitas. A edição pode ser realizada executando um comando como os seguintes:
+
+# visudo /etc/sudoers
+# visudo -f /etc/sudoers.d/student
+
+O editor específico real invocado dependerá da configuração da sua variável de ambiente EDITOR.
+
+Por padrão, os comandos sudo e quaisquer falhas são registrados em /var/log/auth.log na família de distribuição Debian e em /var/log/messages e/ou /var/log/secure em outros sistemas. Esta é uma salvaguarda importante para permitir o rastreamento e a responsabilização do uso do sudo. Uma entrada típica da mensagem contém:
+
+Chamando nome de usuário
+Informações do terminal
+Diretório de trabalho
+Conta de usuário invocada
+Comando com argumentos
+A execução de um comando como sudo whoami resulta em uma entrada de arquivo de log como:
+
+8 de dezembro 14:20:47 server1 sudo: op: TTY=pts/6 PWD=/var/log USER=root COMMAND=/usr/bin/whoami
+
+O Linux é considerado mais seguro do que muitos outros sistemas operacionais porque os processos são naturalmente isolados uns dos outros. Normalmente, um processo não pode acessar os recursos de outro processo, mesmo quando esse processo está sendo executado com os mesmos privilégios de usuário. Assim, o Linux torna difícil (embora certamente não impossível) que vírus e explorações de segurança acessem e ataquem recursos aleatórios em um sistema.
+
+Os mecanismos de segurança adicionais mais recentes que limitam ainda mais os riscos incluem:
+
+Grupos de controle (cgroups)
+Permite que administradores de sistema agrupem processos e associem recursos finitos a cada cgroup.
+Containers
+Torna possível executar vários sistemas Linux isolados (contêineres) em um único sistema, contando com cgroups.
+Virtualização
+O hardware é emulado de tal forma que não apenas os processos podem ser isolados, mas sistemas inteiros são executados simultaneamente como convidados isolados e isolados (máquinas virtuais) em um host físico.
+
+O Linux limita o acesso do usuário a dispositivos de hardware que não sejam de rede de uma maneira extremamente semelhante ao acesso normal a arquivos. Os aplicativos interagem envolvendo a camada do sistema de arquivos (que é independente do dispositivo ou hardware real em que o arquivo reside). Essa camada abrirá então um arquivo especial do dispositivo (geralmente chamado de nó do dispositivo) no diretório /dev que corresponde ao dispositivo que está sendo acessado. Cada arquivo especial de dispositivo possui campos padrão de proprietário, grupo e permissão mundial. A segurança é naturalmente aplicada da mesma forma que quando os arquivos padrão são acessados.
+
+Os discos rígidos, por exemplo, são representados como /dev/sd*. Embora um usuário root possa ler e gravar no disco de maneira bruta, por exemplo, fazendo algo como:
+
+# echo olá mundo > /dev/sda1
+
+As permissões padrão, conforme mostrado na figura, impossibilitam que usuários comuns façam isso. Escrever em um dispositivo dessa maneira pode facilmente destruir o sistema de arquivos armazenado nele de uma forma que não pode ser reparada sem grande esforço, se é que é possível. A leitura e escrita normal de arquivos no disco rígido pelas aplicações é feita em um nível superior através do sistema de arquivos e nunca através do acesso direto ao nó do dispositivo.
+
+Quando problemas de segurança no kernel do Linux ou em aplicativos e bibliotecas são descobertos, as distribuições do Linux têm um bom histórico de reação rápida e envio de correções para todos os sistemas, atualizando seus repositórios de software e enviando notificações para atualização imediata. O mesmo acontece com correções de bugs e melhorias de desempenho que não estão relacionadas à segurança.
+
+No entanto, é sabido que muitos sistemas não são atualizados com a frequência suficiente e que problemas já resolvidos podem permanecer nos computadores por muito tempo; isso é particularmente verdadeiro com sistemas operacionais proprietários, onde os usuários estão desinformados ou desconfiados da política de patches do fornecedor, pois às vezes as atualizações podem causar novos problemas e interromper as operações existentes. Muitos dos vetores de ataque mais bem-sucedidos vêm da exploração de falhas de segurança para as quais as correções já são conhecidas, mas não são implementadas universalmente.
+
+Portanto, a melhor prática é aproveitar o mecanismo de atualizações automáticas da sua distribuição Linux e nunca adiá-las. É extremamente raro que tal atualização cause novos problemas.
+
+Crie um novo usuário, usando useradd, e forneça ao usuário uma senha inicial com passwd.
+Configure este usuário para poder usar o sudo.
+Faça login ou mude para este novo usuário e certifique-se de executar um comando que requer privilégio de root.
+Por exemplo, um comando trivial que requer privilégios de root poderia ser:
+
+$ls/raiz
+
+Confira a solução fornecida na próxima página.
+
+
+sudo useradd novo usuário
+sudo senha novo usuário
+(forneça a senha deste usuário quando solicitado)
+Com privilégio de root, (use sudo visudo) adicione esta linha ao /etc/sudoers:
+novo usuário TODOS=(TODOS) TODOS
+Alternativamente, crie um arquivo chamado /etc/sudoers.d/newuser com apenas aquela linha como conteúdo.
+Você pode fazer login fazendo:
+sudo su novo usuário
+ou
+ssh novousuário@localhost
+o que exigirá a senha do novo usuário e provavelmente é uma solução melhor. Em vez de localhost você pode fornecer seu nome de host, endereço IP ou 127.0.0.1. Então, como novo usuário, basta digitar:
+sudols /root
+
+****************
+sudo useradd newuser
+sudo passwd newuser
+(give the password for this user when prompted)
+With root privilege, (use sudo visudo) add this line to /etc/sudoers:
+newuser      ALL=(ALL)      ALL
+Alternatively, create a file named /etc/sudoers.d/newuser with just that one line as content.
+You can login by doing:
+sudo su newuser
+or
+ssh newuser@localhost
+which will require giving newuser's password, and is probably a better solution. Instead of localhost you can give your hostname, IP address or 127.0.0.1. Then as newuser just type:
+sudo ls /root
+
+*******************
+
+O sistema verifica a autenticidade e a identidade usando credenciais do usuário.
+
+Originalmente, as senhas criptografadas eram armazenadas no arquivo /etc/passwd, que podia ser lido por todos. Isso tornou bastante fácil a quebra de senhas.
+
+Em sistemas modernos, as senhas são armazenadas em formato criptografado em um arquivo secundário chamado /etc/shadow. Somente aqueles com acesso root podem ler ou modificar este arquivo.
+
+Proteger senhas tornou-se um elemento crucial de segurança. A maioria das distribuições Linux depende de um algoritmo moderno de criptografia de senha chamado SHA-512 (Secure Hashing Algorithm 512 bits), desenvolvido pela Agência de Segurança Nacional dos EUA (NSA) para criptografar senhas.
+
+O algoritmo SHA-512 é amplamente utilizado para aplicações e protocolos de segurança. Esses aplicativos e protocolos de segurança incluem TLS, SSL, PHP, SSH, S/MIME e IPSec. SHA-512 é um dos algoritmos de hash mais testados.
+
+Por exemplo, se você deseja experimentar a codificação SHA-512, a palavra "teste" pode ser codificada usando o programa sha512sum para produzir o formato SHA-512 (veja o gráfico):
+
+Os profissionais de TI seguem diversas boas práticas para proteger os dados e a senha de cada usuário.
+
+A antiguidade da senha é um método para garantir que os usuários recebam avisos que os lembrem de criar uma nova senha após um período específico. Isso pode garantir que as senhas, se quebradas, só poderão ser usadas por um período limitado de tempo. Este recurso é implementado usando chage, que configura as informações de expiração da senha de um usuário.
+Outro método é forçar os usuários a definir senhas fortes usando Pluggable Authentication Modules (PAM). O PAM pode ser configurado para verificar automaticamente se uma senha criada ou modificada usando o utilitário passwd é suficientemente forte. A configuração do PAM é implementada usando uma biblioteca chamada pam_cracklib.so, que também pode ser substituída por pam_passwdqc.so para aproveitar mais opções.
+Também é possível instalar programas de quebra de senhas, como John The Ripper, para proteger o arquivo de senhas e detectar entradas de senhas fracas. Recomenda-se obter autorização por escrito antes de instalar tais ferramentas em qualquer sistema que não seja de sua propriedade.
+
+Com o usuário recém-criado do exercício anterior, observe a validade da senha do usuário.
+
+Modifique a data de validade do usuário, configurando-a como algo que já passou, e verifique o que mudou.
+
+Quando terminar e desejar excluir a conta recém-criada, use userdel, como em:
+
+$ sudo userdel novo usuário
+
+Confira a solução fornecida na próxima página.
+
+chage --list newuser
+sudo chage -E 2014-31-12 newuser
+chage --list newuser
+sudo userdel newuser
+
+NOTA: A solução de exemplo funciona nos EUA. chage -E usa o formato de data padrão para a configuração do teclado local.
+
+**************
+
+Você pode proteger o processo de inicialização com uma senha segura para evitar que alguém ignore a etapa de autenticação do usuário. Isso pode funcionar em conjunto com a proteção por senha do BIOS. Observe que, embora o uso apenas de uma senha do bootloader impeça o usuário de editar a configuração do bootloader durante o processo de inicialização, não impedirá que o usuário inicialize a partir de uma mídia de inicialização alternativa, como discos ópticos ou pen drives. Portanto, deve ser utilizado com uma senha do BIOS para proteção total.
+
+Para o método de inicialização GRUB 1 mais antigo, era relativamente fácil definir uma senha para o grub. Porém, para a versão GRUB 2, as coisas ficaram mais complicadas. No entanto, você tem mais flexibilidade e pode aproveitar recursos mais avançados, como senhas específicas do usuário (que podem ser as senhas normais de login).
+
+Além disso, você nunca edita grub.cfg diretamente; em vez disso, você pode modificar os arquivos de configuração em /etc/grub.d e /etc/defaults/grub e, em seguida, executar update-grub ou grub2-mkconfig e salvar o novo arquivo de configuração.
+
+Para saber mais, leia a seguinte postagem: "Proteção por senha do GRUB 2".
+
+Quando o hardware está fisicamente acessível, a segurança pode ser comprometida por:
+
+Registro de chaves
+Registrar a atividade em tempo real de um usuário de computador, incluindo as teclas que ele pressiona. Os dados capturados podem ser armazenados localmente ou transmitidos para máquinas remotas.
+Sniffing de rede
+Capturando e visualizando os dados em nível de pacote de rede em sua rede.
+Inicializando com um disco ativo ou de recuperação
+Remontar e modificar o conteúdo do disco.
+Sua política de segurança de TI deve começar com requisitos sobre como proteger adequadamente o acesso físico a servidores e estações de trabalho. O acesso físico a um sistema permite que os invasores aproveitem facilmente vários vetores de ataque de uma forma que torna irrelevantes todas as recomendações no nível do sistema operacional.
+
+As diretrizes de segurança são:
+
+Bloqueie estações de trabalho e servidores.
+Proteja seus links de rede de forma que não possam ser acessados por pessoas em quem você não confia.
+Proteja seus teclados onde as senhas são inseridas para garantir que os teclados não possam ser adulterados.
+Certifique-se de que uma senha proteja o BIOS de forma que o sistema não possa ser inicializado com um DVD ativo ou de recuperação ou uma chave USB.
+Para computadores de usuário único e em ambiente doméstico, alguns dos recursos acima (como impedir a inicialização a partir de mídia removível) podem ser excessivos e você pode evitar implementá-los. No entanto, se houver informações confidenciais em seu sistema que exijam proteção cuidadosa, elas não deveriam estar lá ou deveriam ser melhor protegidas seguindo as diretrizes acima.
+
+Como todo software, os hackers ocasionalmente encontram pontos fracos no ecossistema Linux. A força do Linux (e da comunidade de código aberto em geral) é a velocidade com que tais vulnerabilidades são expostas e corrigidas. A cobertura específica de vulnerabilidades está além do escopo deste curso, mas o Quadro de Discussão pode ser usado para realizar discussões mais aprofundadas.
+
+resumo
+
+Você concluiu o Capítulo 18. Vamos resumir os principais conceitos abordados:
+
+A conta root tem autoridade sobre todo o sistema.
+privilégios de root podem ser necessários para tarefas, como reiniciar serviços, instalar pacotes manualmente e gerenciar partes do sistema de arquivos que estão fora do seu diretório inicial.
+Para realizar qualquer operação privilegiada, como alterações em todo o sistema, você precisa usar su ou sudo.
+Chamadas para sudo acionam uma pesquisa no arquivo /etc/sudoers ou no diretório /etc/sudoers.d, que primeiro valida se o usuário chamador tem permissão para usar sudo e se ele está sendo usado dentro do escopo permitido.
+Um dos recursos mais poderosos do sudo é a capacidade de registrar tentativas malsucedidas de obter acesso root. Por padrão, os comandos sudo e as falhas são registrados em /var/log/auth.log na família Debian e em /var/log/messages em outras famílias de distribuição.
+Um processo não pode acessar os recursos de outro processo, mesmo quando esse processo está sendo executado com os mesmos privilégios de usuário.
+Usando as credenciais do usuário, o sistema verifica a autenticidade e a identidade.
+O algoritmo SHA-512 é normalmente usado para codificar senhas. Eles podem ser criptografados, mas não descriptografados.
+Módulos de autenticação conectáveis (PAM) podem ser configurados para verificar automaticamente se as senhas criadas ou modificadas usando o utilitário passwd são fortes o suficiente (o que é considerado forte o suficiente também pode ser configurado).
+Sua política de segurança de TI deve começar com requisitos sobre como proteger adequadamente o acesso físico a servidores e estações de trabalho.
+Manter seus sistemas atualizados é um passo importante para evitar ataques à segurança.
+
+

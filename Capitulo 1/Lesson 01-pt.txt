@@ -1,0 +1,97 @@
+Vamos começar sua introdução ao mundo do Linux
+cobrindo alguns dos conceitos básicos.
+Primeiro, falaremos sobre a base do Linux e o que fazemos.
+Em seguida, falaremos sobre a logística deste curso online.
+E, finalmente, se você ainda não o fez, vamos orientá-lo
+no processo de escolha de uma distribuição Linux
+certo para você.
+Vamos começar.
+
+Ao final deste capítulo, você deverá ser capaz de:
+
+Discuta o papel da Linux Foundation.
+Aprecie as oportunidades de aprendizagem oferecidas pelo programa de treinamento da Linux Foundation.
+Descreva o ambiente de software necessário para este curso.
+Descreva as três principais famílias de distribuição Linux.
+
+A Linux Foundation é o principal centro mundial de colaboração em software, hardware, padrões e dados de código aberto. Os projetos da Linux Foundation são essenciais para a infraestrutura mundial, incluindo Linux, Kubernetes, Node.js, ONAP, PyTorch, RISC-V, SPDX, OpenChain e muito mais. A Linux Foundation se concentra em aproveitar as melhores práticas e atender às necessidades de colaboradores, usuários e provedores de soluções para criar modelos sustentáveis para colaboração aberta.
+
+O Grupo de Treinamento e Certificação da Linux Foundation trabalha com instrutores especializados e desenvolvedores de código aberto experientes para criar cursos de treinamento para todos os níveis de experiência, desde iniciantes até desenvolvedores veteranos, bem como exames de certificação que demonstram suas habilidades para potenciais empregadores de uma forma confiável e verificável. .
+
+Para obter mais informações sobre cursos específicos e exames de certificação oferecidos pela Linux Foundation, incluindo requisitos técnicos e outras logísticas, visite o site de Treinamento e Certificação da Linux Foundation.
+
+Mais de 85.000 tecnólogos e líderes de código aberto em todo o mundo se reúnem anualmente em eventos da Linux Foundation para compartilhar ideias, aprender e colaborar. Os eventos da Linux Foundation são o local de encontro preferido para mantenedores de código aberto, desenvolvedores, arquitetos, gerentes de infraestrutura e administradores de sistemas e tecnólogos que lideram escritórios de programas de código aberto e outras funções críticas de liderança.
+
+Esses eventos são o melhor lugar para obter rapidamente visibilidade na comunidade de código aberto e avançar no trabalho de desenvolvimento de código aberto, formando conexões com as pessoas que avaliam e criam a próxima geração de tecnologia. Eles fornecem um fórum para compartilhar e obter conhecimento, ajudam as organizações a identificar tendências de software antecipadamente para informar futuros investimentos em tecnologia, conectar empregadores com talentos e mostrar tecnologias e serviços para profissionais, mídia e analistas de código aberto influentes em todo o mundo.
+
+Para saber mais sobre os eventos da The Linux Foundation e se inscrever, clique aqui.
+
+Para aproveitar ao máximo este curso, você precisará ter pelo menos uma distribuição Linux instalada (se você ainda não estiver familiarizado com o termo distribuição, no que se refere ao Linux, em breve estará!).
+
+Na próxima página, você aprenderá mais alguns detalhes sobre as diversas distribuições Linux disponíveis e as famílias às quais elas podem ser consideradas pertencentes. Como existem literalmente centenas de distribuições, não abordamos todas elas neste curso. Em vez disso, decidimos concentrar-nos nas três principais famílias de distribuição e escolhemos distribuições dentro de cada família para utilizar em ilustrações, exemplos e exercícios. Isto não pretende sugerir que endossamos estas distribuições específicas; eles foram escolhidos simplesmente porque são amplamente utilizados e cada um é amplamente representativo de sua respectiva família.
+
+As famílias e distribuições representativas que usamos são:
+
+Sistemas da família Red Hat (incluindo CentOS e Fedora)
+Sistemas da família SUSE (incluindo openSUSE)
+Sistemas da família Debian (incluindo Ubuntu e Linux Mint).
+
+No próximo capítulo, você aprenderá sobre os componentes que compõem uma distribuição Linux.
+
+Por enquanto, o que você precisa saber é que este curso se concentra nas três principais famílias de distribuição Linux que existem atualmente. No entanto, enquanto houver colaboradores talentosos, as famílias de distribuições e as distribuições dentro destas famílias continuarão a mudar e a crescer. As pessoas veem uma necessidade e desenvolvem configurações e utilitários especiais para responder a essa necessidade. Às vezes, esse esforço cria uma distribuição totalmente nova do Linux. Às vezes, esse esforço irá alavancar uma distribuição existente para expandir os membros de uma família existente.
+
+Para obter uma lista bastante longa de distribuições disponíveis, consulte The LWN.net Linux Distribution List.
+
+Red Hat Enterprise Linux (RHEL) lidera a família que inclui CentOS, CentOS Stream, Fedora e Oracle Linux.
+
+O Fedora tem um relacionamento próximo com o RHEL e contém significativamente mais software do que a versão corporativa da Red Hat. Uma razão para isto é que uma comunidade diversificada está envolvida na construção do Fedora, com muitos colaboradores que não trabalham para a Red Hat. Além disso, é usado como plataforma de teste para versões futuras do RHEL.
+
+Usaremos o CentOS Stream e o CentOS com mais frequência para atividades, demonstrações e laboratórios porque não há custo para o usuário final e há um ciclo de lançamento mais longo do que o do Fedora (que lança uma nova versão a cada seis meses ou mais).
+
+A versão básica do CentOS também é virtualmente idêntica ao RHEL, a distribuição Linux mais popular em ambientes corporativos. No entanto, o CentOS 8 não tem atualizações agendadas após 2021. O substituto é o CentOS 8 Stream. A diferença entre as duas versões é que o CentOS Stream recebe atualizações antes do RHEL, enquanto o CentOS as recebe depois. Para a maioria dos propósitos, isso importa muito pouco e nem um pouco para este curso. Embora existam alternativas ao CentOS Stream que se parecem mais com o antigo CentOS, para este curso descobrimos que o CentOS 8 Stream funciona perfeitamente.
+
+Alguns dos principais fatos sobre a família de distribuição Red Hat são:
+
+O Fedora serve como uma plataforma de testes upstream para RHEL.
+CentOS é um clone próximo do RHEL; na verdade, o CentOS faz parte da Red Hat desde 2014.
+Um kernel versão 4.18 fortemente corrigido é usado no RHEL/CentOS 8 Stream, enquanto a versão 5.14 é usada no RHEL/CentOS 9 Stream.
+Suporta múltiplas plataformas de hardware.
+Ele usa dnf, o gerenciador de pacotes baseado em RPM (abordado em detalhes posteriormente) para instalar, atualizar e remover pacotes no sistema.
+RHEL é amplamente utilizado por empresas que hospedam seus próprios sistemas.
+
+O relacionamento entre SUSE (SUSE Linux Enterprise Server ou SLES) e openSUSE é semelhante ao descrito entre RHEL, CentOS e Fedora.
+Usamos o openSUSE como distribuição de referência para a família SUSE, pois está disponível para usuários finais sem nenhum custo. Como os dois produtos são extremamente semelhantes, o material que cobre o openSUSE normalmente pode ser aplicado ao SLES sem problemas.
+
+Alguns dos principais fatos sobre a família SUSE estão listados abaixo:
+
+SUSE Linux Enterprise Server (SLES) é o upstream do openSUSE.
+A versão 5.14 do kernel é usada no openSUSE Leap 15.4.
+Ele usa o gerenciador de pacotes zypper baseado em RPM (abordaremos isso em detalhes posteriormente) para instalar, atualizar e remover pacotes no sistema.
+Inclui o aplicativo YaST (Yet Another Setup Tool) para fins de administração do sistema.
+O SLES é amplamente utilizado no varejo e em muitos outros setores.
+
+A distribuição Debian é upstream para várias outras distribuições, incluindo Ubuntu. Por sua vez, o Ubuntu é upstream do Linux Mint e de uma série de outras distribuições. É comumente usado em servidores e computadores desktop. O Debian é um projeto comunitário de código aberto puro (não pertencente a nenhuma corporação) e tem um forte foco na estabilidade.
+
+O Debian fornece de longe o maior e mais completo repositório de software para seus usuários de qualquer distribuição Linux.
+
+O Ubuntu visa fornecer um bom compromisso entre estabilidade a longo prazo e facilidade de uso. Como o Ubuntu obtém a maioria de seus pacotes do ramo estável do Debian, ele também tem acesso a um repositório de software muito grande. Por essas razões, usaremos Ubuntu LTS (Long Term Support) como referência às distribuições da família Debian para este curso.
+
+Alguns fatos importantes sobre a família Debian estão listados abaixo:
+
+A família Debian é upstream para Ubuntu, e Ubuntu é upstream para Linux Mint e outros.
+A versão 5.19 do kernel é usada no Ubuntu 22.04 LTS.
+Ele usa o gerenciador de pacotes APT baseado em DPKG (usando apt, apt-get, apt-cache, etc., que abordaremos em detalhes posteriormente) para instalar, atualizar e remover pacotes no sistema.
+O Ubuntu tem sido amplamente utilizado para implantações em nuvem.
+Embora o Ubuntu seja construído sobre o Debian e seja baseado no GNOME, ele difere visualmente da interface do Debian padrão, bem como de outras distribuições.
+
+O material produzido pela The Linux Foundation é flexível em termos de distribuição. Isso significa que explicações técnicas, laboratórios e procedimentos devem funcionar em quase todas as distribuições modernas. Ao escolher entre os sistemas Linux disponíveis, você notará que as diferenças técnicas estão principalmente relacionadas aos sistemas de gerenciamento de pacotes, versões de software e locais de arquivos. Depois de entender essas diferenças, torna-se relativamente fácil mudar de uma distribuição Linux para outra.
+
+O ambiente de desktop usado para este curso é o GNOME. Como observaremos no Capítulo 4: Interface Gráfica, existem diferentes ambientes, mas selecionamos o GNOME por ser o mais utilizado.
+
+resumo
+
+Você concluiu o Capítulo 1. Vamos resumir os principais conceitos abordados:
+
+A Linux Foundation é a organização guarda-chuva para muitos projetos críticos de código aberto que impulsionam as corporações, abrangendo todos os setores da indústria. Seu trabalho hoje vai muito além do Linux, promovendo a inovação em todas as camadas da pilha de software.
+O treinamento da Linux Foundation é para a comunidade e pela comunidade. O treinamento em Linux é flexível em termos de distribuição, tecnicamente avançado e criado com os líderes da comunidade de desenvolvimento Linux.
+Existem três famílias principais de distribuição no Linux: Red Hat, SUSE e Debian. Neste curso, trabalharemos com membros representativos de todas essas famílias.

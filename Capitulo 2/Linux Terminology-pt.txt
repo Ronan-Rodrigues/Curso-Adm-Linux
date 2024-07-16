@@ -1,0 +1,42 @@
+Antes de começar a usar o Linux,
+você precisa estar ciente de alguns termos básicos,
+como kernel, distribuição, gerenciador de boot, serviço,
+sistema de arquivos,sistema Window X,
+ambiente de trabalho e linha de comando.
+Estes são comumente usados pela comunidade Linux.
+O kernel é o cérebro do Sistema Operacional Linux.
+Ele controla o hardware e
+faz com que o hardware interaja com os aplicativos.
+Um exemplo de kernel é o kernel Linux.
+O kernel Linux mais recente, junto com os kernels
+Linux anteriores, podem ser encontradoS no site kernel.org.
+Uma distribuição também conhecida como Distros
+é uma coleção de programas combinados com o kernel Linux
+para formar um sistema operacional baseado em Linux.
+Alguns exemplos comuns de uma distribuição são
+Red Hat Enterprise Linux, Fedora, Ubuntu e Gentoo.
+O gerenciador de boot, como o nome indica,
+é um programa que inicializa o sistema operacional.
+Dois exemplos de gerenciadores de boot são GRUB e ISOLINUX.
+Um serviço é um programa que é executado
+como um processo em segundo plano.
+Alguns exemplos de serviço são
+httpd, nfsd,
+ntpd, ftpd e named.
+Um sistema de arquivos é um método para armazenar
+e organizar arquivos no Linux.
+Alguns exemplos de sistemas de arquivos são
+ext3, ext4, FAT, XFS e Btrfs.
+O sistema Window X fornece o kit de ferramentas
+e o protocolo padrão para construir interfaces gráficas
+de usuário em quase todos os sistemas Linux.
+O ambiente de trabalho é uma interface gráfica do usuário
+por cima do sistema operacional.
+GNOME, KDE, Xfce e Fluxbox
+são alguns exemplos de ambientes de trabalho.
+A linha de comando é uma interface
+para digitar comandos por cima do sistema operacional.
+O Shell interpreta a entrada da linha de comando
+e instrui o sistema operacional a performar
+qualquer tarefa e comandos necessários.
+Por exemplo, bash, tcsh e zsh.

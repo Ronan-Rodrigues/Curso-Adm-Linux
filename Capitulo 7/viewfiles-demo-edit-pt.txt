@@ -1,0 +1,38 @@
+- Vamos ter uma ideia de como examinar algumas das linhas
+em um determinado arquivo de texto em sua máquina.
+Em todas as máquinas virtuais Linux Foundation
+há um arquivo chamado ready-for.sh,
+no qual eu uso a contagem de palavras, "wc".
+Ele me mostra que há 5127 linhas.
+Se eu digitar o arquivo inteiro,
+posso fazer isso com o utilitário "cat".
+Então vou fazer isso.
+Mas foi muito rápido.
+E se eu usar "cat -n",
+ele me mostrará os números de linhas, que é 5127.
+A maneira de percorrer o caminho
+é usando o utilitário "less".
+Então eu usaria less ready-for.sh.
+E assim eu acesso uma tela por vez.
+Se eu apertar a barra de espaço eu vejo a segunda tela,
+terceira tela, etc.
+E posso ir vendo todo o arquivo na rapidez que quiser.
+A propósito, também posso fazer a opção "less -N"
+e também obter números de linhas que consegui com "cat -n".
+É parecido.
+Suponha que eu só queira ver as primeiras linhas do arquivo.
+Eu poderia usar head ready-for.sh,
+e vemos que ele só me mostrou umas 10 linhas.
+Se eu quiser 20 linhas,
+eu poderia usar isso como um argumento.
+Então, ali vemos as primeiras 20 linhas.
+Da mesma forma com "tail".
+Por padrão, eu vejo as últimas 10 linhas.
+Se eu quiser ver as últimas 20 linhas,
+eu uso tail -20.
+Se quiser se divertir um pouco,
+você pode usar o utilitário "tac",
+note que "t-a-c" é "cat" de trás para frente,
+e ele fornece o arquivo inteiro de trás para frente.
+Esses são utilitários do dia-a-dia
+usados para ver o conteúdo dos arquivos de texto.

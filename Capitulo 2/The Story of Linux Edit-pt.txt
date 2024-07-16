@@ -1,0 +1,67 @@
+- [Narrador] Era agosto de 1991 e um estudante
+de ciência da computação de 20 anos chamado Linus Torvalds
+sentou-se em frente ao seu computador em Helsinque
+para postar o que é hoje uma das entradas mais famosas
+da história da computação;
+"Olá, gente...
+estou fazendo um sistema operacional gratuito,
+apenas um hobby, não será nada grande
+e profissional como o gnu,
+provavelmente nunca suportará nada
+além de discos rígidos AT, pois é tudo o que tenho..."
+O projeto de código aberto Word of the Linus
+se espalhou rapidamente pelo mundo
+e desenvolvedores de todo o mundo contribuíram com o código.
+Linus nomeou seu kernel do sistema operacional de Linux
+e representa com um pinguim como seu mascote
+após um pequeno incidente no zoológico.
+Ele logo tomou uma decisão muito importante
+que moldaria o futuro do Linux tanto quanto a tecnologia.
+Ele escolheu a licença GPL
+criada por um visionário chamado Richard Stallman.
+O kernel Linux junto com a licença GPL
+e outros componentes GNU revolucionaram
+a indústria de computadores com liberdades bem simples,
+mas muito importantes:
+A liberdade de usar o software para qualquer finalidade.
+A liberdade de alterar o software
+para atender às suas necessidades.
+A liberdade de compartilhar o software com seus amigos
+e vizinhos e a liberdade
+de compartilhar as alterações feitas.
+Essas ideias radicais alimentaram sua disseminação
+pelo mundo e, paradoxalmente,
+sua ascensão de um experimento de um hobby
+para a fundação de um grande
+e próspero ecossistema comercial.
+As empresas criaram negócios em torno do Linux.
+Em 1999, as ações da Red Hat triplicaram
+ao se tornar a primeira empresa Linux a abrir o capital.
+Nesse mesmo ano, a IBM gastou um bilhão de dólares
+para melhorar e divulgar o Linux.
+- [Mulher] Ele tem um nome?
+- [Homem] Seu nome é Linux.
+Logo o Linux estava derrubando pesos pesados da indústria
+e alimentando a ascensão da internet com seu software livre.
+Em suma, o Linux revolucionou a computação.
+Mas sempre que algo é tão disruptivo,
+é provável que apareça algo para competitir.
+Mas o Linux não apenas sobreviveu, ele prosperou.
+Hoje, a comunidade de desenvolvimento do kernel
+conta com milhares, com centenas de empresas colaborando
+no desenvolvimento do Linux.
+A cada três meses, outra versão do Linux é lançada.
+Então, como está o Linux hoje?
+Rodando em 75% das bolsas de valores em todo o mundo,
+capacitando os servidores que entregam Amazon,
+Facebook, Twitter, eBay e Google.
+Você usa o Linux literalmente toda vez
+que navega na Internet.
+Está no seu telefone, na sua TV,
+executando 95% dos supercomputadores
+e em muitos dos dispositivos que você usa todos os dias.
+Linux está em toda parte.
+E o programador residente de Helsinque que começou tudo?
+Ele orquestra esse exército mundial de desenvolvedores
+de seu escritório em Portland no Oregon
+como membro da Linux Foundation.

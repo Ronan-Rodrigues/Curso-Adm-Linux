@@ -1,0 +1,16 @@
+Vejamos como bloquear e desbloquear sua tela
+em qualquer distribuição recente GNOME.
+Vá até o canto superior direito e clique.
+Encontre o botão "Bloquear".
+Clique nele!
+Você pode desbloqueá-lo clicando na tela,
+quando solicitado, e digitar a senha novamente.
+Muito simples.
+Outra forma é através da combinação de teclas,
+dependendo da sua máquina, poderá ser a tecla Super + L
+ou a tecla Super + Escape,
+onde a tecla Super também é conhecida como tecla "Windows".
+Deixe-me mostrá-los.
+Abri a janela de bloqueio, mas posso desbloqueá-la também.
+Isso é tudo que está envolvido.
+Muito simples.

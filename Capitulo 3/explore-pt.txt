@@ -1,0 +1,59 @@
+- [Jerry] Vamos adquirir alguma experiência
+com a exploração do sistema de arquivos
+usando o gerenciador gráfico de arquivos.
+Não importa mais qual distribuição Linux você usa,
+todas têm exatamente a mesma interface.
+Aqui estamos usando o CentOS-9-Stream para esse propósito.
+Há várias maneiras de acessar o gerenciador de arquivos.
+Posso ir em Aplicativos, Favoritos e ver Arquivos.
+Também posso encontrar em outros lugares.
+Ou clicar em Atividades
+e ele aparecerá na parte inferior também,
+porque está nos meus favoritos.
+Aqui estou obtendo meu Diretório Home.
+Está sendo mostrado aqui o diretório do aluno Home.
+Posso ver facilmente outros lugares no sistema de arquivos.
+Por exemplo, se for para Outros locais,
+posso ver Computador
+e rolar para baixo, digamos em Usuário,
+em Local, Lixeira.
+Você vê vários arquivos diferentes.
+Tenho a visualização de listagem,
+no canto superior direito,
+posso clicar na visualização de ícone,
+se preferir.
+É uma questão de gosto
+e que tipo de diretório você está procurando.
+Olhando para esse--
+Vamos ver um arquivo de script chamado kprep.sh.
+Se eu clicar nele, ele me colocará no editor de texto.
+Neste caso, neste sistema,
+por padrão, é definido como Emacs.
+Pode ser VI, pode ser Gedit, pode ser Nano.
+Como eu abriria com outro aplicativo?
+Deixe-me fechar isso
+e clicarei com o botão direito em vez de clicar duas vezes.
+Em vez de abrir com o Emacs,
+vou em Abrir Com Outro Aplicativo.
+Veja que está me oferecendo um editor de texto,
+que é outro nome para o Gedit.
+No Gedit,
+você verá que ele tem uma boa coloração de contexto,
+dependendo do tipo de arquivo que eles são.
+Se eu tentasse abri-lo novamente,
+redefiniria o padrão desse tipo de arquivo para o Gedit.
+É muito simples navegar por aqui.
+Há outras coisas que você poderia fazer.
+Pode definir os chamados favoritos,
+para colocar uma lista de outros locais
+aqui em Outros Locais,
+além de Computador, Rede do Windows,
+aos quais você gosta de ir com frequência.
+Se entrar no Diretório Home, poderá configurá-lo
+para mostrar, por exemplo, seus arquivos ocultos.
+Veja aqui todos os que começam com pontos.
+Muito simples de usar.
+Se você já usou um gerenciador de arquivos
+em qualquer área de trabalho,
+em qualquer sistema operacional,
+não haverá problemas para aprender como fazer isso.

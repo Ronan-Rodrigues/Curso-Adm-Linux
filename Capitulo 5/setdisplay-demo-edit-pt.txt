@@ -1,0 +1,50 @@
+O ajuste das configurações de exibição, como a resolução,
+é quase idêntica em todas as principais distribuições.
+Demonstraremos a execução de máquinas virtuais
+sob VMware em um host Red Hat 8.
+Vamos começar mostrando como é no Ubuntu.
+No canto superior direito, temos o botão "Settings".
+E no painel principal temos "Displays".
+Então já clicamos nele.
+E vemos que a coisa mais fácil de fazer aqui
+é mudar a resolução para qualquer um desses números.
+Agora você pode variar continuamente o tamanho da exibição,
+geralmente em uma máquina virtual,
+arrastando e soltando os cantos.
+Vemos agora que mudou para outro número,
+mas isso é tudo o que está envolvido no Ubuntu.
+Vamos tentar abrir o CentOS.
+CentOS-8-Stream, na verdade.
+Eu acesso "Settings" mais uma vez
+e tenho que rolar para baixo até "Devices"
+e "Displays" está lá.
+Tínhamos a mesma configuração,
+exceto por esta opção "Night Light",
+que é para uma situação mais escura,
+que também tínhamos no Ubuntu, só que em outro lugar.
+No openSUSE,
+veremos que é virtualmente idêntico também.
+Eu cliquei no botão de engrenagem de configurações aqui.
+E de novo, tenho que ir para "Devices"
+como fiz no sistema Red Hat.
+E aí temos a mesma situação.
+Você não saberia em qual sistema operacional está
+se apenas observasse isso.
+Essas são todas as máquinas virtuais com um terminal.
+Se olharmos no host,
+que tem três monitores diferentes conectados a ele,
+veremos algo assim,
+onde podemos ver os três monitores.
+Eu configuro qualquer um deles.
+Aqui, está o menor, o de 18",
+mas eu poderia mudar para o de 27" ou o de 24"
+e posso controlar as diferentes resoluções.
+Se eu movê-los, posso mudar a maneira
+como os três estão dispostos, da esquerda para a direita.
+Eu não quero fazer isso, porque fica meio confuso,
+mas é assim que você controla qual está no meio,
+qual está à direita ou à esquerda, etc.
+Hoje em dia, configurar a resolução da tela
+e algumas outras coisas básicas é muito simples e intuitivo.
+O mais difícil é achar
+o ícone "Settings" para clicar.

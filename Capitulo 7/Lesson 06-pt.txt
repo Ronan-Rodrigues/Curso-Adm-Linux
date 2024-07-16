@@ -1,0 +1,476 @@
+A interface é uma forma confortável de usar o sistema Linux,
+mas o verdadeiro poder do Linux está nas linhas de comando.
+A boa notícia é que você começará a customizar seu Linux
+com linhas de comando, a má é que você pode nunca parar.
+Vamos começar!
+
+
+Ao final deste capítulo, você deverá ser capaz de:
+
+Use a linha de comando para realizar operações no Linux.
+Procure por arquivos.
+Crie e gerencie arquivos.
+Instalar e atualizar software.
+
+Os administradores de sistema Linux gastam uma quantidade significativa de tempo em um prompt de linha de comando. Freqüentemente, eles automatizam e solucionam problemas neste ambiente de texto. Há um ditado que diz: "as interfaces gráficas de usuário facilitam as tarefas fáceis, enquanto as interfaces de linha de comando tornam possíveis as tarefas difíceis". O Linux depende muito da abundância de ferramentas de linha de comando. A interface da linha de comandos oferece as seguintes vantagens:
+
+Nenhuma sobrecarga da GUI é incorrida.
+Praticamente toda e qualquer tarefa pode ser realizada na linha de comando.
+Você pode implementar scripts para tarefas e séries de procedimentos usados com frequência (ou fáceis de esquecer).
+Você pode entrar em máquinas remotas em qualquer lugar da Internet.
+Você pode iniciar aplicativos gráficos diretamente da linha de comando, em vez de procurar nos menus.
+Embora as ferramentas gráficas possam variar entre as distribuições Linux, a interface da linha de comando não.
+
+Um programa emulador de terminal emula (simula) um terminal independente dentro de uma janela na área de trabalho. Com isso, queremos dizer que ele se comporta essencialmente como se você estivesse fazendo login na máquina em um terminal de texto puro sem interface gráfica em execução. A maioria dos programas emuladores de terminal oferece suporte a várias sessões de terminal abrindo guias ou janelas adicionais.
+
+Por padrão, em ambientes de área de trabalho GNOME, o aplicativo gnome-terminal é usado para emular um terminal em modo texto em uma janela. Outros programas de terminal disponíveis incluem:
+
+termo x
+konsole (padrão no KDE)
+Exterminador do Futuro
+
+Para abrir um terminal em qualquer sistema usando uma área de trabalho GNOME recente, clique em Aplicativos > Ferramentas do Sistema > Terminal ou Aplicativos > Utilitários > Terminal. Se você não tiver o menu Aplicativos, terá que instalar o pacote gnome-shell-extension apropriado e ativá-lo com gnome-tweaks.
+
+Na maioria das distribuições baseadas no GNOME, você sempre pode abrir um terminal clicando com o botão direito em qualquer lugar do plano de fundo da área de trabalho e selecionando Abrir no Terminal. Se isso não funcionar, pode ser necessário instalar e ativar o pacote apropriado, geralmente chamado gnome-shell-extension-apps-menu.
+
+Você também pode pressionar Alt-F2 e digitar gnome-terminal.
+
+Como as distribuições têm um histórico de enterrar como abrir um terminal de linha de comando, e o local nos menus pode variar na GUI do desktop, é uma boa ideia descobrir como "fixar" o ícone do terminal no painel, o que pode significar adicioná-lo ao agrupamento Favoritos em sistemas GNOME.
+
+Existem alguns utilitários básicos de linha de comando que são usados constantemente e seria impossível prosseguir sem usar alguns deles de forma simples antes de discuti-los com mais detalhes. Uma pequena lista deve incluir:
+
+cat: usado para digitar um arquivo (ou combinar arquivos).
+head: usado para mostrar as primeiras linhas de um arquivo.
+tail: usado para mostrar as últimas linhas de um arquivo.
+man: usado para visualizar a documentação.
+A captura de tela mostra os usos elementares desses programas. Observe o uso do símbolo de barra vertical (|) usado para fazer com que um programa receba como entrada a saída de outro.
+
+Na maioria das vezes, usaremos esses utilitários apenas em capturas de tela que mostram diversas atividades, antes de discuti-las em detalhes.
+
+A maioria das linhas de entrada inseridas no prompt do shell possuem três elementos básicos:
+
+Comando
+Opções
+Argumentos
+O comando é o nome do programa ou script que você está executando. Pode ser seguido por uma ou mais opções (ou opções) que modificam o que o comando pode fazer. As opções geralmente começam com um ou dois travessões, por exemplo, -p ou --print, para diferenciá-las dos argumentos, que representam o que o comando opera.
+
+No entanto, muitos comandos não têm opções, argumentos ou nenhum dos dois. Além disso, outros elementos (como a configuração de variáveis de ambiente) também podem aparecer na linha de comando ao iniciar uma tarefa.
+
+Todas as demonstrações criadas possuem um usuário configurado com recursos sudo para fornecer ao usuário privilégios administrativos (admin) quando necessário. sudo permite que os usuários executem programas usando os privilégios de segurança de outro usuário, geralmente root (superusuário).
+
+Em seus próprios sistemas, pode ser necessário configurar e ativar o sudo para funcionar corretamente. Para fazer isso, você precisa seguir alguns passos que discutiremos, mas não explicaremos com muitos detalhes agora. Muitas distribuições, incluindo o Ubuntu, configuram o sudo para você durante a instalação. Em outras distribuições Linux, você precisará configurar o sudo para funcionar corretamente após a instalação inicial. Voltaremos a discutir as diferenças e o uso de su e sudo posteriormente em nossa seção focada em segurança.
+
+Se o seu sistema ainda não tiver o sudo configurado e habilitado, você precisará executar as seguintes etapas:
+
+Você precisará fazer modificações como root administrativo ou superusuário. Embora o sudo se torne o método preferido para fazer isso, ainda não o configuramos, então precisaremos usar o su. No prompt da linha de comando, digite su e pressione Enter. Em seguida, será solicitada a senha do root, digite-a e pressione Enter. Você notará que nada é impresso; isso ocorre para que outras pessoas não possam ver a senha na tela. Você deve acabar com um prompt de aparência diferente, geralmente terminando com ‘#’. Por exemplo:
+$ su Senha:
+#
+Agora, você precisa criar um arquivo de configuração para permitir que sua conta de usuário use o sudo. Normalmente, esse arquivo é criado no diretório /etc/sudoers.d/ com o nome do arquivo igual ao seu nome de usuário. Por exemplo, para esta demonstração, digamos que seu nome de usuário seja estudante. Depois de executar a etapa 1, você criaria o arquivo de configuração para o aluno fazendo o seguinte:
+# echo "aluno ALL=(ALL) ALL" > /etc/sudoers.d/student
+Finalmente, algumas distribuições Linux irão reclamar se você também não alterar as permissões do arquivo fazendo:
+#chmod 440 /etc/sudoers.d/student
+Deveria ser isso. Para o restante deste curso, se você usar o sudo, deverá estar configurado corretamente. Ao usar o sudo, por padrão, você será solicitado a fornecer uma senha (sua própria senha de usuário) pelo menos na primeira vez em um intervalo de tempo especificado. É possível (embora muito inseguro) configurar o sudo para não exigir uma senha ou alterar o intervalo de tempo no qual a senha não precisa ser repetida a cada comando do sudo.
+
+A natureza personalizável do Linux permite abandonar a interface gráfica (temporária ou permanentemente) ou iniciá-la após o sistema estar em execução.
+
+A maioria das distribuições Linux oferece uma opção durante a instalação (ou tem mais de uma versão da mídia de instalação) para escolher entre um desktop ou estação de trabalho (com interface gráfica de usuário) ou servidor (geralmente sem).
+
+Os servidores de produção Linux geralmente são instalados sem a GUI e, mesmo que estejam instalados, geralmente não são iniciados durante a inicialização do sistema. Remover a interface gráfica de um servidor de produção pode ser muito útil na manutenção de um sistema enxuto, que pode ser mais fácil de suportar e manter seguro.
+
+Terminais Virtuais (VT) são sessões de console que usam todo o display e teclado fora de um ambiente gráfico. Tais terminais são considerados “virtuais” porque, embora possam existir múltiplos terminais activos, apenas um terminal permanece visível de cada vez. Um VT não é o mesmo que uma janela de terminal de linha de comando; você pode ter muitos deles visíveis simultaneamente em uma área de trabalho gráfica.
+
+Um terminal virtual (normalmente VT 1 ou VT 7) é reservado para o ambiente gráfico e logins de texto são habilitados nos VTs não utilizados.
+
+Um exemplo de situação em que o uso de VTs é útil é quando você enfrenta problemas com a área de trabalho gráfica. Nessa situação, você pode alternar para um dos VTs de texto e solucionar problemas.
+
+Para alternar entre VTs, pressione a tecla de função CTRL-ALT para o VT. Por exemplo, pressione CTRL-ALT-F6 para VT 6. Na verdade, você só precisa pressionar a combinação de teclas ALT-F6 se estiver em um VT e quiser mudar para outro VT.
+
+As distribuições Linux podem iniciar e parar a área de trabalho gráfica de várias maneiras. O método exato difere entre distribuições e entre versões. Para as distribuições mais recentes baseadas em sistema, o gerenciador de exibição é executado como um serviço e você pode interromper a área de trabalho da GUI com o utilitário systemctl. Além disso, a maioria das distribuições também funcionará com o comando telinit, como em:
+
+$ sudo systemctl stop gdm (ou sudo telinit 3)
+
+e reinicie-o (após fazer login no console) com:
+
+$ sudo systemctl start gdm (ou sudo telinit 5)
+
+De dentro de um terminal gráfico (gnome-terminal, konsole, etc.), elimine a área de trabalho gráfica atual.
+
+Seu método dependerá da sua distribuição e do seu programa greeter (ou seja, gdm ou kdm).
+
+Reinicie a GUI no console.
+
+Confira a solução fornecida na próxima página.
+
+Métodos para derrubar a GUI:
+
+aluno:/tmp> sudo systemctl stop gdm
+aluno:/tmp> sudo telinit 3
+
+Métodos para restaurar a GUI:
+
+aluno:/tmp> sudo systemctl start gdm
+aluno:/tmp> sudo telinit 5
+
+Nesta seção, discutiremos como realizar operações básicas na linha de comando. Isso inclui como fazer login e logout do sistema, reiniciar ou desligar o sistema, localizar aplicativos, acessar diretórios, identificar caminhos absolutos e relativos e explorar o sistema de arquivos.
+
+Um terminal de texto disponível solicitará um nome de usuário (com a string login:) e uma senha. Ao digitar sua senha, nada é exibido no terminal (nem mesmo um * para indicar que você digitou algo), para evitar que outras pessoas vejam sua senha. Depois de fazer login no sistema, você pode realizar operações básicas.
+
+Depois que sua sessão for iniciada (fazendo login em um terminal de texto ou por meio de um programa de terminal gráfico), você também poderá conectar-se e fazer login em sistemas remotos usando Secure SHell (SSH). Por exemplo, digitando ssh student@remote-server.com, o SSH se conectaria com segurança à máquina remota (remote-server.com) e forneceria ao aluno uma janela de terminal de linha de comando, usando uma senha (como acontece com logins regulares) ou criptografia. chave para fazer login sem fornecer uma senha para verificar a identidade.
+
+Um terminal de texto disponível solicitará um nome de usuário (com a string login:) e uma senha. Ao digitar sua senha, nada é exibido no terminal (nem mesmo um * para indicar que você digitou algo), para evitar que outras pessoas vejam sua senha. Depois de fazer login no sistema, você pode realizar operações básicas.
+
+Um terminal de texto disponível solicitará um nome de usuário (com a string login:) e uma senha. Ao digitar sua senha, nada é exibido no terminal (nem mesmo um * para indicar que você digitou algo), para evitar que outras pessoas vejam sua senha. Depois de fazer login no sistema, você pode realizar operações básicas.
+
+Depois que sua sessão for iniciada (fazendo login em um terminal de texto ou por meio de um programa de terminal gráfico), você também poderá conectar-se e fazer login em sistemas remotos usando Secure SHell (SSH). Por exemplo, digitando ssh student@remote-server.com, o SSH se conectaria com segurança à máquina remota (remote-server.com) e forneceria ao aluno uma janela de terminal de linha de comando, usando uma senha (como acontece com logins regulares) ou criptografia. chave para fazer login sem fornecer uma senha para verificar a identidade.
+
+O método preferido para desligar ou reinicializar o sistema é usar o comando shutdown. Isso envia uma mensagem de aviso e impede que outros usuários efetuem login. O processo init controlará o desligamento ou a reinicialização do sistema. É importante sempre desligar corretamente; não fazer isso pode resultar em danos ao sistema e/ou perda de dados.
+
+Os comandos halt e poweroff emitem shutdown -h para interromper o sistema; reboot emite shutdown -r e faz com que a máquina seja reinicializada em vez de apenas desligar. Tanto a reinicialização quanto o desligamento a partir da linha de comando requerem acesso de superusuário (root).
+
+Ao administrar um sistema multiusuário, você tem a opção de notificar todos os usuários antes do encerramento, como em:
+
+$ sudo shutdown -h 10:00 "Desligamento para manutenção programada."
+
+Dependendo das especificidades da política de sua distribuição específica, programas e pacotes de software podem ser instalados em vários diretórios. Em geral, programas e scripts executáveis devem estar nos diretórios /bin, /usr/bin, /sbin, /usr/sbin ou em algum lugar abaixo de /opt. Eles também podem aparecer em /usr/local/bin e /usr/local/sbin, ou em um diretório no espaço da conta de um usuário, como /home/student/bin.
+
+Uma maneira de localizar programas é empregar o utilitário which. Por exemplo, para descobrir exatamente onde o programa diff reside no sistema de arquivos:
+
+$ qual diferença
+/usr/bin/diff
+
+Se which não encontrar o programa, whereis é uma boa alternativa porque procura pacotes em uma gama mais ampla de diretórios do sistema:
+
+$ onde está a diferença
+diferença: /usr/bin/diff /usr/share/man/man1/diff.1.gz /usr/share/man/man1p/diff.1p.gz
+
+bem como localizar arquivos fonte e man empacotados com o programa.
+
+Quando você faz login em um sistema ou abre um terminal pela primeira vez, o diretório padrão deve ser seu diretório inicial. Você pode ver a localização exata digitando echo $HOME. No entanto, a maioria das distribuições Linux abre novos terminais gráficos em $HOME/Desktop.
+
+Dê uma olhada no seguinte exercício Experimente você mesmo: Acessando diretórios usando o prompt de comando.
+
+Existem duas maneiras de identificar caminhos:
+
+Caminho absoluto
+Um nome de caminho absoluto começa com o diretório raiz (/) e segue a árvore, ramo por ramo, até chegar ao diretório ou arquivo desejado. Caminhos absolutos sempre começam com /.
+Nome do caminho relativo
+Um nome de caminho relativo começa no diretório de trabalho atual. Caminhos relativos nunca começam com /.
+Várias barras (/) entre diretórios e arquivos são permitidas, mas todas as barras, exceto uma, entre os elementos do nome do caminho são ignoradas pelo sistema. Embora ////usr//bin seja válido, ele é visto apenas como /usr/bin pelo sistema.
+
+Na maioria das vezes, é mais conveniente usar caminhos relativos, que exigem menos digitação. Normalmente, você aproveita os atalhos fornecidos por: . (diretório atual), .. (diretório pai) e ~ (seu diretório inicial).
+
+Por exemplo, suponha que você esteja trabalhando atualmente em seu diretório inicial e queira mudar para o diretório /usr/bin. As duas maneiras a seguir o levarão ao mesmo diretório do seu diretório inicial:
+
+Método de nome de caminho absoluto
+$ cd /usr/bin
+Método de nome de caminho relativo
+$cd../../usr/bin
+Nesse caso, o método do nome do caminho absoluto requer menos digitação e é menos sujeito a erros.
+
+Percorrer para cima e para baixo na árvore do sistema de arquivos pode ser entediante. O comando tree é uma boa maneira de obter uma visão panorâmica da árvore do sistema de arquivos. Use tree -d para visualizar apenas os diretórios e suprimir a listagem de nomes de arquivos.
+
+O utilitário ln é usado para criar links físicos e (com a opção -s) links virtuais, também conhecidos como links simbólicos ou links simbólicos. Esses dois tipos de links são muito úteis em sistemas operacionais baseados em UNIX.
+
+Suponha que file1 já exista. Um link físico, chamado file2, é criado com o comando:
+
+$ ln arquivo1 arquivo2
+
+Observe que agora parecem existir dois arquivos. No entanto, uma inspeção mais detalhada da listagem de arquivos mostra que isso não é bem verdade.
+
+$ ls -li arquivo1 arquivo2
+
+A opção -i para ls imprime na primeira coluna o número do inode, que é uma quantidade única para cada objeto de arquivo. Este campo é o mesmo para ambos os arquivos; o que realmente está acontecendo aqui é que é apenas um arquivo, mas possui mais de um nome associado a ele, conforme indicado pelo 2 que aparece na saída ls. Assim, já existia outro objeto vinculado ao arquivo1 antes da execução do comando.
+
+Hard links são muito úteis e economizam espaço, mas é preciso ter cuidado com seu uso, às vezes de forma sutil. Por um lado, se você remover o arquivo1 ou o arquivo2 no exemplo, o objeto inode (e o nome do arquivo restante) permanecerá, o que pode ser indesejável, pois pode levar a erros sutis posteriormente se você recriar um arquivo desse nome.
+
+Se você editar um dos arquivos, exatamente o que acontecerá dependerá do seu editor; a maioria dos editores, incluindo vi e gedit, manterão o link por padrão, mas é possível que a modificação de um dos nomes quebre o link e resulte na criação de dois objetos.
+
+Links virtuais (ou simbólicos) são criados com a opção -s, como em:
+
+$ ln -s arquivo1 arquivo3
+$ ls -li arquivo1 arquivo3
+
+Observe que o arquivo3 não parece mais ser um arquivo normal e aponta claramente para o arquivo1 e possui um número de inode diferente.
+
+Links simbólicos não ocupam espaço extra no sistema de arquivos (a menos que seus nomes sejam muito longos). Eles são extremamente convenientes, pois podem ser facilmente modificados para apontar para locais diferentes. Uma maneira fácil de criar um atalho do seu diretório inicial para nomes de caminho longos é criar um link simbólico.
+
+Ao contrário dos hard links, os soft links podem apontar para objetos mesmo em diferentes sistemas de arquivos, partições e/ou discos e outras mídias, que podem ou não estar atualmente disponíveis ou até mesmo existir. No caso em que o link não aponta para um objeto atualmente disponível ou existente, você obtém um link pendente.
+
+O comando cd lembra onde você esteve pela última vez e permite voltar lá com cd -. Para lembrar mais do que apenas o último diretório visitado, use pushd para alterar o diretório em vez de cd; isso coloca seu diretório inicial em uma lista. Usar o popd enviará você de volta a esses diretórios, andando na ordem inversa (o diretório mais recente será o primeiro recuperado com o popd). A lista de diretórios é exibida com o comando dirs.
+
+Descubra a localização do utilitário de rede IP.
+
+Confira a solução fornecida na próxima página.
+
+aluno:/tmp> qual ip
+/usr/sbin/ip
+
+aluno:/tmp> onde está o ip
+ip: /usr/sbin/ip /usr/share/man/man7/ip.7.gz /usr/share/man/man8/ip.8.gz
+
+Observe que whereis também informa a localização da página de manual.
+
+O Linux fornece muitos comandos que ajudam você a visualizar o conteúdo de um arquivo, criar um novo arquivo ou um arquivo vazio, alterar o carimbo de data/hora de um arquivo e mover, remover e renomear um arquivo ou diretório. Esses comandos ajudam você a gerenciar seus dados e arquivos e a garantir que os dados corretos estejam disponíveis no local correto.
+
+Nesta seção, você aprenderá como gerenciar arquivos.
+
+touch é frequentemente usado para definir ou atualizar os horários de acesso, alteração e modificação de arquivos. Por padrão, ele redefine o carimbo de data/hora de um arquivo para corresponder à hora atual.
+
+No entanto, você também pode criar um arquivo vazio usando touch:
+
+$ toque <nome do arquivo>
+
+Isso normalmente é feito para criar um arquivo vazio como espaço reservado para uma finalidade posterior.
+
+touch oferece várias opções úteis. Por exemplo, a opção -t permite definir a data e o carimbo de data/hora do arquivo para um valor específico, como em:
+
+$ touch -t 12091600 meuarquivo
+
+Isso define o carimbo de data/hora do arquivo myfile para 16h do dia 9 de dezembro (12 09 1600).
+
+mkdir é usado para criar um diretório:
+
+mkdir sampdir
+Ele cria um diretório de amostra chamado sampdir no diretório atual.
+mkdir /usr/sampdir
+Ele cria um diretório de amostra chamado sampdir em /usr.
+A remoção de um diretório é feita com rmdir. O diretório deve estar vazio ou o comando falhará. Para remover um diretório e todo o seu conteúdo você deve fazer rm -rf.
+
+Observe que mv tem dupla função, pois pode:
+
+Simplesmente renomeie um arquivo
+Mova um arquivo para outro local, possivelmente alterando seu nome ao mesmo tempo.
+Se você não tiver certeza sobre a remoção de arquivos que correspondam a um padrão fornecido, é sempre bom executar rm interativamente (rm –i) para avisar antes de cada remoção.
+
+rmdir funciona apenas em diretórios vazios; caso contrário, você receberá um erro.
+
+Embora digitar rm –rf seja uma maneira rápida e fácil de remover recursivamente uma árvore inteira do sistema de arquivos, é extremamente perigoso e deve ser usado com o máximo cuidado, especialmente quando usado pelo root (lembre-se de que recursivo significa detalhar todos os subdiretórios, até descer em uma árvore).
+
+A variável PS1 é a sequência de caracteres exibida como prompt na linha de comando. A maioria das distribuições define PS1 com um valor padrão conhecido, que é adequado na maioria dos casos. No entanto, os usuários podem querer que informações personalizadas sejam exibidas na linha de comando. Por exemplo, alguns administradores de sistema exigem que o usuário e o nome do sistema host apareçam na linha de comando como em:
+
+estudante@r9 $
+
+Isso pode ser útil se você estiver trabalhando em diversas funções e quiser ser sempre lembrado de quem você é e em que máquina está. O prompt acima pode ser implementado definindo a variável PS1 como: \u@\h \$.
+
+Por exemplo:
+
+$ eco $ PS1
+\$
+$PS1="\u@\h \$ "
+estudante@r9 $ echo $PS1
+\u@\h \$
+estudante@r9 $
+
+Por convenção, a maioria dos sistemas são configurados para que o usuário root tenha um sinal de cerquilha (#) como prompt.
+
+Dê uma olhada no seguinte exercício: Experimente você mesmo: Trabalhando com arquivos e diretórios usando o prompt de comando.
+
+Crie um arquivo vazio chamado exercicio.txt e mova esse arquivo para o diretório /tmp, usando um nome de caminho relativo do seu diretório inicial. Em seguida, exclua este arquivo usando um nome de caminho absoluto.
+
+Confira a solução fornecida na próxima página.
+
+criar um arquivo
+student:/home/student> touch exercise.txt
+caminho relativo
+student:/home/student> mv exercise.txt ../../tmp
+excluir arquivo pelo caminho absoluto
+student:/tmp> rm /tmp/exercise.txt
+
+
+Quando os comandos são executados, por padrão existem três fluxos de arquivos padrão (ou descritores) sempre abertos para uso: entrada padrão (entrada padrão ou stdin), saída padrão (saída padrão ou stdout) e erro padrão (ou stderr).
+
+Usually, stdin is your keyboard, and stdout and stderr are printed on your terminal. stderr is often redirected to an error logging file, while stdin is supplied by directing input to come from a file or from the output of a previous command through a pipe. stdout is also often redirected into a file. Since stderr is where error messages (and warning) are written, usually nothing will go there.
+
+In Linux, all open files are represented internally by what are called file descriptors. Simply put, these are represented by numbers starting at zero. stdin is file descriptor 0, stdout is file descriptor 1, and stderr is file descriptor 2. Typically, if other files are opened in addition to these three, which are opened by default, they will start at file descriptor 3 and increase from there.
+
+On the next page and in the chapters ahead, you will see examples which alter where a running command gets its input, where it writes its output, or where it prints diagnostic (error) messages. 
+
+Através do shell de comando, podemos redirecionar os três fluxos de arquivos padrão para que possamos obter entrada de um arquivo ou de outro comando, em vez de nosso teclado, e podemos gravar saídas e erros em arquivos ou usá-los para fornecer entrada para subseqüentes. comandos.
+
+Por exemplo, se tivermos um programa chamado do_something que lê stdin e grava em stdout e stderr, podemos alterar sua fonte de entrada usando o sinal de menor que (<) seguido do nome do arquivo a ser consumido para dados de entrada :
+
+$ do_something <arquivo de entrada
+
+Se você quiser enviar a saída para um arquivo, use o sinal de maior que (>) como em:
+
+$ do_something > arquivo de saída
+
+Na verdade, você pode fazer as duas coisas ao mesmo tempo, como em:
+
+$ do_something < arquivo de entrada > arquivo de saída
+
+Como stderr não é igual a stdout, mensagens de erro ainda serão vistas nas janelas do terminal no exemplo acima.
+
+Se você deseja redirecionar o stderr para um arquivo separado, use o número do descritor de arquivo do stderr (2), o sinal de maior que (>), seguido do nome do arquivo no qual deseja receber tudo o que o comando em execução grava no stderr:
+
+$ do_something 2> arquivo de erro
+
+NOTA: Pela mesma lógica, do_something 1> arquivo de saída é o mesmo que do_something > arquivo de saída.
+
+Uma notação abreviada especial pode enviar qualquer coisa escrita no descritor de arquivo 2 (stderr) para o mesmo local que o descritor de arquivo 1 (stdout): 2>&1.
+
+$ do_something > arquivo de saída total 2>&1
+
+bash permite uma sintaxe mais fácil para o acima:
+
+$ do_something >& arquivo de saída total
+
+A filosofia do UNIX/Linux é ter muitos programas (ou comandos) simples e curtos cooperando entre si para produzir resultados bastante complexos, em vez de ter um programa complexo com muitas opções e modos de operação possíveis. Para conseguir isso, é feito uso extensivo de tubos. Você pode canalizar a saída de um comando ou programa para outro como entrada.
+
+Para fazer isso, usamos a barra vertical, símbolo de barra vertical (|), entre os comandos como em:
+ 
+$comando1 | comando2 | comando3
+
+O texto acima representa o que costumamos chamar de pipeline e permite que o Linux combine as ações de vários comandos em um. Isso é extraordinariamente eficiente porque command2 e command3 não precisam esperar a conclusão dos comandos anteriores do pipeline antes de começarem a processar os dados em seus fluxos de entrada; em vários sistemas de CPU ou núcleo, o poder de computação disponível é muito melhor utilizado e as coisas são feitas mais rapidamente.
+
+Além disso, não há necessidade de salvar a saída em arquivos (temporários) entre os estágios do pipeline, o que economiza espaço em disco e reduz a leitura e gravação do disco, o que geralmente constitui o gargalo mais lento na realização de algo.
+
+Ser capaz de encontrar rapidamente os arquivos que você procura economizará seu tempo e aumentará a produtividade. Você pode procurar arquivos no espaço do diretório inicial ou em qualquer outro diretório ou local no sistema.
+
+As principais ferramentas para fazer isso são os utilitários localizar e localizar. Também mostraremos como usar curingas no bash, para especificar qualquer arquivo que corresponda a uma determinada solicitação generalizada.
+
+O programa utilitário de localização executa uma pesquisa enquanto aproveita um banco de dados de arquivos e diretórios previamente construído em seu sistema, combinando todas as entradas que contêm uma sequência de caracteres especificada. Às vezes, isso pode resultar em uma lista muito longa.
+
+Para obter uma lista mais curta (e possivelmente mais relevante), podemos usar o programa grep como filtro. grep imprimirá apenas as linhas que contêm uma ou mais strings especificadas, como em:
+
+$ localizar zip | grep bin
+
+que listará todos os arquivos e diretórios com zip e bin em seus nomes. Abordaremos o grep com mais detalhes posteriormente. Observe o uso de | para canalizar os dois comandos juntos.
+
+localizar utiliza um banco de dados criado por um utilitário relacionado, atualizadob. A maioria dos sistemas Linux executa isso automaticamente uma vez por dia. No entanto, você pode atualizá-lo a qualquer momento, apenas executando updateb na linha de comando como usuário root.
+
+Por favor, dê uma olhada no seguinte exercício Experimente você mesmo: Localizando arquivos.
+
+Você pode procurar um nome de arquivo contendo caracteres específicos usando curingas.
+
+Para procurar arquivos usando o ? curinga, substitua cada caractere desconhecido por ?. Por exemplo, se você sabe que apenas as duas primeiras letras são 'ba' de um nome de arquivo de três letras com extensão .out, digite ls ba?.out.
+
+Para procurar arquivos usando o curinga *, substitua a string desconhecida por *. Por exemplo, se você lembrar apenas que a extensão era .out, digite ls *.out.
+
+Por favor, dê uma olhada no seguinte exercício: Experimente você mesmo: Usando bash Wildcards com ls.
+
+find é um programa utilitário extremamente útil e frequentemente usado na vida diária de um administrador de sistema Linux. Ele percorre a árvore do sistema de arquivos a partir de qualquer diretório específico (ou conjunto de diretórios) e localiza os arquivos que correspondem às condições especificadas. O caminho padrão é sempre o diretório de trabalho atual.
+
+Por exemplo, os administradores às vezes verificam arquivos principais potencialmente grandes (que contêm informações de diagnóstico após a falha de um programa) que tenham mais de várias semanas para removê-los.
+
+Também é comum remover arquivos não essenciais ou desatualizados em /tmp (e outros diretórios voláteis, como aqueles em /var/cache/ contendo arquivos em cache dispensáveis) que não foram acessados recentemente. Muitas distribuições Linux usam scripts de shell que são executados periodicamente (normalmente por meio do cron) para realizar essa limpeza doméstica.
+
+Quando nenhum argumento é fornecido, find lista todos os arquivos no diretório atual e todos os seus subdiretórios. As opções comumente usadas para encurtar a lista incluem -name (lista apenas arquivos com um determinado padrão em seus nomes), -iname (também ignora o caso de nomes de arquivos) e -type (que restringirá os resultados a arquivos de um determinado nome). tipo, como d para diretório, l para link simbólico ou f para um arquivo normal, etc.).
+
+Procurando por arquivos e diretórios chamados gcc:
+
+$ encontrar /usr -nome gcc
+
+Procurando apenas diretórios chamados gcc:
+
+$ encontrar /usr -tipo d -nome gcc
+
+Procurando apenas por arquivos regulares chamados gcc:
+
+$ encontrar /usr -tipo f -nome gcc
+
+Outro bom uso do find é poder executar comandos nos arquivos que correspondem aos seus critérios de pesquisa. A opção -exec é usada para esta finalidade.
+
+Para localizar e remover todos os arquivos que terminam com .swp:
+
+$ find -name "*.swp" -exec rm {} ’;’
+
+O {} (colchetes ondulados) é um espaço reservado que será preenchido com todos os nomes de arquivos resultantes da expressão find, e o comando anterior será executado em cada um deles individualmente.
+
+Observe que você deve terminar o comando com ‘;’ (incluindo aspas simples) ou \;. Ambas as formas estão bem.
+
+Também é possível usar a opção -ok, que se comporta da mesma forma que -exec, exceto que find solicitará permissão antes de executar o comando. Isso é uma boa maneira de testar seus resultados antes de executar cegamente qualquer comando potencialmente perigoso.
+
+Às vezes, você deseja encontrar arquivos de acordo com atributos, como quando foram criados, usados pela última vez, etc., ou com base em seu tamanho. É fácil realizar essas pesquisas.
+
+Para encontrar arquivos com base no tempo:
+
+$ encontrar / -ctime 3
+
+Aqui, -ctime é quando os metadados do inode (ou seja, propriedade do arquivo, permissões, etc.) foram alterados pela última vez; é frequente, mas não necessariamente, quando o arquivo foi criado pela primeira vez. Você também pode pesquisar os horários de acesso/última leitura (-atime) ou modificação/última gravação (-mtime). O número é o número de dias e pode ser expresso como um número (n), que significa exatamente esse valor, +n, que significa maior que esse número, ou -n, que significa menos que esse número. Existem opções semelhantes para tempos em minutos (como em -cmin, -amin e -mmin).
+
+Para localizar arquivos com base em tamanhos:
+
+$ encontrar / -tamanho 0
+
+Observe que o tamanho aqui está em blocos de 512 bytes, por padrão; você também pode especificar bytes (c), quilobytes (k), megabytes (M), gigabytes (G), etc. Assim como acontece com os números de tempo acima, os tamanhos dos arquivos também podem ser números exatos (n), +n ou -n. Para obter detalhes, consulte a página de manual para encontrar.
+
+Por exemplo, para localizar arquivos com tamanho superior a 10 MB e executar um comando nesses arquivos:
+
+$ encontrar / -size +10M -exec comando {} ’;’
+
+Encontre o diretório init.d, começando em /, e crie um link simbólico de seu diretório inicial para esse diretório.
+
+Observe que este diretório SysVinit não é mais usado em sistemas baseados em systemd, mas geralmente é mantido por motivos de compatibilidade com versões anteriores.
+
+Confira a solução fornecida na próxima página.
+
+aluno:/tmp> encontrar / -type d -name init.d
+aluno:/tmp> cd ~
+aluno:/home/aluno> ln -s /etc/init.d .
+
+Observe que você ouvirá muito barulho ao tentar examinar arquivos e diretórios que usuários normais não têm permissão para examinar. Se você prefaciar o comando find com sudo, isso não ocorrerá.
+
+As partes principais de uma distribuição Linux e a maioria de seus softwares complementares são instalados por meio do Sistema de Gerenciamento de Pacotes. Cada pacote contém os arquivos e outras instruções necessárias para fazer um componente de software funcionar bem e cooperar com os outros componentes que compõem todo o sistema. Os pacotes podem depender uns dos outros. Por exemplo, um pacote para um aplicativo baseado na Web escrito em Python exigirá que os pacotes Python apropriados sejam instalados primeiro.
+
+Existem duas grandes famílias de gerenciadores de pacotes amplamente implantados: aqueles baseados no Debian e aqueles que usam RPM como gerenciador de pacotes de baixo nível. Os dois sistemas são incompatíveis mas, em termos gerais, oferecem as mesmas características essenciais e satisfazem as mesmas necessidades. Além disso, existem alguns outros sistemas usados por distribuições Linux mais especializadas.
+
+Nesta seção, você aprenderá como instalar, remover ou pesquisar pacotes na linha de comando usando esses dois sistemas de gerenciamento de pacotes.
+
+Ambos os sistemas de gerenciamento de pacotes operam em dois níveis distintos: uma ferramenta de baixo nível (como dpkg ou rpm) cuida dos detalhes de descompactação de pacotes individuais, execução de scripts e instalação correta do software, enquanto uma ferramenta de alto nível (como apt, dnf ou zypper) trabalha com grupos de pacotes, baixa pacotes do fornecedor e descobre dependências.
+
+Na maioria das vezes os usuários precisam trabalhar apenas com a ferramenta de alto nível, que se encarregará de chamar a ferramenta de baixo nível conforme necessário. A resolução de dependências é um recurso particularmente importante da ferramenta de alto nível, pois trata dos detalhes de localização e instalação de cada dependência para você. Tenha cuidado, entretanto, pois a instalação de um único pacote pode resultar na instalação de dezenas ou até centenas de pacotes dependentes.
+
+A Advanced Packaging Tool (apt) é o sistema de gerenciamento de pacotes subjacente que gerencia software em sistemas baseados em Debian. Embora seja o back-end para gerenciadores de pacotes gráficos, como o Ubuntu Software Center e o synaptic, sua interface de usuário nativa está na linha de comando, com programas que incluem apt (ou apt-get) e apt-cache.
+
+dnf é o utilitário de gerenciamento de pacotes de linha de comando de código aberto para sistemas Linux compatíveis com RPM que pertencem à família Red Hat.
+
+zypper é o sistema de gerenciamento de pacotes da família SUSE/openSUSE e também é baseado em RPM. zypper também permite gerenciar repositórios a partir da linha de comando. zypper é bastante simples de usar e se assemelha muito ao dnf.
+
+Usando o sistema de gerenciamento de pacotes de nível superior apropriado para sua distribuição Linux, faça o seguinte:
+
+Instale o pacote dump em seu sistema.
+Remova o pacote dump do seu sistema.
+NOTA: Se o dump já estiver instalado (você será informado quando tentar instalar), faça as coisas na ordem oposta, ou seja, remova e instale.
+
+Confira a solução fornecida na próxima página.
+
+
+student:/tmp> apt install dump
+student:/tmp> apt remove dump
+
+or
+
+student:/tmp> dnf install dump
+student:/tmp> dnf remove dump
+
+or
+
+student:/tmp> zypper install dump
+student:/tmp> zypper remove dump
+
+
+resumo
+
+Você concluiu o Capítulo 7. Vamos resumir os principais conceitos que abordamos:
+
+Os terminais virtuais (VT) no Linux são consoles ou terminais de linha de comando que usam o monitor e o teclado conectados.
+Diferentes distribuições do Linux iniciam e param a área de trabalho gráfica de maneiras diferentes.
+Um programa emulador de terminal na área de trabalho gráfica funciona emulando um terminal dentro de uma janela na área de trabalho.
+O sistema Linux permite que você faça login via terminal de texto ou remotamente através do console.
+Ao digitar sua senha, nada é impresso no terminal, nem mesmo um símbolo genérico para indicar que você digitou.
+O método preferido para desligar ou reinicializar o sistema é usar o comando shutdown.
+Existem dois tipos de nomes de caminho: absolutos e relativos.
+Um nome de caminho absoluto começa com o diretório raiz e segue a árvore, ramo por ramo, até chegar ao diretório ou arquivo desejado.
+Um nome de caminho relativo começa no diretório de trabalho atual.
+Usar links físicos e virtuais (simbólicos) é extremamente útil no Linux.
+cd lembra onde você esteve pela última vez e permite que você volte lá com cd -.
+localizar executa uma pesquisa no banco de dados para encontrar todos os nomes de arquivos que correspondam a um determinado padrão.
+find localiza arquivos recursivamente de um determinado diretório ou conjunto de diretórios.
+find é capaz de executar comandos nos arquivos listados, quando usado com a opção -exec.
+touch é usado para definir os horários de acesso, alteração e edição de arquivos, bem como para criar arquivos vazios.
+O sistema de gerenciamento de pacotes Advanced Packaging Tool (apt) é usado para gerenciar software instalado em sistemas baseados em Debian.
+Você pode usar o utilitário de gerenciamento de pacotes de linha de comando dnf para distribuições Red Hat Family Linux baseadas em RPM.
+O sistema de gerenciamento de pacotes zypper é baseado em RPM e usado para openSUSE.
+
+

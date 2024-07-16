@@ -1,0 +1,63 @@
+Vamos treinar o uso do dnf na linha de comando
+em um sistema Fedora recente.
+Para isso, primeiro abrimos a linha de comando.
+Farei isso com Atividades, clico no ícone "terminal" abaixo,
+e obtenho um bom terminal de linha de comando,
+e o tornarei um pouco maior, porque... as fontes maiores,
+porque é difícil ver com as fontes menores.
+Primeiro, obtemos uma lista de todos os pacotes
+com a string "bzip2" no nome.
+Então eu vou fazer isso com 'dnf list',
+e os primeiros pacotes que aparecem são os já instalados.
+Vou rolar para cima, porque a lista é muito longa.
+Lá está o programa real, bzip2,
+o pacote de desenvolvimento
+caso eu queira escrever código
+com bzip2 internamente,
+e então bzip2-libs seria usado
+por programas que já têm bzip2 dentro deles.
+Os dois que estarei interessado em instalar aqui
+são os pacotes lbzip2.
+O lbzip2 é uma versão paralela do bzip2,
+que pode separar a quantidade de trabalho em várias partes
+que podem ser feitas simultaneamente.
+Então, por exemplo,
+se você tivesse quatro processadores, ou núcleos,
+você poderia dividir o trabalho em quatro partes,
+fazer tudo ao mesmo tempo, e então uni-los no final.
+Em teoria, seria quase quatro vezes mais rápido.
+Vamos tentar instalar o pacote de utilitários.
+Vou fazer, 'sudo dnf install
+libbzip2'...
+Eu acho que é lbzip2
+'lbzip2-utils'.
+E você verá "Sim, é um prazer fazer isso",
+mas também precisa do pacote lbzip2, do qual depende.
+Então eu direi "sim",
+só digitarei "y",
+e ele instalará os dois pacotes.
+Agora devo ter um programa chamado lbzip2,
+mas vamos verificar se é esse o caso.
+Com 'which'...
+E sim, aceito.
+Então eu poderia usá-lo agora se eu quisesse.
+Se eu realmente não quero que eles sejam instalados
+e quero limpar com eles,
+posso fazer algo como
+'sudo dnf remove lbzip2'.
+E você notará que fica feliz em removê-lo,
+mas me diz que,
+como o lbzip2-utils depende do lbzip2,
+se eu remover o lbzip2, é melhor remover os dois.
+Caso contrário, terei uma dependência insatisfeita,
+então só direi "sim".
+Esse é apenas um exemplo muito simples
+de como usar dnf na linha de comando.
+Infelizmente, os sistemas recentes baseados em Red Hat
+não têm um gerenciamento gráficos de pacotes bom.
+O Fedora tem algo chamado dnf dragon,
+mas pode ser um pouco lento para carregar
+e um pouco bugado,
+e não há nada para Red Hat 8 ou CentOS 8,
+então desenvolvedores experientes
+tendem a fazer tudo na linha de comando.

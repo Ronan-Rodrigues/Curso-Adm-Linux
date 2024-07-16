@@ -1,0 +1,68 @@
+[Instrutor] O "ps" é comumente usado na linha de comando
+para obter informações sobre o que está rodando no sistema,
+os vários processos e tarefas, que recursos estão usando,
+que relações têm entre si etc.
+Ao digitar apenas "ps", sem argumentos,
+obtenho os processos iniciados
+sob esta janela de terminal específica.
+Para tornar mais interessante,
+tenho processos rodando em segundo plano,
+tenho o Cat, o gerenciador de arquivos Nautilus
+e o Evince, o visualizador de PDF.
+Posso obter mais informações digitando "ps -f",
+que também me diz a identidade do processo-pai.
+O Bash tem um processo cuja identidade é 2942.
+O Bash tem um processo cuja identidade é 2942.
+Esse é o processo-pai do Cat e do Nautilus,
+lançado diretamente da shell,
+assim como o próprio comando "ps".
+O comando "evince" tem outra coisa como pai
+por motivos complicados,
+relacionados à forma que o GNOME shell roda.
+Para obter uma informação diferente, posso digitar "ps -l".
+Para obter uma informação diferente, posso digitar "ps -l".
+Agora também estou vendo informações sobre a prioridade
+nestas duas colunas.
+E um valor de "nice", que é apenas uma mudança numérica
+na maioria dos sistemas Linux.
+Um valor de "nice" neutro, igual a zero,
+tem uma prioridade de 80,
+valor padrão com o qual todos os processos iniciam.
+Posso fazer mais coisas se quiser fornecer mais argumentos.
+Vou pôr "ps -elf".
+Isso me mostrará todos os processos do sistema.
+Vou digirar "less" para que não vá tão rápido.
+E isto é tudo que está sendo executado no meu sistema.
+A primeira porção de processos desta longa lista
+apresenta estes colchetes em volta.
+Ou seja, não foram iniciados por um programa do usuário.
+Estão sendo executados no kernel
+para fazer vários tipos de tarefas em segundo plano,
+como cuidar da movimentação de coisas de uma CPU para outra,
+entre outras coisas.
+Note que eles têm prioridades diferentes.
+São "-20" aqui, "-20" ali.
+Significa que são prioridades mais altas.
+Quanto menor o número da prioridade, mais alta a prioridade.
+Se eu descer até o fim, chegarei às tarefas
+que não estão sendo executadas no kernel.
+Estão rodando, por exemplo, sob meu nome, Coop.
+Estes são os verdadeiros processos do usuário,
+e são bem diferentes.
+O comando "ps" pode ser um pouco confuso
+porque há diferentes tipos de opções,
+os que têm travessão e os que não têm.
+Por exemplo, "ps -e" é diferente de "ps e".
+Um conjunto comum de opções é o "ps aux", sem travessão.
+Um conjunto comum de opções é o "ps aux", sem travessão.
+Aqui temos uma informação adicional interessante,
+a porcentagem de CPU que está sendo usada.
+Claro, não há muito acontecendo no sistema agora,
+então tende a ser zero.
+Você pode personalizar a saída do comando "ps".
+Você pode personalizar o output do comando "ps".
+Ao procurar por "ps" na página principal,
+verá que há formas de imprimir só as colunas desejadas
+se quiser produzir relatórios personalizados etc.
+Mas um administrador padrão de um sistema Linux
+provavelmente usa "ps" todo dia para uma coisa ou outra.

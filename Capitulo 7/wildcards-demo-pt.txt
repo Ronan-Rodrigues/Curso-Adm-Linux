@@ -1,0 +1,50 @@
+Vamos ganhar experiência usando curingas no sistema Ubuntu.
+Fui para o diretório "/var/log" e farei um "ls"
+para ver o que tem lá.
+Por exemplo, usarei "du" ou uso ferramenta de uso de disco,
+a qual me mostra quantos bytes estão sendo usados
+por um arquivo ou diretório.
+Poderia digitar algo como "du -sh a*".
+Essas são todas as coisas sob "a",
+alguns são diretórios como "apt", outros são só arquivos.
+Se eu quiser ver aqueles que têm "log" no nome,
+posso fazer "du -sh a*log*".
+Mostra só os que tem "log" no nome.
+Se quiser ver só aqueles que começam com P
+ou letras que vêm depois no alfabeto,
+posso fazer "du -sh a [p-Z]*".
+Veja que ele negligenciou os alternativos, ele faz isso.
+Se eu quiser ver apenas aqueles
+com um determinado caractere,
+posso fazer "du *.?.*".
+Esses são todos que têm uma substring com um caractere.
+Aqui é sempre um número, mas não precisa ser,
+com pontos dos dois lados.
+Precisamos ter cuidado com curingas para que o sistema
+não faça "glob" do que está fazendo,
+da string que você está colocando.
+Darei um exemplo: veja que há vários arquivos diferentes
+aqui que começam com o nome "vmware",
+estão todos na coluna direita aqui.
+Imagine que eu tento
+"apt-get install vmware*",
+e coloco "sudo" na frente.
+Ele está procurando por pacotes com todos esses nomes
+como "vmware-network.1", "vmware-vmvsc-root2"
+esse login.
+Claro que não há pacotes com nomes bobos assim,
+mas eu poderia fazer algo assim.
+Colocarei "vmware*" entre aspas.
+Veja que achou algumas coisas.
+Achou dois pacotes: "vmware-nsx-common", "vmware-manager",
+e quer instalá-los.
+E precisa dessas outras ferramentas para funcionar.
+Não farei isso, porque não preciso deles. Então, direi não.
+Quando você coloca algo entre aspas, isso diz:
+não procure no diretório atual para preencher os nomes,
+para expandir o que está fazendo.
+Ao invés disso, olhe para os pacotes da base de dados.
+Por isso, precisa tomar cuidado e, seguidamente,
+verá as pessoas usando aspas, mesmo sem necessidade,
+só por segurança.
+Essa é uma pequena demonstração do uso de curingas.

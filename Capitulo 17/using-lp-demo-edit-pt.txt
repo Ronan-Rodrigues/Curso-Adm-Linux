@@ -1,0 +1,30 @@
+Vamos fazer uma simples demonstração usando a utilidade
+"lp" ao imprimir diretamente da linha de comando.
+Esses dias, você fará a maior parte das suas impressões
+dentro de um aplicativo com uma interface gráfica, onde você
+só terá que clicar em "Print",
+ou talvez apertar Ctrl+P para surgir o diálogo de impressão,
+mas ainda é útil saber como fazê-lo
+a partir de uma linha de comando.
+Então, suponhamos que tenho um arquivo cujo nome é capa.pdf.
+Posso simplesmente fazer "capa lp.pdf".
+E você verá que está indicado como sendo impresso.
+Você perceberá no lado da mão direita, que eu trouxe a
+interface gráfica para impressora.
+Você verá que está mostrando esta impressora HLL2380DW como
+sendo a que está imprimindo.
+Agora posso fazer uma série de outras coisas.
+Por exemplo, poderia tentar enviá-lo para outra impressora
+ou poderia mudar a impressora padrão.
+Então, se eu digo "opções lp"...
+...você verá que está me mostrando todas as opções
+que estão disponíveis nessa impressora.
+Suponhamos que quero mudá-la para outra impressora,
+esta que começa com MFC9.
+Então, faria "opções lp -d MFC9340CDW"...
+...que agora é nossa impressora irmã.
+Essa impressora a laser em cores,
+enquanto a primeira era em preto e branco.
+Então, tudo que eu quero fazer é imprimir
+a partir de uma linha de comando.
+E você pode ver atividade em cima sobre a interface gráfica.

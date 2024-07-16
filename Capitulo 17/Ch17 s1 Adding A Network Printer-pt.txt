@@ -1,0 +1,53 @@
+Vamos demonstrar como adicionar uma impressora de rede
+em uma distribuição do Ubuntu.
+Primeiro, vou ao canto superior direito
+e como na maioria das distribuições modernas,
+eu posso clicar lá e clicar no ícone de engrenagem,
+e descer até Devices.
+Ali eu escolho Printers
+e depois posso clicar em Add a Printer.
+Ele primeiro pesquisará na rede
+e verá se consegue realmente achar algo.
+Isso pode demorar um pouco.
+Ele descobrirá que é a mesma impressora,
+mas vários modos diferentes de usá-la.
+Ao digitar o endereço de rede da impressora
+na parte inferior,
+isso ajudará a achar as coisas bem mais rápido.
+Então, vou fazer isso.
+Vemos que já achei
+duas impressoras essencialmente diferentes
+no endereço de rede que digitei.
+São modos diferentes de usar a mesma impressora,
+mas a mais nativa é esta última,
+que é uma impressora Brother. Então vou clicar em Add.
+Como vemos, ele está procurando por drivers.
+Ele vai examinar o banco de dados de drivers
+que vêm com a distribuição Linux.
+Esta caixa apareceu
+e diz que eu deveria instalar o driver gutenprint,
+que é um driver de software livre e eu clicarei em Apply.
+Ele me dá mais informações sobre o gutenprint driver.
+Então, vou clicar em Apply novamente.
+Agora a impressora está instalada e diz que está pronta.
+Eu posso ajustar mais configurações,
+por exemplo, clicando em Additional Printer Settings,
+e depois clicando na impressora que temos.
+Eu clicarei duas vezes e terei o que esperamos
+dos ajustes da impressora em qualquer sistema operacional:
+várias coisas que podemos controlar,
+como o Printer Options.
+Está definido por padrão para impressão em um lado.
+Vou configurar para dois lados,
+borda longa, DPI, tamanho da página, etc.
+Em Job Options vemos quantas cópias,
+vários fatores de escala.
+Os níveis de tinta e toner geralmente não funcionam,
+a menos que tenhamos um driver do fabricante
+que geralmente produz drivers só para Windows.
+Isso é tudo o que precisamos fazer
+para instalar uma impressora de rede em um sistema Linux.
+Atualmente, a maioria das impressoras são de rede.
+Para instalar uma impressora local
+conectada fisicamente ao computador é praticamente o mesmo,
+portanto, não passaremos por isso.

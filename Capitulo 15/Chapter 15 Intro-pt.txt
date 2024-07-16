@@ -1,0 +1,845 @@
+Antes neste curso, você aprendeu a pegar vários comandos
+e juntá-los em comandos mais poderosos usando pipes.
+Nesta lição, falaremos dos scripts,
+ou seja, onde se pode informar ao sistema
+uma série de ações que ele precisa executar
+para reutilizá-los no futuro e automatizar muitas coisas.
+Neste módulo, falaremos dos recursos e das capacidades
+de vários shells,
+falaremos da sintaxe do shell que os acompanha,
+das variáveis de ambiente
+e de como passar argumentos de fora,
+bem como das expressões aritméticas.
+Vamos começar!
+
+Ao final deste capítulo, você deverá ser capaz de:
+
+Explique os recursos e capacidades do script bash shell.
+Conheça a sintaxe básica das instruções de script.
+Estar familiarizado com vários métodos e construções usadas.
+Teste as propriedades e a existência de arquivos e outros objetos.
+Use instruções condicionais, como blocos if-then-else.
+Execute operações aritméticas usando linguagem de script.
+
+Suponha que você queira procurar um nome de arquivo, verificar se o arquivo associado existe e então responder de acordo, exibindo uma mensagem confirmando ou não a existência do arquivo. Se você precisar fazer isso apenas uma vez, basta digitar uma sequência de comandos em um terminal. No entanto, se você precisar fazer isso várias vezes, a automação é a melhor opção. Para automatizar conjuntos de comandos, você precisará aprender como escrever scripts de shell. Mais comumente no Linux, esses scripts são desenvolvidos para serem executados no interpretador de shell de comando bash. O gráfico ilustra vários benefícios da implementação de scripts.
+
+NOTA: Muitos dos tópicos discutidos neste e no próximo capítulo já foram apresentados anteriormente, enquanto discutimos coisas que podem ser feitas na linha de comando. Optamos por repetir parte dessa discussão para que as seções sobre scripts sejam independentes, de modo que a repetição seja intencional.
+
+O interpretador de comandos tem a tarefa de executar as instruções que o seguem no script. Os intérpretes comumente usados incluem: /usr/bin/perl, /bin/bash, /bin/csh, /usr/bin/python e /bin/sh.
+
+Digitar uma longa sequência de comandos em uma janela de terminal pode ser complicado, demorado e propenso a erros. Ao implantar scripts de shell, o uso da linha de comando torna-se uma maneira eficiente e rápida de iniciar sequências complexas de etapas. O fato de os scripts shell serem salvos em um arquivo também facilita seu uso para criar novas variações de script e compartilhar procedimentos padrão com vários usuários.
+
+O Linux oferece uma ampla variedade de shells; exatamente o que está disponível no sistema está listado em /etc/shells. As escolhas típicas são:
+
+/bin/sh
+/bin/bash
+/bin/tcsh
+/bin/csh
+/bin/ksh
+/bin/zsh
+
+A maioria dos usuários do Linux usa o shell bash padrão, mas aqueles com longa experiência em UNIX com outros shells podem querer substituir o padrão.
+
+Um shell é simplesmente um interpretador de linha de comando que fornece a interface do usuário para janelas de terminal. Um shell de comando também pode ser usado para executar scripts, mesmo em sessões não interativas sem uma janela de terminal, como se os comandos estivessem sendo digitados diretamente. Por exemplo, digitando find . -name "*.c" -ls na linha de comando realiza o mesmo que executar um arquivo de script contendo as linhas:
+
+#!/bin/bash
+encontrar . -nome "*.c" -ls
+
+A primeira linha do script, que começa com #!, contém o caminho completo do interpretador de comandos (neste caso /bin/bash) que será usado no arquivo. Você tem algumas opções para a linguagem de script que pode usar, como /usr/bin/perl, /bin/csh, /usr/bin/python, etc. A sequência especial de dois caracteres, #!, costuma ser chamada um shebang e evita a regra usual de que o sinal de cerquilha, #, delineia o texto a seguir como um comentário.
+
+Vamos escrever um script bash simples que exibe uma mensagem de uma linha na tela. Qualquer tipo:
+
+$ gato > olá.sh
+#!/bin/bash
+echo "Olá, aluno da Linux Foundation"
+
+e pressione ENTER e CTRL-D para salvar o arquivo ou apenas crie hello.sh em seu editor de texto favorito. Em seguida, digite chmod +x hello.sh para tornar o arquivo executável por todos os usuários.
+
+Você pode então executar o script digitando ./hello.sh ou fazendo:
+
+$ bash olá.sh
+Olá estudante da Linux Foundation
+
+NOTA: Se você usar o segundo formulário, não será necessário tornar o arquivo executável.
+
+Agora, vamos ver como criar um exemplo mais interativo usando um script bash. O usuário será solicitado a inserir um valor, que será exibido na tela. O valor é armazenado em uma variável temporária, nome. Podemos referenciar o valor de uma variável shell usando $ na frente do nome da variável, como $name. Para criar este script, você precisa criar um arquivo chamado getname.sh em seu editor favorito com o seguinte conteúdo:
+
+#!/bin/bash
+#Leitura interativa de uma variável
+echo "Digite seu nome"
+leia o nome
+# Exibe a entrada da variável
+echo O nome dado foi:$nome
+
+Mais uma vez, torne-o executável fazendo chmod +x getname.sh.
+
+No exemplo acima, quando o usuário digita ./getname.sh e o script é executado, o usuário recebe a string ENTER YOUR NAME. O usuário então precisa inserir um valor e pressionar a tecla Enter. O valor será então impresso.
+
+NOTA: A hash-tag/sinal de cerquilha/sinal numérico (#) é usada para iniciar comentários no script e pode ser colocada em qualquer lugar da linha (o restante da linha é considerado um comentário). No entanto, observe a combinação mágica especial de #! (shebang) usado na primeira linha, é uma exceção única a esta regra.
+
+Todos os scripts shell geram um valor de retorno ao terminar a execução, que pode ser definido explicitamente com a instrução exit. Os valores de retorno permitem que um processo monitore o estado de saída de outro processo, geralmente em um relacionamento pai-filho. Saber como o processo termina permite tomar quaisquer medidas apropriadas que sejam necessárias ou dependentes do sucesso ou do fracasso.
+
+À medida que um script é executado, é possível verificar um valor ou condição específica e retornar sucesso ou falha como resultado. Por convenção, o sucesso é retornado como zero (0) e a falha é retornada como qualquer valor diferente de zero. Uma maneira fácil de demonstrar o sucesso e a falha na conclusão é executar o programa ls em um arquivo que existe e em outro que não existe. O valor de retorno é armazenado na variável de ambiente representada por $?:
+
+$ ls /etc/logrotate.conf
+/etc/logrotate.conf
+
+$ eco $?
+0
+
+Neste exemplo, o sistema é capaz de localizar o arquivo /etc/logrotate.conf e ls retorna um valor 0 para indicar sucesso. Quando executado em um arquivo inexistente, ele retorna 2. Os aplicativos geralmente traduzem esses valores de retorno em mensagens significativas facilmente compreendidas pelo usuário. Normalmente, os valores específicos que podem ser retornados e seus significados são explicados na página de manual do programa como em:
+
+Escreva um script que:
+
+Faz ls para um arquivo inexistente e exibe o status de saída resultante.
+Cria um arquivo e executa ls para ele e, em seguida, exibe novamente o status de saída resultante.
+Confira a solução fornecida na próxima página.
+
+Crie um arquivo chamado testls.sh, com o conteúdo abaixo:
+
+#!/bin/bash
+#
+# verifica se há arquivo inexistente, o status de saída será 2
+#
+é algum arquivo
+echo "status: $?"
+
+# cria o arquivo e faz novamente, o status de saída será 0
+toque em algum arquivo
+é algum arquivo
+echo "status: $?"
+
+# remova o arquivo para limpar
+rm algum arquivo
+
+Torne-o executável e execute-o:
+
+aluno:/tmp> chmod +x testls.sh
+aluno:/tmp> ./testls.sh
+
+ls: não é possível acessar algum arquivo: esse arquivo ou diretório não existe
+estado: 2
+algum arquivo
+estado: 0
+
+*Para baixar a solução de laboratório, clique neste link.
+
+Os scripts exigem que você siga uma sintaxe de linguagem padrão. As regras delineiam como definir variáveis e como construir e formatar instruções permitidas, etc. A tabela lista alguns usos de caracteres especiais em scripts bash:
+
+ 
+
+Tabela: usos de personagens e suas descrições
+Descrição do personagem
+# 		Usado para adicionar um comentário, exceto quando usado como \# ou como #! ao iniciar um script
+\ 		Usado no final de uma linha para indicar a continuação para a próxima linha ou para indicar que o próximo caractere deve ser interpretado literalmente, como em \$
+; 		Usado para interpretar o que se segue como um novo comando a ser executado após a conclusão do comando atual
+$ 		Indica que o que se segue é uma variável de ambiente
+> 		Redirecionar saída
+>> 		Anexar saída
+<		Redirecionar entrada
+| 		Usado para canalizar o resultado para o próximo comando
+ 
+
+Existem outros caracteres especiais e combinações de caracteres e construções que os scripts entendem, como (..), {..}, [..], &&, ||, ', ", $((...)), alguns dos quais discutiremos mais tarde.
+
+Às vezes, os comandos são muito longos para serem digitados facilmente em uma linha ou para serem compreendidos (mesmo que não haja um limite prático real para o comprimento de uma linha de comando).
+
+Neste caso, o operador de concatenação (\), o caractere de barra invertida, é usado para continuar comandos longos em várias linhas.
+
+Aqui está um exemplo de comando que instala uma longa lista de pacotes em um sistema usando gerenciamento de pacotes Debian:
+
+$~/> cd $HOME
+$~/> sudo apt install autoconf automake bison build-essential \
+     chrpath curl diffstat emacs flex gcc-multilib g++-multilib \
+     libsdl1.2-dev libtool lzop fazer mc patch \
+     tela socat sudo tar texinfo tofrodos u-boot-tools descompacte \
+     vim wget xterm zip
+
+O comando é dividido em várias linhas para torná-lo legível e mais fácil de entender. O operador \ no final de cada linha faz com que o shell combine (concatene) várias linhas e as execute como um único comando.
+
+Às vezes, os usuários precisam combinar vários comandos e instruções e até mesmo executá-los condicionalmente com base no comportamento dos operadores usados entre eles. Este método é chamado de encadeamento de comandos.
+
+Existem várias maneiras diferentes de fazer isso, dependendo do que você deseja fazer. O ; O caractere (ponto e vírgula) é usado para separar esses comandos e executá-los sequencialmente, como se tivessem sido digitados em linhas separadas. Cada comando subsequente é executado independentemente de o anterior ter sido bem-sucedido ou não.
+
+Assim, todos os três comandos no exemplo a seguir serão executados, mesmo se os anteriores falharem:
+
+$ fazer; fazer instalação; fazer limpo
+
+No entanto, você pode desejar abortar comandos subsequentes quando um anterior falhar. Você pode fazer isso usando o operador && (e) como em:
+
+$ make && make install && make clean
+
+Se o primeiro comando falhar, o segundo nunca será executado. Um refinamento final é usar o || (ou) operador, como em:
+
+$ gato arquivo1 || arquivo gato2 || arquivo gato3
+
+Nesse caso, você prossegue até que algo seja bem-sucedido e então para de executar quaisquer etapas adicionais.
+
+Encadear comandos não é o mesmo que canalizá-los; no último caso, os comandos sucessivos começam a operar nos fluxos de dados produzidos pelos anteriores antes de serem concluídos, enquanto no encadeamento cada etapa termina antes do início da próxima.
+
+Assim como a saída pode ser redirecionada para um arquivo, a entrada de um comando pode ser lida a partir de um arquivo. O processo de leitura de entrada de um arquivo é chamado de redirecionamento de entrada e usa o caractere <.
+
+Os três comandos a seguir (usando wc para contar o número de linhas, palavras e caracteres em um arquivo) são totalmente equivalentes e envolvem redirecionamento de entrada e um comando operando no conteúdo de um arquivo:
+
+$ wc < /etc/passwd
+49 105 2678 /etc/passwd
+
+$ wc /etc/senha
+49 105 2678 /etcpasswd
+
+$ cat /etc/passwd | Banheiro
+49 105 2678
+
+Os scripts Shell executam sequências de comandos e outros tipos de instruções. Esses comandos podem ser:
+
+Aplicativos compilados
+Comandos bash integrados
+Scripts shell ou scripts de outras linguagens interpretadas, como perl e Python.
+Aplicativos compilados são arquivos binários executáveis, geralmente residentes no sistema de arquivos em diretórios conhecidos, como /usr/bin. Os scripts shell sempre têm acesso a aplicativos no caminho padrão, como rm, ls, df, vi e gzip, que são programas compilados a partir de linguagens de programação de nível inferior, como C.
+
+Além disso, o bash possui muitos comandos integrados, que só podem ser usados para exibir a saída em um shell de terminal ou script de shell. Às vezes, esses comandos têm o mesmo nome de programas executáveis no sistema, o que pode levar a problemas sutis. Esses comandos integrados incluem cd, pwd, echo, read, logout, printf, let, time e ulimit. Assim, um comportamento ligeiramente diferente pode ser esperado da versão integrada de um comando como echo em comparação com /bin/echo.
+
+Uma lista completa de comandos integrados do bash pode ser encontrada na página de manual do bash ou simplesmente digitando help, conforme revisaremos na próxima página.
+
+Os usuários geralmente precisam passar valores de parâmetros para um script, como nome de arquivo, data, etc. Os scripts seguirão caminhos diferentes ou chegarão a resultados diferentes de acordo com os parâmetros (argumentos de comando) que são passados para eles. Esses valores podem ser texto ou números, como em:
+
+$./script.sh/tmp
+$./script.sh 100 200
+
+Dentro de um script, o parâmetro ou argumento é representado por $ e um número ou caractere especial. A tabela lista alguns desses parâmetros.
+
+ 
+
+Tabela: Parâmetros e seus significados
+Significado do parâmetro
+$0 			Nome do script
+$1 			Primeiro parâmetro
+$ 2, $ 3, etc. 		Segundo, terceiro parâmetro, etc.
+$* 			Todos os parâmetros
+$# 			Número de argumentos
+
+Se você digitar o script mostrado na figura, torne o script executável com chmod +x param.sh. Em seguida, execute o script fornecendo vários argumentos, conforme mostrado. O script é processado da seguinte forma:
+
+$0 imprime o nome do script: param.sh
+
+$1 imprime o primeiro parâmetro: um
+
+$2 imprime o segundo parâmetro: dois
+
+$3 imprime o terceiro parâmetro: três
+
+$* imprime todos os parâmetros: um dois três quatro cinco
+
+A declaração final se torna: Tudo feito com param.sh
+
+Às vezes, pode ser necessário substituir o resultado de um comando como parte de outro comando. Isso pode ser feito de duas maneiras:
+
+Colocando o comando interno entre $( )
+Colocando o comando interno entre crases (`)
+A segunda forma que usa crases está obsoleta e seu uso deve ser evitado em novos scripts e comandos. Não importa qual método seja usado, o comando especificado será executado em um ambiente shell recém-iniciado e a saída padrão do shell será inserida onde a substituição do comando é feita.
+
+Praticamente qualquer comando pode ser executado desta forma. Embora ambos os métodos permitam a substituição de comandos, o método $( ) permite o aninhamento de comandos, enquanto o uso de crases não permite porque os delimitadores direito e esquerdo são idênticos. Novos scripts devem sempre usar esse método mais moderno. Por exemplo:
+
+$ ls /lib/modules/$(uname -r)/
+
+No exemplo acima, a saída do comando uname –r (que será algo como 6.2.4) é inserida no argumento do comando ls.
+
+A maioria dos scripts usa variáveis contendo um valor, que pode ser usado em qualquer lugar do script. Essas variáveis podem ser definidas pelo usuário ou pelo sistema. Muitas aplicações utilizam tais variáveis de ambiente (já abordadas com algum detalhe no capítulo Ambiente do Usuário) para fornecer entradas, validação e controlar comportamento.
+
+Conforme discutimos anteriormente, alguns exemplos de variáveis de ambiente padrão são HOME, PATH e HOST. Quando referenciadas, as variáveis de ambiente devem ser prefixadas com o símbolo $, como em $HOME. Você pode visualizar e definir o valor das variáveis de ambiente. Por exemplo, o comando a seguir exibe o valor armazenado na variável PATH:
+
+$ echo $PATH
+
+No entanto, nenhum prefixo é necessário ao definir ou modificar o valor da variável. Por exemplo, o comando a seguir define o valor da variável MYCOLOR como azul:
+
+$ MINHACOLOR=azul
+
+Você pode obter uma lista de variáveis de ambiente com os comandos env, set ou printenv.
+
+Embora tenhamos discutido a exportação de variáveis de ambiente na seção "Ambiente do usuário", vale a pena revisar este tópico no contexto da escrita de scripts bash.
+
+Por padrão, as variáveis criadas em um script estão disponíveis apenas para as etapas subsequentes desse script. Quaisquer processos filhos (sub-shells) não têm acesso automático aos valores dessas variáveis. Para disponibilizá-los aos processos filhos, eles devem ser promovidos para variáveis de ambiente usando a instrução export, como em:
+
+exportar VAR=valor
+
+ou
+
+VAR=valor; exportar VAR
+
+Embora os processos filhos possam modificar o valor das variáveis exportadas, o pai não verá nenhuma alteração; variáveis exportadas não são compartilhadas, apenas copiadas e herdadas.
+
+Digitar export sem argumentos fornecerá uma lista de todas as variáveis de ambiente exportadas atualmente.
+
+Uma função é um bloco de código que implementa um conjunto de operações. As funções são úteis para executar procedimentos diversas vezes, talvez com variáveis de entrada variadas. As funções também são frequentemente chamadas de sub-rotinas. O uso de funções em scripts requer duas etapas:
+
+Declarando uma função
+Chamando uma função
+A declaração da função requer um nome que é usado para invocá-la. A sintaxe adequada é:
+
+nome_da_função() {
+    comando...
+}
+
+Por exemplo, a seguinte função é chamada display:
+
+mostrar () {
+    echo "Esta é uma função de exemplo que exibe apenas uma string"
+}
+
+A função pode ser tão longa quanto desejada e ter muitas instruções. Uma vez definida, a função pode ser chamada posteriormente quantas vezes forem necessárias. No exemplo completo mostrado na figura, também mostramos um refinamento frequentemente usado: como passar um argumento para a função. O primeiro argumento pode ser referido como $1, o segundo como $2, etc.
+
+Escreva um script que:
+
+Solicita ao usuário um nome de diretório e o cria com mkdir.
+Muda para o novo diretório e imprime onde está usando pwd.
+Usando touch, cria vários arquivos vazios e executa ls neles para verificar se estão vazios.
+Coloca algum conteúdo neles usando eco e redirecionamento.
+Exibe seu conteúdo usando cat.
+Diz adeus ao usuário e se limpa.
+
+Crie um arquivo chamado testfile.sh, com o conteúdo abaixo:
+
+#!/bin/bash
+
+# Solicita ao usuário um nome de diretório e o cria com mkdir.
+
+echo "Dê um nome de diretório para criar:"
+leia NEW_DIR
+
+# Salva o diretório original para que possamos retornar a ele (também podemos usar pushd, popd)
+
+ORIG_DIR=$(senha)
+
+# verifique se ele ainda não existe!
+
+[[ -d $NEW_DIR ]] && echo $NEW_DIR já existe, abortando && exit
+mkdir$NEW_DIR
+
+# Muda para o novo diretório e imprime onde está usando pwd.
+
+cd$NEW_DIR
+senha
+
+# Usando touch, cria vários arquivos vazios e executa ls neles para verificar se estão vazios.
+
+para n em 1 2 3 4
+fazer
+     toque no arquivo$n
+feito
+
+é arquivo?
+
+# (Poderia ter feito touch file1 file2 file3 file4, só quero mostrar o loop!)
+
+# Coloca algum conteúdo neles usando eco e redirecionamento.
+
+para nomes em arquivo?
+fazer
+     echo Este arquivo se chama $names > $names
+feito
+
+# Exibe seu conteúdo usando cat
+
+arquivo gato?
+
+# Diz adeus ao usuário e limpa tudo
+
+cd$ORIG_DIR
+rm -rf $NEW_DIR
+echo "Adeus meu amigo!"
+
+Torne-o executável e execute-o:
+
+$ chmod +x arquivo de teste.sh
+./testfile.sh
+
+Dê um nome de diretório para criar:
+
+/tmp/SOME_DIR
+
+/tmp/SOME_DIR
+arquivo1 arquivo2 arquivo3 arquivo4
+Este arquivo é denominado arquivo1
+Este arquivo é denominado arquivo2
+Este arquivo é denominado arquivo3
+Este arquivo é denominado arquivo4
+Adeus meu amigo
+
+*Para baixar a solução de laboratório, clique neste link.
+
+Escreva um script que receba exatamente um argumento e imprima-o na saída padrão. Certifique-se de que o script gere uma mensagem de uso se for executado sem fornecer um argumento.
+
+Confira a solução fornecida na próxima página.
+
+Crie um arquivo chamado testarg.sh, com o conteúdo abaixo:
+
+#!/bin/bash
+#
+# verifica se há um argumento, imprime uma mensagem de uso se não for fornecida.
+#
+se [$# -eq 0]; então
+       echo "Uso: $0 argumento"
+       saída 1
+fi
+eco $ 1
+saída 0
+
+Torne-o executável e execute-o:
+
+aluno:/tmp> chmod +x testarg.sh
+aluno:/tmp> ./testarg.sh Olá
+
+Olá
+
+aluno:/tmp>./testarg.sh
+
+Uso: argumento ./testarg.sh
+aluno:/tmp>
+
+*Para baixar a solução de laboratório, clique neste link.
+
+Create a file named testarg.sh, with the content below:
+
+#!/bin/bash
+#
+# check for an argument, print a usage message if not supplied.
+#
+if [ $# -eq 0 ] ; then
+      echo "Usage: $0 argument"
+      exit 1
+fi
+echo $1
+exit 0
+
+Make it executable and run it:
+
+student:/tmp> chmod +x testarg.sh
+student:/tmp> ./testarg.sh Hello
+
+Hello
+
+student:/tmp>./testarg.sh
+
+Usage: ./testarg.sh argument
+student:/tmp>
+
+*To download the lab solution, click this link.
+
+Escreva um script que:
+
+Solicita ao usuário um número, que deve ser “1” ou “2”. Qualquer outra entrada deve levar a um relatório de erro.
+Define uma variável ambiental como "Sim" se for "1" e "Não" se for "2".
+Exporta a variável ambiental e a exibe.
+
+Confira a solução fornecida na próxima página.
+
+Escreva um script que:
+
+Pede ao usuário um número (1, 2 ou 3).
+Chama uma função com esse número no nome. A função deve exibir uma mensagem com seu nome incluído.
+Confira a solução fornecida na próxima página.
+
+Create a file named testfun.sh, with the content below:
+
+#!/bin/bash
+
+# Functions (must be defined before use)
+func1() {
+echo " This message is from function 1"
+}
+func2() {
+echo " This message is from function 2"
+}
+func3() {
+echo " This message is from function 3"
+}
+
+# Beginning of the main script
+
+# prompt the user to get their choice
+echo "Enter a number from 1 to 3"
+read n
+
+# Call the chosen function
+func$n
+
+Make it executable and run it:
+
+student:/tmp> chmod +x testfun.sh
+student:/tmp> ./testfun.sh
+
+Enter a number from 1 to 3
+
+2
+
+This message is from function 2
+
+$ ./testfun.sh
+
+Enter a number from 1 to 3
+
+7
+
+./testfun.sh: line 21: func7: command not found
+
+*To download the lab solution, click this link.
+
+Crie um arquivo chamado testfun.sh, com o conteúdo abaixo:
+
+#!/bin/bash
+
+# Funções (devem ser definidas antes do uso)
+função1() {
+echo "Esta mensagem é da função 1"
+}
+func2() {
+echo "Esta mensagem é da função 2"
+}
+func3(){
+echo "Esta mensagem é da função 3"
+}
+
+# Início do script principal
+
+# solicita ao usuário que faça sua escolha
+echo "Digite um número de 1 a 3"
+leia n
+
+# Chame a função escolhida
+função$n
+
+Torne-o executável e execute-o:
+
+aluno:/tmp> chmod +x testfun.sh
+aluno:/tmp> ./testfun.sh
+
+Digite um número de 1 a 3
+
+2
+
+Esta mensagem é da função 2
+
+$./testfun.sh
+
+Digite um número de 1 a 3
+
+7
+
+./testfun.sh: linha 21: func7: comando não encontrado
+
+*Para baixar a solução de laboratório, clique neste link.
+
+A tomada de decisão condicional, usando uma instrução if, é uma construção básica que qualquer linguagem de programação ou script útil deve ter.
+
+Quando uma instrução if é usada, as ações subsequentes dependem da avaliação de condições especificadas, tais como:
+
+Comparações numéricas ou de strings
+Valor de retorno de um comando (0 para sucesso)
+Existência ou permissões de arquivo
+Na forma compacta, a sintaxe de uma instrução if é:
+
+se COMANDOS DE TESTE; então COMANDOS CONSEQUENTES; fi
+
+Uma definição mais geral é:
+
+se condição
+então
+        declarações
+outro
+        declarações
+fi
+
+No exemplo a seguir, uma instrução if verifica se um determinado arquivo existe e, se o arquivo for encontrado, exibe uma mensagem indicando sucesso ou falha:
+
+se [-f "$1"]
+então
+     arquivo de eco "$1" existe
+outro
+     arquivo de eco "$1" não existe
+fi
+
+Nós realmente deveríamos também verificar primeiro se há um argumento passado para o script ($1) e abortar se não houver.
+
+Observe o uso de colchetes ([]) para delinear a condição de teste. Existem muitos outros tipos de testes que você pode realizar, como verificar se dois números são iguais, maiores ou menores entre si e tomar uma decisão de acordo; discutiremos esses outros testes.
+
+Em scripts modernos, você pode ver colchetes duplos como em [[ -f /etc/passwd ]]. Isso não é um erro. Nunca é errado fazer isso e evita alguns problemas sutis, como referir-se a uma variável de ambiente vazia sem colocá-la entre aspas duplas; não vamos falar sobre isso aqui.
+
+Você pode usar a instrução elif para realizar testes mais complicados e tomar medidas apropriadas. A sintaxe básica é:
+
+se [algum teste]; então
+     eco Passou no teste1
+elif [algum outro teste]; então
+     eco Passou no teste2
+fi
+
+No exemplo mostrado, usamos testes de strings que explicaremos em breve e mostraremos como extrair uma variável de ambiente com a instrução read.
+
+As expressões booleanas são avaliadas como TRUE ou FALSE e os resultados são obtidos usando os vários operadores booleanos listados na tabela.
+
+Tabela: Operador, Operação e Significado
+Significado da operação do operador
+
+&& 		AND A ação será executada somente se ambas as condições forem avaliadas como verdadeiras
+|| 		OU A ação será executada se qualquer uma das condições for avaliada como verdadeira
+! NOT 		A ação será executada somente se a condição for avaliada como falsa
+ 
+
+Observe que se você tiver várias condições agrupadas com o operador &&, o processamento será interrompido assim que uma condição for avaliada como falsa. Por exemplo, se você tiver A && B && C e A for verdadeiro, mas B for falso, C nunca será executado.
+
+Da mesma forma, se você estiver usando o || operador, o processamento para assim que algo for verdadeiro. Por exemplo, se você tiver A || B || C e A é falso e B é verdadeiro, você também nunca executará C.
+
+Expressões booleanas retornam TRUE ou FALSE. Podemos usar essas expressões ao trabalhar com vários tipos de dados, incluindo strings ou números, bem como com arquivos. Por exemplo, para verificar se existe um arquivo, use o seguinte teste condicional:
+
+[ -e <nome do arquivo> ]
+
+Da mesma forma, para verificar se o valor de número1 é maior que o valor de número2, use o seguinte teste condicional:
+
+[$ número1 -gt $ número2]
+
+O operador -gt retorna TRUE se número1 for maior que número2.
+
+Você pode usar a instrução if para comparar strings usando o operador == (dois sinais de igual). A sintaxe é a seguinte:
+
+se [string1 == string2]; então
+    AÇÃO
+fi
+
+Observe que usar um sinal = também funcionará, mas alguns consideram seu uso obsoleto. Vamos agora considerar um exemplo de teste de strings.
+
+No exemplo ilustrado aqui, a instrução if é usada para comparar a entrada fornecida pelo usuário e exibir o resultado de acordo.
+
+Você pode usar operadores especialmente definidos com a instrução if para comparar números. Os vários operadores disponíveis estão listados na tabela:
+
+Tabela: Operador e Significado
+Significado do Operador
+-eq Igual a
+-ne Diferente de
+-gt Maior que
+-menos que
+-ge Maior ou igual a
+-le Menor ou igual a
+ 
+
+A sintaxe para comparar números é a seguinte:
+
+exp1 -op exp2
+
+Consideremos agora um exemplo de comparação de números usando os vários operadores:
+
+As expressões aritméticas podem ser avaliadas das três maneiras a seguir (os espaços são importantes!):
+
+Usando o utilitário expr
+expr é um programa padrão, mas um tanto obsoleto. A sintaxe é a seguinte:
+expressão 8 + 8
+eco $(expr 8 + 8)
+
+Usando a sintaxe $((...))
+Este é o formato de shell integrado. A sintaxe é a seguinte:
+eco $((x+1))
+
+Usando o comando shell integrado let. A sintaxe é a seguinte:
+deixe x = (1 + 2); eco $x
+
+Em shell scripts modernos, o uso de expr é melhor substituído por var=$((...)).
+
+Escreva um script que funcione como uma calculadora simples para somar, subtrair, multiplicar e dividir.
+
+Cada operação deve ter sua própria função.
+Qualquer um dos três métodos para aritmética bash, ($((..)), let ou expr) pode ser usado.
+O usuário deve fornecer 3 argumentos ao executar o script:
+- A primeira deve ser uma das letras a, s, m ou d para especificar qual operação matemática.
+- O segundo e terceiro argumentos devem ser os números que estão sendo operados.
+  O script deve detectar valores de entrada incorretos ou ausentes e exibir os resultados quando terminar.
+Confira a solução fornecida na próxima página.
+
+#!/bin/bash
+
+# Funções. deve estar antes da parte principal do script
+
+# em cada caso, o método 1 usa $((..))
+# método 2 usa let
+# método 3 usa expr
+
+adicionar() {
+     resposta1=$(($1 + $2))
+     deixe resposta2=($1 + $2)
+     resposta3=expr $1 + $2
+}
+sub() {
+     resposta1=$(($1 - $2))
+     deixe resposta2=($1 - $2)
+     resposta3=expr $1 - $2
+}
+mult() {
+     resposta1=$(($1 * $2))
+     deixe resposta2=($1 * $2)
+     resposta3=expr $1 \* $2
+}
+div(){
+     resposta1=$(($1 / $2))
+     deixe resposta2=($1 / $2)
+     resposta3=expr $1 / $2
+}
+#Fim das funções
+#
+#Parte principal do script
+# precisa de 3 argumentos e analisa para ter certeza de que são tipos válidos
+op=$1 ; arg1=$2; arg2=$3
+[[ $# -lt3 ]] && \
+     echo "Uso: Forneça uma operação (a,s,m,d) e dois números" && exit 1
+[[ $op != a ]] && [[ $op != s ]] && [[ $op != d ]] && [[ $op != m ]] && \
+     O operador echo deve ser a, s, m ou d, não $op conforme fornecido
+# ok, faça o trabalho!
+
+se [[ $op == a ]] ; então adicione $arg1 $arg2
+elif [[ $op == s ]] ; então sub $arg1 $arg2
+elif [[ $op == m ]] ; então mult $arg1 $arg2
+elif [[ $op == d ]] ; então div $arg1 $arg2
+outro
+echo $op não é a, s, m ou d, abortando; saída 2
+fi
+#Mostre as respostas
+echo $arg1 $op $arg2 :
+echo 'Método 1, $((..)),' A resposta é $resposta1
+echo 'Método 2, deixe,' A resposta é $resposta2
+echo 'Método 3, expr, ' A resposta é $resposta3
+
+Torne-o executável e execute-o:
+
+aluno:/tmp> chmod +x testmath.sh
+aluno:/tmp> ./testmath.sh
+aluno:/tmp> para n em a s m d x ; faça ./testmath.sh $n 21 7 ; feito
+
+21 a 7:
+Método 1, $((..)), a resposta é 28
+Método 2, vamos,
+A resposta é 28
+Método 3, expr,
+A resposta é 28
+21s 7:
+Método 1, $((..)), a resposta é 14
+Método 2, vamos,
+A resposta é 14
+Método 3, expr,
+A resposta é 14
+21m7:
+Método 1, $((..)), a resposta é 147
+Método 2, vamos,
+A resposta é 147
+Método 3, expr,
+A resposta é 147
+21 d 7:
+Método 1, $((..)), a resposta é 3
+Método 2, vamos,
+A resposta é 3
+Método 3, expr,
+A resposta é 3
+o operador deve ser a, s, m ou d, não x conforme fornecido
+x não é a, s, m ou d, abortando
+
+*Para baixar a solução de laboratório, clique neste link.
+
+Create a file named testmath.sh, with the content below:
+
+#!/bin/bash
+
+# Functions. must be before the main part of the script
+
+# in each case method 1 uses $((..))
+#              method 2 uses let
+#              method 3 uses expr
+
+add() {
+    answer1=$(($1 + $2))
+    let answer2=($1 + $2)
+    answer3=expr $1 + $2
+}
+sub() {
+    answer1=$(($1 - $2))
+    let answer2=($1 - $2)
+    answer3=expr $1 - $2
+}
+mult() {
+    answer1=$(($1 * $2))
+    let answer2=($1 * $2)
+    answer3=expr $1 \* $2
+}
+div() {
+    answer1=$(($1 / $2))
+    let answer2=($1 / $2)
+    answer3=expr $1 / $2
+}
+# End of functions
+#
+# Main part of the script
+# need 3 arguments, and parse to make sure they are valid types
+op=$1 ; arg1=$2 ; arg2=$3
+[[ $# -lt 3 ]] && \
+    echo "Usage: Provide an operation (a,s,m,d) and two numbers" && exit 1
+[[ $op != a ]] && [[ $op != s ]] && [[ $op != d ]] && [[ $op != m ]] && \
+    echo operator must be a, s, m, or d, not $op as supplied
+# ok, do the work!
+
+if [[ $op == a ]] ; then add $arg1 $arg2
+elif [[ $op == s ]] ; then sub $arg1 $arg2
+elif [[ $op == m ]] ; then mult $arg1 $arg2
+elif [[ $op == d ]] ; then div $arg1 $arg2
+else
+echo $op is not a, s, m, or d, aborting ; exit 2
+fi
+# Show the answers
+echo $arg1 $op $arg2 :
+echo 'Method 1, $((..)),' Answer is $answer1
+echo 'Method 2, let,    ' Answer is $answer2
+echo 'Method 3, expr,   ' Answer is $answer3
+
+Make it executable and run it:
+
+student:/tmp> chmod +x testmath.sh
+student:/tmp> ./testmath.sh
+student:/tmp> for n in a s m d x ; do ./testmath.sh $n 21 7 ; done
+
+21 a 7 :
+Method 1, $((..)), Answer is 28
+Method 2, let,
+Answer is 28
+Method 3, expr,
+Answer is 28
+21 s 7 :
+Method 1, $((..)), Answer is 14
+Method 2, let,
+Answer is 14
+Method 3, expr,
+Answer is 14
+21 m 7 :
+Method 1, $((..)), Answer is 147
+Method 2, let,
+Answer is 147
+Method 3, expr,
+Answer is 147
+21 d 7 :
+Method 1, $((..)), Answer is 3
+Method 2, let,
+Answer is 3
+Method 3, expr,
+Answer is 3
+operator must be a, s, m, or d, not x as supplied
+x is not a, s, m, or d, aborting
+
+*To download the lab solution, click this link.
+
+resumo
+
+Você concluiu o Capítulo 15. Vamos resumir os principais conceitos abordados:
+
+Scripts são uma sequência de instruções e comandos armazenados em um arquivo que pode ser executado por um shell. O shell mais comumente usado no Linux é o bash.
+A substituição de comando permite substituir o resultado de um comando como parte de outro comando.
+Funções ou rotinas são um grupo de comandos usados para execução.
+Variáveis ambientais são quantidades pré-atribuídas pelo shell ou definidas e modificadas pelo usuário.
+Para tornar as variáveis de ambiente visíveis aos processos filhos, elas precisam ser exportadas.
+Os scripts podem se comportar de maneira diferente com base nos parâmetros (valores) passados a eles.
+O processo de gravação da saída em um arquivo é chamado de redirecionamento de saída.
+O processo de leitura da entrada de um arquivo é chamado de redirecionamento de entrada.
+A instrução if é usada para selecionar uma ação com base em uma condição.
+As expressões aritméticas consistem em números e operadores aritméticos, como +, - e *.
+

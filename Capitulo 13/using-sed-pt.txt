@@ -1,0 +1,48 @@
+Vamos demonstrar operações mais simples
+que podemos fazer com o SED em um sistema Fedora.
+Eu preparei um arquivo de texto simples
+antes de começarmos,
+o arquivo "cat infile.txt".
+Três linhas indicam a presença dele.
+Suponha que eu digite
+"sed -e s/is/are/infile.txt"
+"sed -e s/is/are/infile.txt"
+e a saída irá direto no stdout.
+Veremos que só mudou a primeira instância em cada linha.
+Então, eu até tenho "var" em vez disso.
+Posso fazer uma pequena modificação no comando
+se eu colocar um "g" no final dele
+.
+E veremos desta vez que ele pegou todas as instâncias.
+Eu também poderia fazer algo assim,
+"1,2s"
+e só fiz isso na primeira e segunda linhas,
+mas deixei a terceira linha sem nada.
+Percebemos que não preciso usar "/",
+posso usar muitos outros caracteres.
+Aqui eu usarei ":"
+e não faz diferença o que eu uso.
+Há uma opção para o SED alterar
+os fluxos de caracteres no local do arquivo original,
+mas é uma operação bem perigosa,
+já que você destrói o arquivo original.
+Geralmente, é melhor enviar a saída para outro arquivo.
+Vou chamá-lo de outfile.txt.
+Esqueci de usar infile.txt para entrada.
+Agora posso ver outfile.txt.
+Vemos que essa é a saída.
+Se eu quiser usar o comando 'diff' para ver a diferença,
+posso fazer algo assim,
+'diff infile.txt outfile.txt',
+e ele mostra as duas linhas que foram alteradas.
+Agora podemos fazer algumas coisas bem complicadas com o SED
+quando tentarmos lidar com caracteres especiais,
+incluindo espaços, pontos de interrogação e asteriscos.
+A vida pode ficar bem complicada.
+Ele respeita tudo que existe
+sobre as chamadas expressões regulares,
+o que pode parecer um pouco estranho,
+mas é uma ferramenta diária,
+é o que os administradores usam
+para fazer substituições elementares em arquivos.
+Então, isso é um pouco sobre o SED.
